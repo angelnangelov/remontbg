@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns:th="http://www.thymeleaf.org">
+<head>    <th:block th:include="~{fragments/head}"/>
+</head>
+
+<body>
+<header>
+    <th:block th:include="~{fragments/navbar}"/>
+</header>
+<main class="d-flex align-items-center min-vh-100 py-3 py-md-0">
+    <div class="container">
+        <div class="card login-register-card">
+            <div class="row no-gutters">
+                <div class="col-md-5">
+                    <img src="/img/register_background.jpg" alt="register" class="login-register-card-img">
+                </div>
+                <div class="col-md-7">
+                    <div class="card-body">
+                        <div class="brand-wrapper">
+                            <img src="/img/logo.png" alt="logo" class="logo">
+                        </div>
+                        <p class="login-register-card-description">Регистрация</p>
+                        <form th:object="${userRegisterBindingModel}" th:action="@{/user/register}" th:method="post">
+                            <div class="form-group">
+                                <label for="username" class="sr-only">Потребителско име</label>
+                                <input   th:field="*{username}" th:errorclass="bg-danger"  type="text" name="username" id="username" class="form-control" placeholder="Потребителско име">
+                                <th:block th:if="${#fields.hasErrors('username')}">
+                                    <small class="error" th:errors="*{username}"></small>
+                                </th:block>
+                            </div>
+                            <div class="form-group">
+                                <label for="firstName" class="sr-only">Име</label>
+                                <input   th:field="*{firstName}" th:errorclass="bg-danger"  type="text" name="firstName" id="firstName" class="form-control" placeholder="Име">
+                                <th:block th:if="${#fields.hasErrors('firstName')}">
+                                    <small class="error" th:errors="*{firstName}"></small>
+                                </th:block>
+                            </div>
+                            <div class="form-group">
+                                <label for="lastName" class="sr-only">Фамилия</label>
+                                <input  th:field="*{lastName}" th:errorclass="bg-danger"  type="text" name="lastName" id="lastName" class="form-control" placeholder="Фамилия">
+                                <th:block th:if="${#fields.hasErrors('lastName')}">
+                                    <small class="error" th:errors="*{lastName}"></small>
+                                </th:block>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="email" class="sr-only">Емайл адрес</label>
+                                <input  th:field="*{email}" th:errorclass="bg-danger"    type="email" name="username" id="email" class="form-control" placeholder="Емайл">
+                                <th:block th:if="${#fields.hasErrors('email')}">
+                                    <small class="error" th:errors="*{email}"></small>
+                                </th:block>
+                            </div>
+                            <div class="form-group mb-4">
+                                <label for="password" class="sr-only">Парола</label>
+                                <input th:field="*{password}" th:errorclass="bg-danger"   type="password" name="password" id="password" class="form-control" placeholder="Парола">
+                                <th:block th:if="${#fields.hasErrors('password')}">
+                                    <small class="error" th:errors="*{password}"></small>
+                                </th:block>
+                            </div>
+                            <div class="form-group mb-4">
+                            <label for="confirmPassword" class="sr-only">Потвърди парола</label>
+                            <input th:field="*{confirmPassword}" th:errorclass="bg-danger"  type="password" name="confirmPassword" id="confirmPassword" class="form-control" placeholder="Потвърди парола">
+                                <th:block th:if="${#fields.hasErrors('confirmPassword')}">
+                                    <small class="error" th:errors="*{confirmPassword}"></small>
+                                </th:block>
+                    </div>
+                            <input name="register" id="register" class="btn btn-block login-btn mb-4" type="submit" value="Регистрация">
+                        </form>
+                        <p class="login-register-card-footer-text"><a href="/user/login" class="text-reset"> Вече си регистриран?</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</main>
+<th:block th:include="~{fragments/footer}"/>
+
+</body>
+</html>

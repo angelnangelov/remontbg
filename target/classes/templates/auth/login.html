@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>    <th:block th:include="~{fragments/head}"/>
+</head>
+
+<body>
+<header>
+    <th:block th:include="~{fragments/navbar}"/>
+</header>
+<main class="d-flex align-items-center min-vh-100 py-3 py-md-0">
+    <div class="container">
+        <div class="card login-register-card">
+            <div class="row no-gutters">
+                <div class="col-md-5">
+                    <img src="/img/login_background.png" alt="login" class="login-register-card-img">
+                </div>
+                <div class="col-md-7">
+                    <div class="card-body">
+                        <div class="brand-wrapper">
+                            <img src="/img/logo.png" alt="logo" class="logo">
+                        </div>
+                        <p class="login-register-card-description">Влез</p>
+                        <form th:action="@{/user/login}" method="post">
+                            <th:block th:if="${param.error}">
+                                <div class="text-center" style="font-weight: bold; color: red; text-align: center;">
+                                    Грешно потребителско име или парола!
+                                </div>
+                            </th:block>
+                            <div class="form-group">
+                                <label for="username" class="sr-only">Потребителско име</label>
+                                <input type="text" name="username" id="username" class="form-control" placeholder="Потребителско име">
+                            </div>
+                            <div class="form-group mb-4">
+                                <label for="password" class="sr-only">Парола</label>
+                                <input type="password" name="password" id="password" class="form-control" placeholder="***********">
+                            </div>
+                            <input  class="btn btn-block login-btn mb-4" type="submit" value="Вход">
+                        </form>
+                        <p class="login-register-card-footer-text">Нямаш акаунт? <a href="/user/register" class="text-reset">Регистрирай се.</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</main>
+<th:block th:include="~{fragments/footer}"/>
+
+</body>
+</html>

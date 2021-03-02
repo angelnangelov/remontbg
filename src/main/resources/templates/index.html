@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <th:block th:include="~{fragments/head}"/>
+</head>
+<body>
+<header>
+    <th:block th:include="~{fragments/navbar}"/>
+</header>
+<main role="main">
+    <section id="hero">
+        <div class="hero-container">
+            <h3><strong>Ремонт.бг</strong></h3>
+            <h1>Платформата за твоят предстоящ ремонт</h1>
+            <a href="#about" class="btn-get-started scrollto">Повече информация</a>
+        </div>
+    </section><!-- End Hero -->
+    <section id="services" class="services">
+        <div class="container">
+
+            <div class="section-title">
+                <h2>Защо REMONT.BG</h2>
+                <h3>Тук ще намерите най-добрите<span> услуги</span></h3>
+            </div>
+        </div>
+  </section>
+
+    <!-- /.row -->
+
+    <div class="row service_info">
+        <div class="col-md-4 mb-5">
+            <div class="card h-100">
+                <img class="card-img-top" src="/img/lookinggorworker.jpg" alt="">
+                <div class="card-body">
+                    <h4 class="card-title">Майстори</h4>
+                    <p class="card-text">Тук имаш възможността бързо да откриеш правилния човек от когото имаш нужда. Всички обяви са разделени в 19 основни категории.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-5">
+            <div class="card h-100">
+                <img class="card-img-top"  src="/img/tools.jpg" alt="">
+                <div class="card-body">
+                    <h4 class="card-title">Инструменти</h4>
+                    <p class="card-text">Не искаш да даваш пари за чисто нов инструмент, който ще ползваш само веднъж? Тук можеш да наемеш всичко от каквото имаш нужда.</p>
+                </div>
+
+            </div>
+        </div>
+        <div class="col-md-4 mb-5" >
+            <div class="card h-100">
+                <img class="card-img-top" src="/img/services_worker.jpg" alt="">
+                <div class="card-body">
+                    <h4 class="card-title">Работа</h4>
+                    <p class="card-text">Ти си майстор, който търси работа? Пусни обява, напълно безплатно е! Стани част от нашите майстори.</p>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!-- /.row -->
+    <footer class="text-center text-white" style="background-color: #932432;">
+        <!-- Grid container -->
+        <div class="container p-4 pb-0">
+            <!-- Section: CTA -->
+                <p class="d-flex justify-content-center align-items-center">
+
+                    <h3>Не се бави! Намери човек за твоят ремонт!</h3>
+                    <br>
+
+            <a class="btn btn-outline-light btn-rounded" href="/user/register"  role="button">         РЕГИСТРАЦИЯ!</a>
+
+            </p>
+            <p> © 2021 Copyright remont.bg  </p>
+        </div>
+    </footer>
+
+
+</main>
+</body>
+
+</html>
