@@ -1,30 +1,48 @@
 package com.angelangelov.remont_bg.model.entities;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import com.angelangelov.remont_bg.model.entities.enums.ServiceOfferNames;
+import com.angelangelov.remont_bg.model.entities.enums.ToolsCategoryName;
+
+import javax.persistence.*;
 import java.util.List;
 
 @Entity
 @Table(name = "tools_categories")
-public class ToolCategory extends BaseCategory {
-
-    private String imgUrl;
+public class ToolCategory extends BaseEntity {
+    private ToolsCategoryName name;
+    private String description;
     private List<ToolOffer> tools;
-
 
     public ToolCategory() {
     }
-
-    @Column(name = "img_url")
-    public String getImgUrl() {
-        return imgUrl;
+    public ToolCategory(ToolsCategoryName name, String description) {
+        this.name = name;
+        this.description=description;
     }
 
-    public void setImgUrl(String imgUrl) {
-        this.imgUrl = imgUrl;
+
+
+
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false, unique = true)
+    public ToolsCategoryName getName() {
+        return name;
     }
+
+    public void setName(ToolsCategoryName name) {
+        this.name = name;
+    }
+
+    @Column(name = "description", nullable = false, unique = true, columnDefinition = "text")
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
 
     @OneToMany(mappedBy = "toolCategory")
     public List<ToolOffer> getTools() {

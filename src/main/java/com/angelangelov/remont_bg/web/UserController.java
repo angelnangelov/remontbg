@@ -64,7 +64,16 @@ public class UserController {
             return "redirect:register";
         }
 
-        this.userService.register(this.modelMapper.map(userRegisterBindingModel, UserServiceModel.class));
-        return "redirect:login";
+        try {
+            this.userService.register(this.modelMapper
+                    .map(userRegisterBindingModel, UserServiceModel.class));
+            return "redirect:login";
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+            redirectAttributes.addFlashAttribute("userRegisterBindingModel", userRegisterBindingModel);
+            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.userRegisterBindingModel"
+                    , bindingResult);
+            return "redirect:register";
+        }
     }
 }

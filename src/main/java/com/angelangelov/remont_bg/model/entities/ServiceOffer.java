@@ -1,5 +1,7 @@
 package com.angelangelov.remont_bg.model.entities;
 
+import com.angelangelov.remont_bg.model.entities.enums.ServiceOfferNames;
+
 import javax.persistence.*;
 import java.math.BigDecimal;
 
@@ -11,6 +13,8 @@ public class ServiceOffer extends BaseOffer {
 
     public ServiceOffer() {
     }
+
+
 
     @ManyToOne
     public ServiceCategory getCategory() {

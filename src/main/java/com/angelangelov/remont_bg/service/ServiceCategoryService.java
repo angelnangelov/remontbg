@@ -1,5 +1,5 @@
 package com.angelangelov.remont_bg.service;
 
-public interface ToolCategoryService {
+public interface ServiceCategoryService {
     void initCategories();
 }
