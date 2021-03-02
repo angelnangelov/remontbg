@@ -1,13 +1,97 @@
+
+
 <!DOCTYPE html>
-<html lang="en"
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <th:block th:include="~{fragments/head}"/>
 </head>
 <body>
-Hello, <span sec:authentication="name">Bob</span>!
+<header>
+    <th:block th:include="~{fragments/navbar}"/>
+</header>
 
+
+<main class=" min-vh-100 py-3 py-md-0">
+    <div class="container">
+        <div class="jumbotron jumbotron-styling">
+            <div class="bg-text">
+            <h2>Добре дошъл, <span sec:authentication="name">Ime</span>!</h2>
+            <h3>В ремонт.бг ще откриеш всичко за твоят ремонт.</h3>
+            </div>
+        </div>
+
+    </div>
+
+<div id="cards_landscape_wrap-2">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+                <a href="">
+                    <div class="card-flyer">
+                        <div class="text-box">
+                            <div class="image-box">
+                                <img src="/img/detective.png"  alt="Търсещ майстор" />
+                            </div>
+                            <div class="text-container">
+                                <p class="paragraph-text">Търсиш майстор?</p>
+                                <p>Тук ще намериш майстори за всичко, каквото ти потрябва! Имаме 14 различни категории с майстори.</p>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+                <a href="">
+                    <div class="card-flyer">
+                        <div class="text-box">
+                            <div class="image-box">
+                                <img src="/img/giving_tools.jpg"  alt="Търсене инструменти под наем" />
+                            </div>
+                            <div class="text-container">
+                                <p class="paragraph-text">Търсиш инструмент?</p>
+                                <p>Тук ще намериш изубилие от инструменти на добри цени,разделени в 6 основни категории.</p>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+                <a href="">
+                    <div class="card-flyer">
+                        <div class="text-box">
+                            <div class="image-box">
+                                <img src="/img/worker.png" alt="Майстор" />
+                            </div>
+
+                            <div class="text-container">
+                                <p class="paragraph-text">Ти си майстор?</p>
+                                <p>Търсиш работа? Пусни обява само с един клик и стани част от нашите майстори.</p>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+                <a href="">
+                    <div class="card-flyer">
+                        <div class="text-box">
+                            <div class="image-box">
+                                <img src="/img/renting_tools.jpg" alt="Инструменти под неам" />
+                            </div>
+                            <div class="text-container">
+                                <p class="paragraph-text">Даваш инструмент?</p>
+                                <p>Имаш инструмент, който не позлваш често? <br> Пусни го тук под наем и спечели пари.</p>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+</main>
 </body>
+<th:block th:include="~{fragments/footer}"/>
 </html>
