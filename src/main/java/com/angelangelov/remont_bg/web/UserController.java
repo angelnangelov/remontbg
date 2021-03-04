@@ -125,4 +125,9 @@ public class UserController {
 
     }
 
+    @GetMapping("/profile")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public String profile(){
+        return "user-profile";
+    }
 }
