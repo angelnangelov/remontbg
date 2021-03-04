@@ -2,7 +2,6 @@ package com.angelangelov.remont_bg.service.impl;
 
 import com.angelangelov.remont_bg.error.user.UserWithIdNotExists;
 import com.angelangelov.remont_bg.error.user.UserWithUsernameNotExists;
-import com.angelangelov.remont_bg.model.entities.Role;
 import com.angelangelov.remont_bg.model.entities.User;
 import com.angelangelov.remont_bg.model.services.UserServiceModel;
 import com.angelangelov.remont_bg.repository.UserRepository;
@@ -15,6 +14,9 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -69,6 +71,35 @@ public class UserServiceImpl implements UserService {
     public UserServiceModel findUserById(String id) {
         User user = this.userRepository.findById(id).orElseThrow(() -> new UserWithIdNotExists("User with this id does not exist!"));
         return this.modelMapper.map(user, UserServiceModel.class);
+    }
+    @Override
+    public List<UserServiceModel> findAllUsers() {
+        return userRepository.findAll().stream()
+                .map(u -> modelMapper.map(u, UserServiceModel.class))
+                .collect(Collectors.toList());
+    }
+
+
+    @Override
+    public void setUserRole(String id, String role) {
+
+        User user = userRepository.findById(id).orElseThrow(()->new UserWithIdNotExists("User with this id does not exist!"));
+        UserServiceModel userServiceModel = modelMapper.map(user, UserServiceModel.class);
+        userServiceModel.getAuthorities().clear();
+        switch (role) {
+            case "user" -> userServiceModel.getAuthorities().add(roleService.findByAuthority("ROLE_USER"));
+            case "moderator" -> {
+                userServiceModel.getAuthorities().add(roleService.findByAuthority("ROLE_USER"));
+                userServiceModel.getAuthorities().add(roleService.findByAuthority("ROLE_MODERATOR"));
+            }
+            case "admin" -> {
+                userServiceModel.getAuthorities().add(roleService.findByAuthority("ROLE_USER"));
+                userServiceModel.getAuthorities().add(roleService.findByAuthority("ROLE_MODERATOR"));
+                userServiceModel.getAuthorities().add(roleService.findByAuthority("ROLE_ADMIN"));
+            }
+        }
+        userRepository.saveAndFlush(modelMapper.map(userServiceModel, User.class));
+
     }
 
     @Override

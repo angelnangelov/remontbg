@@ -396,3 +396,12 @@ h4   {
     font-weight: bold;
     border: 3px solid #f1f1f1;
 }
+
+
+.container {
+    min-height:100%;
+}
+.footer {
+    height:40px;
+    margin-top:-40px;
+}

@@ -29,7 +29,6 @@ public class RoleServiceImpl implements RoleService {
             roleRepository.save(new Role("ROLE_USER"));
             roleRepository.save(new Role("ROLE_ADMIN"));
             roleRepository.save(new Role("ROLE_MODERATOR"));
-            roleRepository.save(new Role("ROLE_REDACTOR"));
         }
     }
 
