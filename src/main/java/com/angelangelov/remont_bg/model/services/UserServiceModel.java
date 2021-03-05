@@ -12,9 +12,19 @@ public class UserServiceModel extends BaseServiceModel{
     private String lastName;
     private String phoneNumber;
     private String profileImageUrl;
+    private String city;
+
     private Set<RoleServiceModel> authorities;
 
     public UserServiceModel() {
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
     }
 
     public String getUsername() {
@@ -80,4 +90,7 @@ public class UserServiceModel extends BaseServiceModel{
     public void setAuthorities(Set<RoleServiceModel> authorities) {
         this.authorities = authorities;
     }
+
+
+
 }

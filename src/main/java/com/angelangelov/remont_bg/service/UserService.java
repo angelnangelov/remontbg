@@ -3,6 +3,7 @@ package com.angelangelov.remont_bg.service;
 import com.angelangelov.remont_bg.model.services.UserServiceModel;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
+import java.security.Principal;
 import java.util.List;
 
 public interface UserService extends UserDetailsService {
@@ -16,6 +17,9 @@ public interface UserService extends UserDetailsService {
     UserServiceModel findUserById(String id);
     void setUserRole(String id, String role);
     List<UserServiceModel> findAllUsers();
+    void updateProfile(UserServiceModel userServiceModel, String username);
+    UserServiceModel changePassword(UserServiceModel userServiceModel, String oldPassword ,String username);
+
 
 
 }

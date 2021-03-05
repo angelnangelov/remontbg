@@ -43,7 +43,7 @@ public class AppSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .logout()
                 .invalidateHttpSession(true)
                 .deleteCookies("JSESSIONID")
-                .logoutSuccessUrl("/").permitAll()
+                .logoutSuccessUrl("/user/login").permitAll()
                 .and()
                 .exceptionHandling().accessDeniedPage("/unauthorized");
 

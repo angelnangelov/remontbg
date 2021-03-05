@@ -405,3 +405,44 @@ h4   {
     height:40px;
     margin-top:-40px;
 }
+
+/*PROFILE*/
+.form-control:focus {
+    box-shadow: none;
+    border-color: #DE354C
+}
+
+.profile-button {
+    background: #932432;
+    box-shadow: none;
+    border: none
+}
+
+.profile-button:hover {
+    background: #932432
+}
+
+.profile-button:focus {
+    background: #932432;
+    box-shadow: none
+}
+
+.profile-button:active {
+    background: #932432;
+    box-shadow: none
+}
+
+.back:hover {
+    color: #932432;
+    cursor: pointer
+}
+
+.labels {
+    font-size: 13px
+}
+
+
+.profilepage{
+    padding-top: 70px;
+
+}

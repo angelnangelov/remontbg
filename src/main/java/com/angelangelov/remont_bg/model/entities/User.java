@@ -16,6 +16,7 @@ public class User  extends BaseEntity  implements UserDetails {
     private String firstName;
     private String lastName;
     private String phoneNumber;
+    private String city;
     private String profileImageUrl;
     private LocalDateTime createdDate = LocalDateTime.now();
 
@@ -23,6 +24,14 @@ public class User  extends BaseEntity  implements UserDetails {
     private Set<Role> authorities;
 
     public User() {
+    }
+    @Column
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
     }
 
     @Column(name = "username", nullable = false, updatable = false, unique = true)

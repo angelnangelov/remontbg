@@ -1,5 +1,6 @@
 package com.angelangelov.remont_bg.service.impl;
 
+import com.angelangelov.remont_bg.error.user.UserOldPasswordNotCorrectException;
 import com.angelangelov.remont_bg.error.user.UserWithIdNotExists;
 import com.angelangelov.remont_bg.error.user.UserWithUsernameNotExists;
 import com.angelangelov.remont_bg.model.entities.User;
@@ -13,6 +14,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.security.Principal;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Optional;
@@ -79,6 +82,23 @@ public class UserServiceImpl implements UserService {
                 .collect(Collectors.toList());
     }
 
+    @Override
+    public void updateProfile(UserServiceModel userServiceModel, String  username) {
+     User user = userRepository.findUserByUsername(username)
+                .orElseThrow(() -> new UsernameNotFoundException(String.format("User with NOT FOUND  username: %s",username)));
+
+            user.setFirstName(userServiceModel.getFirstName());
+            user.setLastName(userServiceModel.getLastName());
+            user.setPhoneNumber(userServiceModel.getPhoneNumber());
+            user.setCity(userServiceModel.getCity());
+            userRepository.saveAndFlush(user);
+
+
+        modelMapper.map(user, UserServiceModel.class);
+
+
+    }
+
 
     @Override
     public void setUserRole(String id, String role) {
@@ -99,12 +119,28 @@ public class UserServiceImpl implements UserService {
             }
         }
         userRepository.saveAndFlush(modelMapper.map(userServiceModel, User.class));
-
+ user.setPassword(userServiceModel.getPassword() != null ? encoder.encode(userServiceModel.getPassword()) :
+                user.getPassword());
     }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return userRepository.findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException(String.format("User with NOT FOUND  username: %s", username)));
+    }
+
+    @Override
+    public UserServiceModel changePassword(UserServiceModel userServiceModel, String oldPassword,String username) {
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new UsernameNotFoundException(String.format("Username not found %s", userServiceModel.getUsername())));
+
+        if (!encoder.matches(oldPassword, user.getPassword())) {
+            throw new UserOldPasswordNotCorrectException("INCORRECT_PASSWORD");
+        }
+
+        user.setPassword(userServiceModel.getPassword() != null ? encoder.encode(userServiceModel.getPassword()) :
+                user.getPassword());
+        userRepository.saveAndFlush(user);
+        return modelMapper.map(user,UserServiceModel.class);
     }
 }

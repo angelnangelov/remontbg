@@ -1,17 +1,17 @@
 package com.angelangelov.remont_bg.web;
 
+import com.angelangelov.remont_bg.model.bindings.UserEditBindingModel;
 import com.angelangelov.remont_bg.model.bindings.UserRegisterBindingModel;
 import com.angelangelov.remont_bg.model.services.UserServiceModel;
 import com.angelangelov.remont_bg.model.views.UserViewModel;
 import com.angelangelov.remont_bg.service.UserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
@@ -20,14 +20,16 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Controller
-@RequestMapping(value = "/user",method = RequestMethod.GET)
+@RequestMapping(value = "/user")
 public class UserController {
     private final UserService userService;
     private final ModelMapper modelMapper;
+    private final PasswordEncoder encoder;
 
-    public UserController(UserService userService, ModelMapper modelMapper) {
+    public UserController(UserService userService, ModelMapper modelMapper, PasswordEncoder encoder) {
         this.userService = userService;
         this.modelMapper = modelMapper;
+        this.encoder = encoder;
     }
 
     @GetMapping("/login")
@@ -48,8 +50,8 @@ public class UserController {
 
     @PostMapping("/register")
     @PreAuthorize("isAnonymous()")
-    public String registerConfirm(@Valid @ModelAttribute("userRegisterBindingModel")UserRegisterBindingModel userRegisterBindingModel,
-                                  BindingResult bindingResult, RedirectAttributes redirectAttributes){
+    public String registerConfirm(@Valid @ModelAttribute("userRegisterBindingModel") UserRegisterBindingModel userRegisterBindingModel,
+                                  BindingResult bindingResult, RedirectAttributes redirectAttributes) {
 
         if (!userRegisterBindingModel.getPassword().equals(userRegisterBindingModel.getConfirmPassword())) {
             bindingResult.rejectValue("password", "error.userRegisterBindingModel", "Паролите не съвпадат!");
@@ -61,9 +63,9 @@ public class UserController {
         if (this.userService.existByEmail(userRegisterBindingModel.getEmail())) {
             bindingResult.rejectValue("email", "error.userRegisterBindingModel", "Потребител с този емайл вече съществува!");
         }
-        if(bindingResult.hasErrors()){
+        if (bindingResult.hasErrors()) {
             redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.userRegisterBindingModel", bindingResult);
-            redirectAttributes.addFlashAttribute("userRegisterBindingModel",userRegisterBindingModel);
+            redirectAttributes.addFlashAttribute("userRegisterBindingModel", userRegisterBindingModel);
             return "redirect:register";
         }
 
@@ -81,10 +83,9 @@ public class UserController {
     }
 
 
-
     @GetMapping("/admin")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public String adminPanel(Model model,Principal principal){
+    public String adminPanel(Model model, Principal principal) {
         List<UserServiceModel> allUsers = userService.findAllUsers();
         allUsers.removeIf(user -> user.getUsername().equals(principal.getName()));
         List<UserViewModel> users = allUsers.stream().map(u -> {
@@ -95,7 +96,7 @@ public class UserController {
             return user;
         }).collect(Collectors.toList());
 
-        model.addAttribute("users",users);
+        model.addAttribute("users", users);
         return "admin";
     }
 
@@ -126,8 +127,72 @@ public class UserController {
     }
 
     @GetMapping("/profile")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public String profile(){
+    @PreAuthorize("isAuthenticated()")
+    public String profile(Model model, Principal principal) {
+        UserServiceModel userServiceModel = userService.findUserByUsername(principal.getName());
+        UserViewModel user = modelMapper.map(userServiceModel, UserViewModel.class);
+        model.addAttribute("userProfile",user);
         return "user-profile";
     }
+
+    @PostMapping("/profile")
+    @PreAuthorize("isAuthenticated()")
+    public String profileEdit(@ModelAttribute("userEditBindingModel") UserEditBindingModel userEditBindingModel,
+                              Principal principal) {
+
+
+        UserServiceModel userServiceModel = modelMapper.map(userEditBindingModel, UserServiceModel.class);
+
+        this.userService.updateProfile(userServiceModel,principal.getName());
+
+        //TODO VALIDAIONS
+        userService.updateProfile(userServiceModel, principal.getName());
+        return "redirect:profile";
+    }
+
+    @GetMapping("/passwordChange")
+    @PreAuthorize("isAuthenticated()")
+    public String changePassword(Model model){
+        if(!model.containsAttribute("userEditBindingModel")){
+            model.addAttribute("userEditBindingModel",new UserEditBindingModel());
+        }
+        return "passwordChange";
+    }
+
+    @PostMapping("/passwordChange")
+    @PreAuthorize("isAuthenticated()")
+    public String changePasswordConfirm(@Valid @ModelAttribute("userEditBindingModel")
+                                                    UserEditBindingModel userEditBindingModel,
+                                      BindingResult  bindingResult,RedirectAttributes redirectAttributes,Principal principal)
+            {
+
+                if (!userEditBindingModel.getPassword().equals(userEditBindingModel.getConfirmPassword())) {
+                    bindingResult.rejectValue("confirmPassword", "error.userEditBindingModel", "Паролите не съвпадат!");
+                    return "redirect:passwordChange";
+
+                }
+                if(userEditBindingModel.getPassword().isBlank()||userEditBindingModel.getOldPassword().isBlank() ||userEditBindingModel.getConfirmPassword().isBlank()){
+                    bindingResult.rejectValue("password", "error.userEditBindingModel", "Всички полета трябва да са запълнени!");
+                    return "redirect:passwordChange";
+                }
+
+                if (!this.encoder.matches(userEditBindingModel.getOldPassword(), userService.findUserByUsername(principal.getName()).getPassword())) {
+                    bindingResult.rejectValue("oldPassword", "error.userEditBindingModel", "Грешна парола!");
+                    return "redirect:passwordChange";
+                }
+                    String oldPassword = userEditBindingModel.getOldPassword();
+
+                if(userEditBindingModel.getPassword().equals(userEditBindingModel.getConfirmPassword())){
+                    UserServiceModel user = modelMapper.map(userEditBindingModel, UserServiceModel.class);
+                    userService.changePassword(user,userEditBindingModel.getOldPassword(),principal.getName());
+                    return "redirect:/logout";
+                }else{
+                    //TODO VALIDATIONS
+                    return "redirect:passwordChange";
+                }
+
+
+            }
+
+
 }
