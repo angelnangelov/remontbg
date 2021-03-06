@@ -446,3 +446,33 @@ h4   {
     padding-top: 70px;
 
 }
+.countworkers{
+    padding-top: 70px;
+
+}
+
+.card{
+    position: relative;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    min-width: 0;
+    word-wrap: break-word;
+    background-color: #fff;
+    background-clip: border-box;
+    border: 2px solid  #932432;
+    width: 100%!important;
+
+}
+.sub-card {
+    width: 300px;
+    height: 180px;
+    padding: 40px 20px;
+    margin: 0 auto;
+}
+
+.card h2{
+
+    color: #932432;}
+

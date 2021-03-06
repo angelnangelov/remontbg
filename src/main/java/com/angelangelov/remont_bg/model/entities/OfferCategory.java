@@ -1,24 +1,25 @@
 package com.angelangelov.remont_bg.model.entities;
 
 import com.angelangelov.remont_bg.model.entities.enums.ServiceOfferNames;
+import org.hibernate.annotations.Fetch;
 
 import javax.persistence.*;
 import java.util.List;
 @Entity
 @Table(name = "offer_categories")
-public class ServiceCategory extends BaseEntity{
+public class OfferCategory extends BaseEntity{
     private ServiceOfferNames name;
     private String description;
 
-    private List<ServiceOffer> services;
+    private List<Offer> offers;
 
 
-    public ServiceCategory(ServiceOfferNames name, String description) {
+    public OfferCategory(ServiceOfferNames name, String description) {
         this.name=name;
         this.description=description;
     }
 
-    public ServiceCategory() {
+    public OfferCategory() {
 
     }
 
@@ -40,12 +41,12 @@ public class ServiceCategory extends BaseEntity{
     public void setDescription(String description) {
         this.description = description;
     }
-    @OneToMany(mappedBy = "category")
-    public List<ServiceOffer> getServices() {
-        return services;
+    @OneToMany(mappedBy = "category",fetch = FetchType.EAGER)
+    public List<Offer> getOffers() {
+        return offers;
     }
 
-    public void setServices(List<ServiceOffer> services) {
-        this.services = services;
+    public void setOffers(List<Offer> offers) {
+        this.offers = offers;
     }
 }

@@ -1,31 +1,20 @@
-package com.angelangelov.remont_bg.model.entities;
+package com.angelangelov.remont_bg.model.views;
 
+import com.angelangelov.remont_bg.model.entities.Offer;
+import com.angelangelov.remont_bg.model.entities.ToolOffer;
 import com.angelangelov.remont_bg.model.entities.enums.ServiceOfferNames;
 import com.angelangelov.remont_bg.model.entities.enums.ToolsCategoryName;
 
-import javax.persistence.*;
 import java.util.List;
 
-@Entity
-@Table(name = "tools_categories")
-public class ToolCategory extends BaseEntity {
+public class ToolsCategoryViewModel {
     private ToolsCategoryName name;
     private String description;
+
     private List<ToolOffer> tools;
-
-    public ToolCategory() {
-    }
-    public ToolCategory(ToolsCategoryName name, String description) {
-        this.name = name;
-        this.description=description;
+    public ToolsCategoryViewModel() {
     }
 
-
-
-
-
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false, unique = true)
     public ToolsCategoryName getName() {
         return name;
     }
@@ -34,7 +23,6 @@ public class ToolCategory extends BaseEntity {
         this.name = name;
     }
 
-    @Column(name = "description", nullable = false, unique = true, columnDefinition = "text")
     public String getDescription() {
         return description;
     }
@@ -43,8 +31,6 @@ public class ToolCategory extends BaseEntity {
         this.description = description;
     }
 
-
-    @OneToMany(mappedBy = "toolCategory",fetch = FetchType.EAGER)
     public List<ToolOffer> getTools() {
         return tools;
     }

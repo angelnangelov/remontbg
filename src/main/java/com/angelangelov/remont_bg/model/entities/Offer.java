@@ -1,27 +1,25 @@
 package com.angelangelov.remont_bg.model.entities;
 
-import com.angelangelov.remont_bg.model.entities.enums.ServiceOfferNames;
-
 import javax.persistence.*;
 import java.math.BigDecimal;
 
 @Entity
 @Table(name = "services")
-public class ServiceOffer extends BaseOffer {
+public class Offer extends BaseOffer {
     private BigDecimal price;
-    private ServiceCategory category;
+    private OfferCategory category;
 
-    public ServiceOffer() {
+    public Offer() {
     }
 
 
 
     @ManyToOne
-    public ServiceCategory getCategory() {
+    public OfferCategory getCategory() {
         return category;
     }
 
-    public void setCategory(ServiceCategory category) {
+    public void setCategory(OfferCategory category) {
         this.category = category;
     }
 
