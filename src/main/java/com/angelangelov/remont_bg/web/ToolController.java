@@ -23,4 +23,9 @@ private final ToolCategoryService toolCategoryService;
         model.addAttribute("allTools",this.toolCategoryService.getAllTools());
         return "tools/all-tools-categories";
     }
+
+    @GetMapping("/choose")
+    private String chooseAction(){
+        return "tools/tool-add-or-viewall";
+    }
 }

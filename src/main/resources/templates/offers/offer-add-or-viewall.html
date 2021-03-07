@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <th:block th:include="~{fragments/head}"/>
+</head>
+<body>
+<header>
+    <th:block th:include="~{fragments/navbar}"/>
+</header>
+<div class="container">
+
+    <div class="row">
+
+        <div class="container offer-card-view-container">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="card mb">
+                        <img class="card-img-top" src="/img/search.png" alt="Виж услугите">
+                        <div class="card-body mb">
+                            <h5 class="card-title">Разгледай услуги</h5>
+                            <p class="card-text">Разгледай нашите услуги разделени в 14 категории..</p>
+                            <a class="btn btn-primary profile-button" href="/offer/categories" role="button">Виж </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card mb">
+                        <img class="card-img-top" src="/img/add.png" alt="Добави услуга">
+                        <div class="card-body mb">
+                            <h5 class="card-title">Добави услуга</h5>
+                            <p class="card-text">Добави услуга и намери работа само с един клик, лесно е! </p>
+                            <a class="btn btn-primary profile-button" href="/offer/add" role="button">Добави</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card mb">
+                        <img class="card-img-top" src="/img/tool.png" alt="Инструменти">
+                        <div class="card-body mb">
+                            <h5 class="card-title">Инструменти</h5>
+                            <p class="card-text">Вземи инструмент под наем или добави обява за твой само с един клик!</p>
+                            <a class="btn btn-primary profile-button" href="/tool/choose" role="button">Виж</a>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<th:block th:include="~{fragments/footer}"/>
+</body>
+
+</html>
+
+
+
+<!--<div class="card mr-3" style="width: 10%">-->
+<!--    <img src="/img/add.png" class="img-box" alt="...">-->
+<!--    <div class="card-body">-->
+<!--        <h5 class="card-title">Card title</h5>-->
+<!--        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>-->
+<!--        <a href="#" class="btn btn-primary">Go somewhere</a>-->
+<!--    </div>-->
+<!--</div>-->

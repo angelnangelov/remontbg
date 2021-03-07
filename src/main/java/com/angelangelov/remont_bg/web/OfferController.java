@@ -18,10 +18,20 @@ private final OfferCategoryService offerCategoryService;
 
     @GetMapping("/categories")
     private String allOffers(Model model){
-
-
       model.addAttribute("allCategories",this.offerCategoryService.getAllCategories());
        return "offers/all-offer-categories";
     }
+
+    @GetMapping("/choose")
+    private String chooseAction(){
+        return "offers/offer-add-or-viewall";
+    }
+
+    @GetMapping("/add")
+    private String addOffer(){
+        return "offers/add-offer";
+    }
+
+
 
 }
