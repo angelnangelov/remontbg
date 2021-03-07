@@ -9,9 +9,8 @@ import java.math.BigDecimal;
 @Entity
 @Table(name = "tools")
 public class ToolOffer extends BaseOffer {
-    private BigDecimal pricePerDay;
-    private BigDecimal pricePerWeak;
-    private BigDecimal pricePerMonth;
+    private BigDecimal price;
+
     private ToolCategory toolCategory;
 
     public ToolOffer() {
@@ -26,30 +25,12 @@ public class ToolOffer extends BaseOffer {
         this.toolCategory = toolCategory;
     }
 
-    @Column(name = "price_per_day", nullable = false)
-    public BigDecimal getPricePerDay() {
-        return pricePerDay;
+    @Column(nullable = false)
+    public BigDecimal getPrice() {
+        return price;
     }
 
-    public void setPricePerDay(BigDecimal pricePerDay) {
-        this.pricePerDay = pricePerDay;
-    }
-
-    @Column(name = "price_per_weak", nullable = false)
-    public BigDecimal getPricePerWeak() {
-        return pricePerWeak;
-    }
-
-    public void setPricePerWeak(BigDecimal pricePerWeak) {
-        this.pricePerWeak = pricePerWeak;
-    }
-
-    @Column(name = "price_per_month", nullable = false)
-    public BigDecimal getPricePerMonth() {
-        return pricePerMonth;
-    }
-
-    public void setPricePerMonth(BigDecimal pricePerMonth) {
-        this.pricePerMonth = pricePerMonth;
+    public void setPrice(BigDecimal price) {
+        this.price = price;
     }
 }

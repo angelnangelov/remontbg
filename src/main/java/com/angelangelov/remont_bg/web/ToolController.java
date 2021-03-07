@@ -24,8 +24,13 @@ private final ToolCategoryService toolCategoryService;
         return "tools/all-tools-categories";
     }
 
-    @GetMapping("/choose")
+    @GetMapping("/actions")
     private String chooseAction(){
         return "tools/tool-add-or-viewall";
+    }
+
+    @GetMapping("/add")
+    private String addOffer(){
+        return "tools/add-tool";
     }
 }

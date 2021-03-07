@@ -5,9 +5,8 @@
 <header>
     <th:block th:include="~{fragments/navbar}"></th:block>
 </header>
-<main class="p-5 bg-blur text-center my-main  add-view-container">
-    <h1 class="text-dark border-bottom">Добави услуга</h1>
-
+<main class="p-5 bg-blur text-center my-main add-view-container">
+    <h1 class="text-dark border-bottom">Добави инструмент</h1>
     <div class="d-flex justify-content-center">
         <form class="text-dark">
             <div class="form-row m-5">
@@ -26,13 +25,13 @@
             </div>
             <div class="form-row m-5">
                 <div class="col">
-                    <label for="price">Цена</label>
+                    <label for="price">Цена на ден</label>
                     <input  name="price" id="price" type="number" class="form-control" placeholder="Цена">
                     <small   id="priceError" class="form-text bg-danger rounded">Price must be positive</small>
                 </div>
                 <div class="col">
-                    <label for="region">Категория</label>
-                    <select    name="category" id="category" class="custom-select">
+                    <label for="toolCategory">Категория</label>
+                    <select    name="toolCategory" id="toolCategory" class="custom-select">
                         <option  selected>Изберете категория</option>
                     </select>
                     <small  id="categoryError" class="form-text bg-danger rounded">You must select artist</small>
@@ -40,7 +39,7 @@
             </div>
             <div class="form-row m-5">
                 <div class="col">
-                    <label for="startsOn">От</label>
+                    <label for="startsOn">Свободен от</label>
                     <input name="startsOn" id="startsOn" type="date" class="form-control" placeholder="От">
                     <small  id="startsOnError" class="form-text bg-danger rounded">Release date cannot be in the
                         future</small>

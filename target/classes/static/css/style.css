@@ -1,6 +1,10 @@
 .navbar{
     padding: 0}
 
+body {
+    height: 100%;
+}
+
 
 /*--------------------------------------------------------------
 # Hero Section
@@ -476,14 +480,12 @@ h4   {
 
     color: #932432;}
 
-.offer-card-view-container{
-    padding-top: 5% !important;
-
-
-}
-body {
-
-    height: 100%;
+.offer-card-view-container {
+    padding-top: 3% !important;
 }
 
+/*}*/
+/*.add-view-container{*/
+/*    padding-top: 5% !important;*/
+/*}*/
 

@@ -22,7 +22,7 @@ private final OfferCategoryService offerCategoryService;
        return "offers/all-offer-categories";
     }
 
-    @GetMapping("/choose")
+    @GetMapping("/actions")
     private String chooseAction(){
         return "offers/offer-add-or-viewall";
     }
