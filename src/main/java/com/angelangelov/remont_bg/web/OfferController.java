@@ -32,6 +32,12 @@ private final OfferCategoryService offerCategoryService;
         return "offers/add-offer";
     }
 
+    @GetMapping("/all")
+    private String allOffers(){
+        return "offers/all-offers";
+    }
+
+
 
 
 }
