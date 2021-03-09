@@ -9,7 +9,6 @@ import com.angelangelov.remont_bg.service.OfferCategoryService;
 import com.angelangelov.remont_bg.service.OfferService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -25,6 +24,7 @@ import java.security.Principal;
 @Controller
 @RequestMapping("/offer")
 public class OfferController {
+    private static final String N0_IMG_URL = "https://res.cloudinary.com/dtns2qohp/image/upload/v1615288082/depositphotos_318221368-stock-illustration-missing-picture-page-for-website_hppqti.jpg";
 private final OfferService offerService;
 private final ModelMapper modelMapper;
 private final CloudinaryService cloudinaryService;
@@ -74,7 +74,7 @@ private final OfferCategoryService offerCategoryService;
         String username = principal.getName();
         OfferServiceModel offerServiceModel = modelMapper.map(offerAddBindingModel, OfferServiceModel.class);
         if (offerAddBindingModel.getImage().isEmpty()) {
-            offerServiceModel.setImage("link");
+            offerServiceModel.setImage(N0_IMG_URL);
         }else {
             offerServiceModel.setImage(cloudinaryService.uploadImg(offerAddBindingModel.getImage()));
         }

@@ -47,7 +47,10 @@ public class OfferCategoryServiceImpl implements OfferCategoryService {
         ).collect(Collectors.toList());
     }
 
-
+    @Override
+    public OfferCategory findByName(ServiceOfferNames name) {
+        return this.offerCategoryRepository.findByName(name);
+    }
 
 
 }

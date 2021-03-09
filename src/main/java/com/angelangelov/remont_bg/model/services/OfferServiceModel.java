@@ -17,7 +17,7 @@ public class OfferServiceModel {
     private Boolean isApproved;
     private String ownerPhoneNumber;
     private UserServiceModel user;
-    private OfferCategoryServiceModel category;
+    private String category;
 
     public OfferServiceModel() {
     }
@@ -110,11 +110,11 @@ public class OfferServiceModel {
         this.user = user;
     }
 
-    public OfferCategoryServiceModel getCategory() {
+    public String getCategory() {
         return category;
     }
 
-    public void setCategory(OfferCategoryServiceModel category) {
+    public void setCategory(String category) {
         this.category = category;
     }
 }

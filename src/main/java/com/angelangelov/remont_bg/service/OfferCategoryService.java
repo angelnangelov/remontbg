@@ -10,6 +10,6 @@ import java.util.List;
 public interface OfferCategoryService {
     void initCategories();
     List<OfferCategoryViewModel> getAllCategories();
-
+    OfferCategory findByName(ServiceOfferNames name);
 
 }

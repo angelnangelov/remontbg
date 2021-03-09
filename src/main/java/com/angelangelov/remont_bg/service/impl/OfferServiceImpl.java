@@ -1,6 +1,7 @@
 package com.angelangelov.remont_bg.service.impl;
 
 import com.angelangelov.remont_bg.model.entities.Offer;
+import com.angelangelov.remont_bg.model.entities.User;
 import com.angelangelov.remont_bg.model.entities.enums.ServiceOfferNames;
 import com.angelangelov.remont_bg.model.services.OfferServiceModel;
 import com.angelangelov.remont_bg.repository.OfferRepository;
@@ -30,9 +31,8 @@ public class OfferServiceImpl implements OfferService {
         offerServiceModel.setActive(true);
         offerServiceModel.setApproved(false);
         Offer offer = modelMapper.map(offerServiceModel, Offer.class);
-        //TODO : FINISH ADDING PRODUCT category/user misiing
-        System.out.println();
-
+        offer.setCategory(offerCategoryService.findByName(ServiceOfferNames.valueOf(offerServiceModel.getCategory())));
+        offer.setUser(modelMapper.map(userService.findUserByUsername(username),User.class));
         System.out.println();
         offerRepository.saveAndFlush(offer);
         System.out.println();
