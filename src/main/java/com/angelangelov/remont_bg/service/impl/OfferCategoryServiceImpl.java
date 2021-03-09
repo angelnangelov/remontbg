@@ -2,6 +2,7 @@ package com.angelangelov.remont_bg.service.impl;
 
 import com.angelangelov.remont_bg.model.entities.OfferCategory;
 import com.angelangelov.remont_bg.model.entities.enums.ServiceOfferNames;
+import com.angelangelov.remont_bg.model.services.OfferCategoryServiceModel;
 import com.angelangelov.remont_bg.model.views.OfferCategoryViewModel;
 import com.angelangelov.remont_bg.repository.OfferCategoryRepository;
 import com.angelangelov.remont_bg.service.OfferCategoryService;
@@ -45,6 +46,7 @@ public class OfferCategoryServiceImpl implements OfferCategoryService {
                 }
         ).collect(Collectors.toList());
     }
+
 
 
 

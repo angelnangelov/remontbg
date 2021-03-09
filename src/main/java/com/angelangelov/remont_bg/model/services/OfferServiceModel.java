@@ -5,33 +5,29 @@ import com.angelangelov.remont_bg.model.entities.enums.Region;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
-public class OfferServiceModel extends BaseServiceModel {
-
+public class OfferServiceModel {
     private String name;
-
     private String description;
-
     private String image;
-
-    private LocalDate startsOn;
-
-    private LocalDate endsOn;
-
     private BigDecimal price;
-
+    private LocalDate startsOn;
+    private LocalDate endsOn;
     private Region region;
-
     private Boolean isActive;
-
     private Boolean isApproved;
-
     private String ownerPhoneNumber;
-
     private UserServiceModel user;
-
-    private OfferCategoryServiceModel  category;
+    private OfferCategoryServiceModel category;
 
     public OfferServiceModel() {
+    }
+
+    public BigDecimal getPrice() {
+        return price;
+    }
+
+    public void setPrice(BigDecimal price) {
+        this.price = price;
     }
 
     public String getName() {
@@ -72,14 +68,6 @@ public class OfferServiceModel extends BaseServiceModel {
 
     public void setEndsOn(LocalDate endsOn) {
         this.endsOn = endsOn;
-    }
-
-    public BigDecimal getPrice() {
-        return price;
-    }
-
-    public void setPrice(BigDecimal price) {
-        this.price = price;
     }
 
     public Region getRegion() {

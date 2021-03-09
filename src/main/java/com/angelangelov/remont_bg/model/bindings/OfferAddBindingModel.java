@@ -11,7 +11,7 @@ import javax.validation.constraints.Positive;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
-public class OfferAddBindingModel extends BaseBindingModel {
+public class OfferAddBindingModel{
 
     private String name;
     private MultipartFile image;
@@ -27,6 +27,7 @@ public class OfferAddBindingModel extends BaseBindingModel {
 
     public OfferAddBindingModel() {
     }
+
 
 
     @NotBlank(message = "Това поле е задължително!")
@@ -109,4 +110,5 @@ public class OfferAddBindingModel extends BaseBindingModel {
     public void setDescription(String description) {
         this.description = description;
     }
+
 }
