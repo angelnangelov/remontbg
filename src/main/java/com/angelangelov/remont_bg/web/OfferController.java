@@ -7,6 +7,7 @@ import com.angelangelov.remont_bg.model.entities.enums.ServiceOfferNames;
 import com.angelangelov.remont_bg.model.services.OfferCategoryServiceModel;
 import com.angelangelov.remont_bg.model.services.OfferServiceModel;
 import com.angelangelov.remont_bg.model.views.OfferCategoryViewModel;
+import com.angelangelov.remont_bg.model.views.OfferViewModel;
 import com.angelangelov.remont_bg.service.CloudinaryService;
 import com.angelangelov.remont_bg.service.OfferCategoryService;
 import com.angelangelov.remont_bg.service.OfferService;
@@ -60,6 +61,19 @@ public class OfferController {
         return "offers/all-offers";
     }
 
+    @GetMapping("/product/{id}")
+    private String productPage(@PathVariable String id,Model model) {
+        OfferServiceModel offerServiceModel = offerService.findById(id);
+        OfferViewModel offerViewModel = modelMapper.map(offerServiceModel, OfferViewModel.class);
+
+
+
+
+        model.addAttribute("offer",offerViewModel);
+
+        return "offers/offer-product-view";
+    }
+
 
     @GetMapping("/actions")
     private String chooseAction() {
@@ -102,10 +116,7 @@ public class OfferController {
 
 
     }
-    @GetMapping("/product")
-    private String productPage() {
-        return "offers/offer-product-view";
-    }
+
 
 
 

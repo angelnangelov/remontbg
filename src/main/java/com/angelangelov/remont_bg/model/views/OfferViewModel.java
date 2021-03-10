@@ -12,9 +12,20 @@ public class OfferViewModel {
     private String image;
     private BigDecimal price;
     private Region region;
+    private LocalDate endsOn;
     private String ownerPhoneNumber;
+    private OfferCategoryViewModel category;
 
     public OfferViewModel() {
+    }
+
+
+    public LocalDate getEndsOn() {
+        return endsOn;
+    }
+
+    public void setEndsOn(LocalDate endsOn) {
+        this.endsOn = endsOn;
     }
 
     public String getName() {
@@ -63,5 +74,13 @@ public class OfferViewModel {
 
     public void setOwnerPhoneNumber(String ownerPhoneNumber) {
         this.ownerPhoneNumber = ownerPhoneNumber;
+    }
+
+    public OfferCategoryViewModel getCategory() {
+        return category;
+    }
+
+    public void setCategory(OfferCategoryViewModel category) {
+        this.category = category;
     }
 }

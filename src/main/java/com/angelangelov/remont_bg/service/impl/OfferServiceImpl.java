@@ -1,8 +1,11 @@
 package com.angelangelov.remont_bg.service.impl;
 
+import com.angelangelov.remont_bg.error.category.CategoryWithIdNotExists;
 import com.angelangelov.remont_bg.model.entities.Offer;
+import com.angelangelov.remont_bg.model.entities.OfferCategory;
 import com.angelangelov.remont_bg.model.entities.User;
 import com.angelangelov.remont_bg.model.entities.enums.ServiceOfferNames;
+import com.angelangelov.remont_bg.model.services.OfferCategoryServiceModel;
 import com.angelangelov.remont_bg.model.services.OfferServiceModel;
 import com.angelangelov.remont_bg.repository.OfferRepository;
 import com.angelangelov.remont_bg.service.OfferCategoryService;
@@ -39,6 +42,14 @@ public class OfferServiceImpl implements OfferService {
 
     }
 
+    @Override
+    public OfferServiceModel findById(String id) {
+         Offer offer = offerRepository.findById(id)
+                .orElseThrow(() -> new CategoryWithIdNotExists(String.format("Offer with id: %s not found",id)));;
 
+        return modelMapper.map(offer, OfferServiceModel.class);
     }
+
+
+}
 

@@ -1,11 +1,12 @@
 package com.angelangelov.remont_bg.model.services;
 
 import com.angelangelov.remont_bg.model.entities.enums.Region;
+import com.fasterxml.jackson.databind.ser.Serializers;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
-public class OfferServiceModel {
+public class OfferServiceModel  extends BaseServiceModel {
     private String name;
     private String description;
     private String image;

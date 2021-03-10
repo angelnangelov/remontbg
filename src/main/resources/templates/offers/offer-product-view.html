@@ -10,14 +10,16 @@
     <th:block th:include="~{fragments/navbar}"/>
 
 </header>
+
 <div class="container">
 
-    <div class="card">
+    <div class="card-product">
         <div class="col-12 col-md-6">
-            <p><a href="subcategory?id=24" class="text-muted">КАТЕГОРИЯ</a>
+
+            <p><a  action="action" type="button" onclick="history.go(-1);" class="text-muted th:text">НАЗАД</a>
 
                 <img src="./assets/images/services/map-marker.svg" class="is-icon" alt="">
-                <strong class="after-icon is-place">ОБЛАСТ</strong>
+                <strong class="after-icon is-place" th:text="${offer.region}">ОБЛАСТ</strong>
 
             </p>
         </div>
@@ -26,17 +28,17 @@
                 <div class="preview col-md-6">
 
                     <div class="preview-pic tab-content">
-                        <div class="tab-pane active" id="pic-1"><img src="https://www.groovypost.com/wp-content/uploads/2011/05/13-Unpin-window-TurboTop.png" /></div>
+                        <div class="tab-pane active" id="pic-1"><img th:src="${offer.image}"  alt="alttext"/></div>
                     </div>
 
                 </div>
                 <div class="details col-md-6">
-                    <h3 class="product-title">Заглавие</h3>
-                    <p class="product-description">Suspendisse quos? Tempus cras iure temporibus? Eu laudantium cubilia sem sem! Repudiandae et! Massa senectus enim minim sociosqu delectus posuere.</p>
-                    <h6 class="price">Цена: <span>$180</span></h6>
-                    <h6 class="price">Активна до: <span>$180</span></h6>
+                    <h3 class="product-title"  th:text="${offer.name}">Заглавие</h3>
+                    <p class="product-description" th:text="${offer.description}">.</p>
+                    <h6 class="price">Цена:  <span th:text="${offer.price}">$180</span></h6>
+                    <h6 class="price" >Активна до: <span th:text="${offer.endsOn}">$180</span></h6>
 
-                    <p class="vote">Телефонен номер за връзка: <strong>08882012121</strong></p>
+                    <p class="vote">Телефонен номер за връзка: <strong  th:text="${offer.ownerPhoneNumber}">08882012121</strong></p>
                 </div>
             </div>
         </div>
