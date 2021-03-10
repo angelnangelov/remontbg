@@ -102,7 +102,10 @@ public class OfferController {
 
 
     }
-
+    @GetMapping("/product")
+    private String productPage() {
+        return "offers/offer-product-view";
+    }
 
 
 
