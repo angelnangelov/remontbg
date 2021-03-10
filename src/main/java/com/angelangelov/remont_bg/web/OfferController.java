@@ -1,9 +1,12 @@
 package com.angelangelov.remont_bg.web;
 
 import com.angelangelov.remont_bg.model.bindings.OfferAddBindingModel;
+import com.angelangelov.remont_bg.model.entities.Offer;
 import com.angelangelov.remont_bg.model.entities.enums.Region;
 import com.angelangelov.remont_bg.model.entities.enums.ServiceOfferNames;
+import com.angelangelov.remont_bg.model.services.OfferCategoryServiceModel;
 import com.angelangelov.remont_bg.model.services.OfferServiceModel;
+import com.angelangelov.remont_bg.model.views.OfferCategoryViewModel;
 import com.angelangelov.remont_bg.service.CloudinaryService;
 import com.angelangelov.remont_bg.service.OfferCategoryService;
 import com.angelangelov.remont_bg.service.OfferService;
@@ -12,15 +15,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 import java.io.IOException;
 import java.security.Principal;
+import java.util.List;
 
 import static com.angelangelov.remont_bg.web.constants.ControllersConstants.N0_IMG_URL;
 
@@ -47,6 +48,18 @@ public class OfferController {
         model.addAttribute("allCategories", this.offerCategoryService.getAllCategories());
         return "offers/all-offer-categories";
     }
+
+    @GetMapping("/category/{id}")
+    public String offersInCategory(@PathVariable String id,Model model){
+        OfferCategoryServiceModel offerCategoryServiceModel = offerCategoryService.findById(id);
+        OfferCategoryViewModel offerByCategory = modelMapper.map(offerCategoryServiceModel, OfferCategoryViewModel.class);
+        List<Offer> offers = offerByCategory.getOffers();
+        System.out.println();
+        model.addAttribute("offerName",offerByCategory.getName());
+        model.addAttribute("offers",offers);
+        return "offers/all-offers";
+    }
+
 
     @GetMapping("/actions")
     private String chooseAction() {
@@ -91,9 +104,6 @@ public class OfferController {
     }
 
 
-    @GetMapping("/all")
-    private String allOffers() {
-        return "offers/all-offers";
-    }
+
 
 }

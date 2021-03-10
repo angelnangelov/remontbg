@@ -295,7 +295,6 @@ h4   {
     color: red;
 }
 /* HOME PAGE
-
  */
 
 
@@ -489,7 +488,6 @@ h4   {
 /*    padding-top: 5% !important;*/
 /*}*/
 
-@import url(http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css);
 .col-item
 {
     border: 1px solid #E1E1E1;
@@ -517,6 +515,8 @@ h4   {
     width: 100%;
     padding: 1px;
     border-radius: 10px 10px 0 0 ;
+    height: 203px;
+
 }
 
 .col-item .info
@@ -529,7 +529,7 @@ h4   {
 .col-item .price
 {
     /*width: 50%;*/
-    float: left;
+    position:center;
     margin-top: 5px;
 }
 
@@ -614,7 +614,7 @@ Hover the image
 */
 .post-img-content
 {
-    height: 196px;
+    height: 256px;
     position: relative;
 }
 .post-img-content img
@@ -642,4 +642,3 @@ Hover the image
 .post-title b:first-child{
     font-size: 14px;
 }
-

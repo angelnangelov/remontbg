@@ -1,23 +1,27 @@
 package com.angelangelov.remont_bg.web;
 
 import com.angelangelov.remont_bg.model.bindings.ToolOfferAddBindingModel;
+import com.angelangelov.remont_bg.model.entities.Offer;
+import com.angelangelov.remont_bg.model.entities.ToolOffer;
 import com.angelangelov.remont_bg.model.entities.enums.Region;
 import com.angelangelov.remont_bg.model.entities.enums.ToolsCategoryName;
+import com.angelangelov.remont_bg.model.services.OfferCategoryServiceModel;
+import com.angelangelov.remont_bg.model.services.ToolCategoryServiceModel;
 import com.angelangelov.remont_bg.model.services.ToolOfferServiceModel;
+import com.angelangelov.remont_bg.model.views.OfferCategoryViewModel;
+import com.angelangelov.remont_bg.model.views.ToolsCategoryViewModel;
 import com.angelangelov.remont_bg.service.*;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import static com.angelangelov.remont_bg.web.constants.ControllersConstants.N0_IMG_URL;
 import javax.validation.Valid;
 import java.io.IOException;
 import java.security.Principal;
+import java.util.List;
 
 @Controller
 @RequestMapping("/tool")
@@ -85,5 +89,17 @@ public class ToolController {
         return "redirect:all";
 
 
+    }
+
+
+    @GetMapping("/category/{id}")
+    public String offersInCategory(@PathVariable String id, Model model){
+        ToolCategoryServiceModel toolCategoryServiceModel = toolCategoryService.findById(id);
+        ToolsCategoryViewModel toolsCategoryViewModel = modelMapper.map(toolCategoryServiceModel, ToolsCategoryViewModel.class);
+        List<ToolOffer> tools = toolsCategoryViewModel.getTools();
+        System.out.println();
+        model.addAttribute("toolName",toolCategoryServiceModel.getName());
+        model.addAttribute("tools",tools);
+        return "tools/all-tools";
     }
 }

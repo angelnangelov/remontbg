@@ -10,16 +10,16 @@
     <th:block th:include="~{fragments/navbar}"/>
 
 </header>
-<div th:if="${#lists.isEmpty(offers)}">
+<div th:if="${#lists.isEmpty(tools)}">
     <div class="row mx-auto" style="padding-top: 10%">
-        <h1 class="font-weight-bold col-md-12 text-center" th:text="|Няма публикувани обяви в категория *{offerName} |">Няма публикувани обяви в категорията</h1>
+        <h1 class="font-weight-bold col-md-12 text-center" th:text="|Няма публикувани обяви в категория *{toolName} |">Няма публикувани обяви в категорията</h1>
 
     </div>
 </div>
 
-<div th:if="${!#lists.isEmpty(offers)}">
+<div th:if="${!#lists.isEmpty(tools)}">
     <div class="row mx-auto">
-        <h4 class="font-weight-bold col-md-12"  th:text="|Разглеждате категория: *{offerName}|">Ime</h4>
+        <h4 class="font-weight-bold col-md-12"  th:text="|Разглеждате категория: *{toolName}|">Ime</h4>
     </div>
 </div>
 
@@ -27,7 +27,7 @@
     <form  action="/offer/category/" th:method="get">
     <div class="row" >
 
-        <div class="col-xs-12 col-sm-6 col-md-3" th:each="offer : ${offers}" th:object="${offer}">
+        <div class="col-xs-12 col-sm-6 col-md-3" th:each="tool : ${tools}" th:object="${tool}">
 
             <div class="col-item">
                 <p class="font-weight-bolder font-italic text-sm-center" th:text="*{name}"> Sample Product</p>
@@ -38,8 +38,10 @@
                 <div class="info">
                     <div class="row">
                         <div class="price col-md-5">
-                            <h5   th:text="${offer.region}">Plovdiv</h5>
-                            <p class="separator text-danger text-sm-center"  th:text="|Цена:*{price}лв.|">$199.99</p>
+                            <h5   th:text="${tool.region}">Plovdiv</h5>
+                            <p class="separator text-danger text-sm-center"  th:text="|Цена:*{price}|">$199.99</p>
+                            <p class="separator  text-sm-center"  th:text="|Депозит:*{deposit}|">$199.99</p>
+
                         </div>
                         <div class="rating hidden-sm col-md-5">
                         </div>

@@ -2,9 +2,11 @@ package com.angelangelov.remont_bg.repository;
 
 import com.angelangelov.remont_bg.model.entities.OfferCategory;
 import com.angelangelov.remont_bg.model.entities.enums.ServiceOfferNames;
-import com.angelangelov.remont_bg.model.services.OfferCategoryServiceModel;
 import org.springframework.data.jpa.repository.JpaRepository;
+
+import java.util.Optional;
 
 public interface OfferCategoryRepository extends JpaRepository<OfferCategory,String> {
     OfferCategory findByName(ServiceOfferNames name);
+
 }

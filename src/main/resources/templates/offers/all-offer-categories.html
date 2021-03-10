@@ -25,13 +25,12 @@
             <div class="col-sm-12 col-md-6 col-xl-3 col-lg-4 pb-3" th:each="category : ${allCategories}" th:object="${category}">
                 <div class="cardwork sub-card without-image">
                     <div class="service-card">
-                        <a href="subcategory?id=29"><h2 style="font-size:20px;" th:text="${category.name}">Бояджия</h2></a>
+                        <a th:href="@{/offer/category/{id}(id=${category.id})}" ><h2 style="font-size:20px;" th:text="${category.name}">Бояджия</h2></a>
                         <div class="row mt-5">
                             <div class="col-sm-8">
                                 <p class="light" th:text="|Брой обяви: ${category.getOffers().size()}|"> 17</p>
                             </div>
                             <div class="col-sm-4">
-                                <a href="subcategory?id=29" class="sub-card-btn"></a>
                             </div>
                         </div>
                     </div>

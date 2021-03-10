@@ -11,5 +11,6 @@ public interface OfferCategoryService {
     void initCategories();
     List<OfferCategoryViewModel> getAllCategories();
     OfferCategory findByName(ServiceOfferNames name);
+    OfferCategoryServiceModel findById(String id);
 
 }

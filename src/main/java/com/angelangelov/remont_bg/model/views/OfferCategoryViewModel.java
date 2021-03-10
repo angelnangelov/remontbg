@@ -9,12 +9,21 @@ import javax.persistence.FetchType;
 import java.util.List;
 
 public class OfferCategoryViewModel {
+    private  String id;
     private ServiceOfferNames name;
     private String description;
 
     private List<Offer> offers;
 
     public OfferCategoryViewModel() {
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public ServiceOfferNames getName() {

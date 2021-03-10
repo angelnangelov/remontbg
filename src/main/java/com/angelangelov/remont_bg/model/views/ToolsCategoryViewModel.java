@@ -8,11 +8,20 @@ import com.angelangelov.remont_bg.model.entities.enums.ToolsCategoryName;
 import java.util.List;
 
 public class ToolsCategoryViewModel {
+    private String id;
     private ToolsCategoryName name;
     private String description;
 
     private List<ToolOffer> tools;
     public ToolsCategoryViewModel() {
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public ToolsCategoryName getName() {
