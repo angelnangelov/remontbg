@@ -1,6 +1,7 @@
 package com.angelangelov.remont_bg.service.impl;
 
 import com.angelangelov.remont_bg.model.entities.ToolCategory;
+import com.angelangelov.remont_bg.model.entities.enums.ServiceOfferNames;
 import com.angelangelov.remont_bg.model.entities.enums.ToolsCategoryName;
 import com.angelangelov.remont_bg.model.views.OfferCategoryViewModel;
 import com.angelangelov.remont_bg.model.views.ToolsCategoryViewModel;
@@ -44,5 +45,11 @@ public class ToolCategoryServiceImpl implements ToolCategoryService {
                     return toolsCategoryViewModel;
                 }
         ).collect(Collectors.toList());
+    }
+
+    @Override
+    public ToolCategory findByName(ToolsCategoryName name) {
+        return this.toolCategoryRepository.findByName(name);
+
     }
 }

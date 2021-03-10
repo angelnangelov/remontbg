@@ -5,64 +5,76 @@
 <header>
     <th:block th:include="~{fragments/navbar}"></th:block>
 </header>
-<main class="p-5 bg-blur text-center my-main add-view-container">
+<main class="p-5 bg-blur text-center my-main  add-view-container">
     <h1 class="text-dark border-bottom">Добави инструмент</h1>
+
     <div class="d-flex justify-content-center">
-        <form class="text-dark">
+        <form  th:object="${toolOfferAddBindingModel}" th:action="@{/tool/add}" th:method="post"  enctype="multipart/form-data"
+               class="text-dark">
             <div class="form-row m-5">
                 <div class="col">
                     <label for="name">Заглавие на обявата</label>
-                    <input   name="name" id="name" type="text" class="form-control" placeholder="Загалвие">
-                    <small id="nameError" class="form-text bg-danger rounded">Name must be between 3 and 20
-                        characters</small>
+                    <input th:field="*{name}" th:errorclass="bg-danger"  name="name" id="name" type="text" class="form-control" placeholder="Заглавие">
+                    <small th:if="${#fields.hasErrors('name')}" th:errors="*{name}" id="nameError" class="form-text bg-danger rounded">Името трябва да бъде м/у 3 и 20 символа</small>
                 </div>
                 <div class="col">
-                <div class="form-group">
-                    <label for="add-product-image">Снимка на офертата</label>
-                    <input type="file" class="form-control-file" id="add-product-image" name="image">
+                    <div class="form-group">
+                        <label for="image" class="font-weight-bold">Снимка на офертата</label>
+                        <input type="file" class="form-control-file" id="image" name="image">
+                    </div>
                 </div>
-            </div>
             </div>
             <div class="form-row m-5">
                 <div class="col">
-                    <label for="price">Цена на ден</label>
-                    <input  name="price" id="price" type="number" class="form-control" placeholder="Цена">
-                    <small   id="priceError" class="form-text bg-danger rounded">Price must be positive</small>
+                    <label for="price">Цена</label>
+                    <input th:field="*{price}" th:errorclass="bg-danger"  name="price" id="price" type="number" class="form-control" placeholder="Цена">
+                    <small th:if="${#fields.hasErrors('price')}" th:errors="*{price}"  id="priceError" class="form-text bg-danger rounded">Цената  не може да бъде отрицателно число</small>
                 </div>
                 <div class="col">
-                    <label for="toolCategory">Категория</label>
-                    <select    name="toolCategory" id="toolCategory" class="custom-select">
-                        <option  selected>Изберете категория</option>
+                    <label for="region">Категория</label>
+                    <select   th:field="*{category}" th:errorclass="bg-danger"  name="category" id="category" class="custom-select">
+                        <option  th:each="c : ${categories}" th:value="${c}" th:text="${c}"  selected>Изберете категория</option>
                     </select>
-                    <small  id="categoryError" class="form-text bg-danger rounded">You must select artist</small>
+                    <small th:if="${#fields.hasErrors('category')}" th:errors="*{category}"   id="categoryError" class="form-text bg-danger rounded">Това поле е задължително</small>
                 </div>
             </div>
             <div class="form-row m-5">
                 <div class="col">
-                    <label for="startsOn">Свободен от</label>
-                    <input name="startsOn" id="startsOn" type="date" class="form-control" placeholder="От">
-                    <small  id="startsOnError" class="form-text bg-danger rounded">Release date cannot be in the
-                        future</small>
+                    <label for="deposit">Депозит</label>
+                    <input th:field="*{deposit}" th:errorclass="bg-danger"  name="deposit" id="deposit" type="number" class="form-control" placeholder="Депозит">
+                    <small th:if="${#fields.hasErrors('deposit')}" th:errors="*{deposit}"  id="depositEror" class="form-text bg-danger rounded">Депозитът  не може да бъде отрицателно число</small>
+                </div>
+                <div class="col">
+                    <label for="power">Мощност</label>
+                    <input th:field="*{power}" th:errorclass="bg-danger"  name="power" id="power" type="text" class="form-control" placeholder="Мощност">
+                    <small th:if="${#fields.hasErrors('power')}" th:errors="*{power}" id="powerError" class="form-text bg-danger rounded">ГРЕШКА </small>
+<!--                    TODO: ADD ERROR-->
+                </div>
+            </div>
+            <div class="form-row m-5">
+                <div class="col">
+                    <label for="startsOn">От</label>
+                    <input th:field="*{startsOn}" th:errorclass="bg-danger"  name="startsOn" id="startsOn" type="date" class="form-control" placeholder="Oт">
+                    <small th:if="${#fields.hasErrors('startsOn')}" th:errors="*{startsOn}"  id="releaseDateError" class="form-text bg-danger rounded">Датата не може да бъде в миналото</small>
                 </div>
                 <div class="col">
                     <label for="endsOn">До</label>
-                    <input name="endsOn" id="endsOn" type="date" class="form-control" placeholder="До">
-                    <small  id="endsOnError" class="form-text bg-danger rounded">Release date cannot be in the
-                        future</small>
+                    <input   th:field="*{endsOn}" th:errorclass="bg-danger"  name="endsOn" id="endsOn" type="date" class="form-control" placeholder="До">
+                    <small  th:if="${#fields.hasErrors('endsOn')}" th:errors="*{endsOn}"  id="endsOnError" class="form-text bg-danger rounded">Датата не може да бъде в миналото</small>
                 </div>
             </div>
             <div class="form-row m-5">
                 <div class="col">
                     <label for="region">Регион</label>
-                    <select    name="region" id="region" class="custom-select">
-                        <option  selected>Изберете регион</option>
+                    <select    th:field="*{region}" th:errorclass="bg-danger"  name="region" id="region" class="custom-select">
+                        <option th:each="r : ${regions}" th:value="${r}" th:text="${r}" selected>Изберете регион</option>
                     </select>
-                    <small  id="regionError" class="form-text bg-danger rounded">You must select artist</small>
+                    <small  th:if="${#fields.hasErrors('region')}" th:errors="*{region}"   id="regionError" class="form-text bg-danger rounded">Това поле е задължително</small>
                 </div>
                 <div class="col">
-                    <label for="phoneNumber">Телефонен номер</label>
-                    <input  name="phoneNumber" id="phoneNumber" type="text" class="form-control" placeholder="Телефонен номер">
-                    <small id="phoneNumberError" class="form-text bg-danger rounded">Image url must be more than 5
+                    <label for="ownerPhoneNumber">Телефонен номер</label>
+                    <input    th:field="*{ownerPhoneNumber}" th:errorclass="bg-danger"  name="ownerPhoneNumber" id="ownerPhoneNumber" type="text" class="form-control" placeholder="Телефонен номер">
+                    <small th:if="${#fields.hasErrors('ownerPhoneNumber')}" th:errors="*{ownerPhoneNumber}" id="ownerPhoneNumberError" class="form-text bg-danger rounded">Това поле е задължително
                         characters</small>
                 </div>
             </div>
@@ -70,22 +82,17 @@
             <div class="form-row m-5">
                 <div class="col">
                     <label for="description">Описание</label>
-                    <textarea    name="description" id="description" type="text" class="form-control" placeholder="Описание"></textarea>
-                    <small  id="descriptionError" class="form-text bg-danger rounded">Description length must be more than 5 characters</small>
+                    <textarea th:field="*{description}" th:errorclass="bg-danger"   name="description" id="description" type="text" class="form-control" placeholder="Описание"></textarea>
+                    <small th:if="${#fields.hasErrors('description')}" th:errors="*{description}"  id="descriptionError" class="form-text bg-danger rounded">Описанието трябва да бъде минимум 5 символа</small>
                 </div>
             </div>
             <div class="d-flex justify-content-center mt-4">
-                <button class="btn btn-primary btn-block w-50 profile-button" type="submit">Добави обява</button>
+                <button class="btn btn-primary btn-block w-50 profile-button" type="submit">Добави инструмент</button>
             </div>
         </form>
     </div>
 </main>
-<footer class="footer bg-blur">
-    <div class="container-fluid text-center">
-        <div class="h5 text-white">
-            &copy;SoftUni Spring Team 2021. All rights reserved.
-        </div>
-    </div>
-</footer>
+<th:block th:include="~{fragments/footer}"/>
+
 </body>
 </html>

@@ -10,6 +10,8 @@ import java.math.BigDecimal;
 @Table(name = "tools")
 public class ToolOffer extends BaseOffer {
     private BigDecimal price;
+    private String power;
+    private BigDecimal deposit;
 
     private ToolCategory toolCategory;
 
@@ -32,5 +34,23 @@ public class ToolOffer extends BaseOffer {
 
     public void setPrice(BigDecimal price) {
         this.price = price;
+    }
+
+    @Column
+    public String getPower() {
+        return power;
+    }
+
+    public void setPower(String power) {
+        this.power = power;
+    }
+
+    @Column(nullable = false)
+    public BigDecimal getDeposit() {
+        return deposit;
+    }
+
+    public void setDeposit(BigDecimal deposit) {
+        this.deposit = deposit;
     }
 }

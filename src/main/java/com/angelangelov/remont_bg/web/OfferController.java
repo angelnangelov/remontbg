@@ -21,21 +21,26 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.validation.Valid;
 import java.io.IOException;
 import java.security.Principal;
+
+import static com.angelangelov.remont_bg.web.constants.ControllersConstants.N0_IMG_URL;
+
 @Controller
 @RequestMapping("/offer")
 public class OfferController {
-    private static final String N0_IMG_URL = "https://res.cloudinary.com/dtns2qohp/image/upload/v1615288082/depositphotos_318221368-stock-illustration-missing-picture-page-for-website_hppqti.jpg";
-private final OfferService offerService;
-private final ModelMapper modelMapper;
-private final CloudinaryService cloudinaryService;
-private final OfferCategoryService offerCategoryService;
-@Autowired
+
+
+    private final OfferService offerService;
+    private final ModelMapper modelMapper;
+    private final CloudinaryService cloudinaryService;
+    private final OfferCategoryService offerCategoryService;
+
+    @Autowired
     public OfferController(OfferService offerService, ModelMapper modelMapper, CloudinaryService cloudinaryService, OfferCategoryService offerCategoryService) {
         this.offerService = offerService;
         this.modelMapper = modelMapper;
         this.cloudinaryService = cloudinaryService;
-    this.offerCategoryService = offerCategoryService;
-}
+        this.offerCategoryService = offerCategoryService;
+    }
 
     @GetMapping("/categories")
     private String allOffers(Model model) {
@@ -75,7 +80,7 @@ private final OfferCategoryService offerCategoryService;
         OfferServiceModel offerServiceModel = modelMapper.map(offerAddBindingModel, OfferServiceModel.class);
         if (offerAddBindingModel.getImage().isEmpty()) {
             offerServiceModel.setImage(N0_IMG_URL);
-        }else {
+        } else {
             offerServiceModel.setImage(cloudinaryService.uploadImg(offerAddBindingModel.getImage()));
         }
         offerService.save(offerServiceModel, username);
