@@ -112,7 +112,7 @@ public class OfferController {
         }
         offerService.save(offerServiceModel, username);
 
-        return "redirect:all";
+        return "redirect:categories";
 
 
     }

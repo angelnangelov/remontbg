@@ -30,7 +30,7 @@
         <div class="col-xs-12 col-sm-6 col-md-3" th:each="offer : ${offers}" th:object="${offer}">
 
             <div class="col-item">
-                <p class="font-weight-bolder font-italic text-sm-center" th:text="*{name}"> Sample Product</p>
+                <p class="font-weight-bolder text-sm-center" th:text="*{name}"> Sample Product</p>
 
                 <div class="photo">
                     <img th:src="*{image}" class="img-responsive" alt="a" />
