@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <th:block th:include="~{fragments/head}"/>
+</head>
+<body>
+<header>
+    <th:block th:include="~{fragments/navbar}"/>
+</header>
+<div class="container">
+<section class="container mt-5">
+    <!--Contact heading-->
+    <div class="row">
+        <!--Grid column-->
+        <div class="col-sm-12 mb-4 col-md-5">
+            <!--Form with header-->
+            <!--Form with header-->
+            <div class="card  rounded-0" style=" border: 1px solid #932432;">
+                <div class="card-header p-0">
+                    <div class=" text-white text-center py-2" style="background-color: #932432">
+                        <h3><i class="fa fa-envelope"></i> Write to us:</h3>
+                        <p class="m-0">We’ll write rarely, but only the best content.</p>
+                    </div>
+                </div>
+                <div class="card-body p-3">
+
+                    <div class="form-group">
+                        <label>Subject</label>
+                        <div class="input-group mb-2 mb-sm-0">
+                            <input type="text" name="data[subject]" class="form-control" id="inlineFormInputGroupUsername" placeholder="Subject">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Message</label>
+                        <div class="input-group mb-2 mb-sm-0">
+                            <textarea type="text" class="form-control" name="mesg"> </textarea>
+                        </div>
+                    </div>
+                    <div class="text-center">
+                        <input type="submit" name="submit" value="Изпрати" class="btn  btn-block rounded-0  text-white" style="background-color: #932432 !important;" >
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+        <!--Grid column-->
+
+        <!--Grid column-->
+        <div class="col-sm-12 col-md-7">
+            <!--Google map-->
+            <div class="mb-4">
+                <iframe width="100%" height="600" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.com/maps?width=100%25&amp;height=600&amp;hl=en&amp;q=Asenovgrad,sredna%20gora+(%D0%A0%D0%B5%D0%BC%D0%BE%D0%BD%D1%82.%D0%B1%D0%B3)&amp;t=p&amp;z=14&amp;ie=UTF8&amp;iwloc=B&amp;output=embed"></iframe>
+            </div>
+
+        <!--Grid column-->
+    </div>
+</section>
+</div>
+<th:block th:include="~{fragments/footer}"/>
+
+</body>
+</html>

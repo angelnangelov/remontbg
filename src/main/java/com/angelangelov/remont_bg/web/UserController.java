@@ -152,5 +152,10 @@ public class UserController {
 
             }
 
+            @GetMapping("/issue")
+    public String issue(){
+        return "issue-page";
+            }
+
 
 }
