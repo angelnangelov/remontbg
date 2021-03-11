@@ -4,6 +4,7 @@ import com.angelangelov.remont_bg.error.category.CategoryWithIdNotExists;
 import com.angelangelov.remont_bg.model.entities.Offer;
 import com.angelangelov.remont_bg.model.entities.OfferCategory;
 import com.angelangelov.remont_bg.model.entities.ToolCategory;
+import com.angelangelov.remont_bg.model.entities.ToolOffer;
 import com.angelangelov.remont_bg.model.entities.enums.ServiceOfferNames;
 import com.angelangelov.remont_bg.model.entities.enums.ToolsCategoryName;
 import com.angelangelov.remont_bg.model.services.OfferCategoryServiceModel;
@@ -45,8 +46,8 @@ public class ToolCategoryServiceImpl implements ToolCategoryService {
         return this.toolCategoryRepository.findAll().stream().map(
                 a ->{
                     ToolsCategoryViewModel toolsCategoryViewModel = this.modelMapper.map(a, ToolsCategoryViewModel.class);
-
-                    toolsCategoryViewModel.setTools(a.getTools());
+                    List<ToolOffer> approvedTools = a.getTools().stream().filter(t -> t.getApproved()).collect(Collectors.toList());
+                    toolsCategoryViewModel.setTools(approvedTools);
                     return toolsCategoryViewModel;
                 }
         ).collect(Collectors.toList());

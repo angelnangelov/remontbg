@@ -43,9 +43,12 @@ public class OfferCategoryServiceImpl implements OfferCategoryService {
     @Override
     public List<OfferCategoryViewModel> getAllCategories() {
         return this.offerCategoryRepository.findAll().stream().map(
+
                 a ->{
                     OfferCategoryViewModel offerCategoryServiceModel = this.modelMapper.map(a, OfferCategoryViewModel.class);
-                    offerCategoryServiceModel.setOffers(a.getOffers());
+                    List<Offer> approvedOffers = offerCategoryServiceModel.getOffers().stream().filter(o -> o.getApproved()).collect(Collectors.toList());
+
+                    offerCategoryServiceModel.setOffers(approvedOffers);
                     return offerCategoryServiceModel;
                 }
         ).collect(Collectors.toList());

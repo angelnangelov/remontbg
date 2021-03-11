@@ -23,6 +23,7 @@ import javax.validation.Valid;
 import java.io.IOException;
 import java.security.Principal;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static com.angelangelov.remont_bg.web.constants.ControllersConstants.N0_IMG_URL;
 
@@ -54,10 +55,11 @@ public class OfferController {
     public String offersInCategory(@PathVariable String id,Model model){
         OfferCategoryServiceModel offerCategoryServiceModel = offerCategoryService.findById(id);
         OfferCategoryViewModel offerByCategory = modelMapper.map(offerCategoryServiceModel, OfferCategoryViewModel.class);
-        List<Offer> offers = offerByCategory.getOffers();
+        List<Offer> approvedOffers = offerByCategory.getOffers().stream().filter(o -> o.getApproved()).collect(Collectors.toList());
+        
         System.out.println();
         model.addAttribute("offerName",offerByCategory.getName());
-        model.addAttribute("offers",offers);
+        model.addAttribute("offers",approvedOffers);
         return "offers/all-offers";
     }
 
