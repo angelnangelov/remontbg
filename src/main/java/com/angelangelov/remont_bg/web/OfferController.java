@@ -63,16 +63,11 @@ public class OfferController {
         return "offers/all-offers";
     }
 
-    @GetMapping("/product/{id}")
+    @GetMapping("/single-offer/{id}")
     private String productPage(@PathVariable String id,Model model) {
         OfferServiceModel offerServiceModel = offerService.findById(id);
         OfferViewModel offerViewModel = modelMapper.map(offerServiceModel, OfferViewModel.class);
-
-
-
-
         model.addAttribute("offer",offerViewModel);
-
         return "offers/offer-product-view";
     }
 
@@ -114,7 +109,7 @@ public class OfferController {
         }
         offerService.save(offerServiceModel, username);
 
-        return "redirect:categories";
+        return "success-add-page";
 
 
     }

@@ -8,7 +8,10 @@ import com.angelangelov.remont_bg.model.entities.enums.ToolsCategoryName;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface ToolOfferRepository extends JpaRepository<ToolOffer,String> {
 
+    List<ToolOffer> findAllByApprovedFalse();
 }

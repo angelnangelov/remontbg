@@ -10,7 +10,6 @@ import java.util.Optional;
 
 public interface OfferCategoryRepository extends JpaRepository<OfferCategory,String> {
     OfferCategory findByName(ServiceOfferNames name);
-    //TODO : FIND ALL WHERE OFFER APPROVED IS TRUE;
-//    List<OfferCategory>  findAllByOfferIsApprovedTrue();
+
 
 }

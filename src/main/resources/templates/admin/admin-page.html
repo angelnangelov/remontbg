@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <th:block th:include="~{fragments/head}"/>
+</head>
+<body>
+<header>
+    <th:block th:include="~{fragments/navbar}"/>
+
+</header>
+<div class="container offer-card-view-container">
+    <h1 class="text-dark border-bottom">АДМИН ПАНЕЛ</h1>
+
+    <div class="row">
+
+        <div class="container ">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="card mb">
+                        <img class="card-img-top" src="/img/admin-tools.jpg" alt="Виж инструментите">
+                        <div class="card-body mb">
+                            <h5 class="card-title">ОБЯВИ ЗА НЕУДОБРЕНИ ИНСТРУМЕНТИ</h5>
+                            <a class="btn btn-primary profile-button" href="/admin/tools" role="button">КЛИКНИ </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card mb">
+                        <img class="card-img-top" src="/img/admin-offers.jpg" alt="Добави инструмент">
+                        <div class="card-body mb">
+                            <h5 class="card-title">ОБЯВИ ЗА НЕУДОБРЕНИ ОФЕРТИ</h5>
+                            <a class="btn btn-primary profile-button" href="/admin/offers" role="button">КЛИКНИ</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card mb">
+                        <img class="card-img-top" src="/img/admin-users.jpg" alt="Инструменти">
+                        <div class="card-body mb">
+                            <h5 class="card-title">КОНТРОЛ ПАНЕЛ ПОТРЕБИТЕЛИ</h5>
+                            <a class="btn btn-primary profile-button" href="/admin/users" role="button">КЛИКНИ</a>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<th:block th:include="~{fragments/footer}"/>
+</body>
+
+</html>
+
+
+
+<!--<div class="card mr-3" style="width: 10%">-->
+<!--    <img src="/img/add.png" class="img-box" alt="...">-->
+<!--    <div class="card-body">-->
+<!--        <h5 class="card-title">Card title</h5>-->
+<!--        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>-->
+<!--        <a href="#" class="btn btn-primary">Go somewhere</a>-->
+<!--    </div>-->
+<!--</div>-->

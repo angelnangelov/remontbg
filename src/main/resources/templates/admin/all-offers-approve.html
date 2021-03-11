@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+  <th:block th:include="~{fragments/head}"/>
+</head>
+<body>
+<header>
+  <th:block th:include="~{fragments/navbar}"/>
+
+</header>
+<div th:if="${#lists.isEmpty(unapprovedOffers)}">
+  <div class="row mx-auto" style="padding-top: 10%">
+    <h1 class="font-weight-bold col-md-12 text-center">Всички оферти са удобрени!</h1>
+
+  </div>
+</div>
+
+<div class="container" style="margin-top:50px;">
+  <form  action="/offer/category/" th:method="get">
+    <div class="row" >
+
+      <div class="col-xs-12 col-sm-6 col-md-3" style="padding-top: 4%;"  th:each="offer : ${unapprovedOffers}" th:object="${offer}">
+
+        <div class="col-item">
+          <p class="font-weight-bolder text-sm-center" th:text="|Категория: *{category}|"> Sample Product</p>
+
+          <p class="font-weight-bolder text-sm-center" th:text="|Заглавие: *{name}|"> Sample Product</p>
+          <p class="font-weight-bolder text-sm-center" th:text="|Описание: *{description}|"> Sample Product</p>
+          <p class="font-weight-bolder text-sm-center"  th:text="|Цена:*{price}лв.|"> Sample Product</p>
+          <p class="font-weight-bolder text-sm-center" th:text="|тел: *{ownerPhoneNumber}|"> Sample Product</p>
+          <div class="photo">
+            <img th:src="*{image}" class="img-responsive" alt="a" />
+          </div>
+
+
+            <div class="separator">
+              <a th:href="@{/admin/offers/deleteOffer/(id=${offer.id})}" type="submit" class="btn btn-sm  btn-danger">Изтрий</a>
+              <a th:href="@{/admin/offers/approveOffer/(id=${offer.id})}" type="button" class="btn btn-sm  btn-success">Удобри</a>
+            </div>
+            <div class="clearfix">
+            </div>
+          </div>
+        </div>
+      </div>
+  </form>
+</div>
+<th:block th:include="~{fragments/footer}"/>
+</body>
+</html>

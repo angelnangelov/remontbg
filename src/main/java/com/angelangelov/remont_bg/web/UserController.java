@@ -83,48 +83,6 @@ public class UserController {
     }
 
 
-    @GetMapping("/admin")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public String adminPanel(Model model, Principal principal) {
-        List<UserServiceModel> allUsers = userService.findAllUsers();
-        allUsers.removeIf(user -> user.getUsername().equals(principal.getName()));
-        List<UserViewModel> users = allUsers.stream().map(u -> {
-            UserViewModel user = this.modelMapper.map(u, UserViewModel.class);
-            user.setAuthorities(u.getAuthorities().stream()
-                    .map(a -> a.getAuthority().substring(5)).collect(Collectors.toSet()));
-            user.setId(u.getId());
-            return user;
-        }).collect(Collectors.toList());
-
-        model.addAttribute("users", users);
-        return "admin";
-    }
-
-    @PostMapping("/set-user/{id}")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public String setUser(@PathVariable String id) {
-
-        this.userService.setUserRole(id, "user");
-        return "redirect:/user/admin";
-
-
-    }
-
-    @PostMapping("/set-moderator/{id}")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public String setModerator(@PathVariable String id) {
-        userService.setUserRole(id, "moderator");
-        return "redirect:/user/admin";
-
-    }
-
-    @PostMapping("/set-admin/{id}")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public String setAdmin(@PathVariable String id) {
-        this.userService.setUserRole(id, "admin");
-        return "redirect:/user/admin";
-
-    }
 
     @GetMapping("/profile")
     @PreAuthorize("isAuthenticated()")

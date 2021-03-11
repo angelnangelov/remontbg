@@ -5,7 +5,7 @@ import com.angelangelov.remont_bg.model.entities.enums.Region;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
-public class ToolOfferServiceModel {
+public class ToolOfferServiceModel extends BaseServiceModel {
     private String name;
     private String description;
     private String image;

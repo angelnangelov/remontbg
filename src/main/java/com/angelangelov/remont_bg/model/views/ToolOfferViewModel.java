@@ -1,11 +1,14 @@
 package com.angelangelov.remont_bg.model.views;
 
 import com.angelangelov.remont_bg.model.entities.enums.Region;
+import com.angelangelov.remont_bg.model.services.UserServiceModel;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 
 public class ToolOfferViewModel {
 
+    private String id;
     private String name;
     private String description;
     private String image;
@@ -13,13 +16,33 @@ public class ToolOfferViewModel {
     private Region region;
     private String ownerPhoneNumber;
     private BigDecimal deposit;
+    private LocalDate endsOn;
+
+    private String power;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public String getName() {
         return name;
     }
 
+
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getPower() {
+        return power;
+    }
+
+    public void setPower(String power) {
+        this.power = power;
     }
 
     public String getDescription() {
@@ -68,5 +91,13 @@ public class ToolOfferViewModel {
 
     public void setDeposit(BigDecimal deposit) {
         this.deposit = deposit;
+    }
+
+    public LocalDate getEndsOn() {
+        return endsOn;
+    }
+
+    public void setEndsOn(LocalDate endsOn) {
+        this.endsOn = endsOn;
     }
 }

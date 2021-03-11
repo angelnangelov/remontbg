@@ -6,9 +6,12 @@ import com.angelangelov.remont_bg.model.entities.ToolOffer;
 import com.angelangelov.remont_bg.model.entities.enums.Region;
 import com.angelangelov.remont_bg.model.entities.enums.ToolsCategoryName;
 import com.angelangelov.remont_bg.model.services.OfferCategoryServiceModel;
+import com.angelangelov.remont_bg.model.services.OfferServiceModel;
 import com.angelangelov.remont_bg.model.services.ToolCategoryServiceModel;
 import com.angelangelov.remont_bg.model.services.ToolOfferServiceModel;
 import com.angelangelov.remont_bg.model.views.OfferCategoryViewModel;
+import com.angelangelov.remont_bg.model.views.OfferViewModel;
+import com.angelangelov.remont_bg.model.views.ToolOfferViewModel;
 import com.angelangelov.remont_bg.model.views.ToolsCategoryViewModel;
 import com.angelangelov.remont_bg.service.*;
 import org.modelmapper.ModelMapper;
@@ -87,7 +90,7 @@ public class ToolController {
         }
         toolOfferService.save(toolOfferServiceModel, username);
 
-        return "redirect:all";
+        return "success-add-page";
 
 
     }
@@ -103,4 +106,14 @@ public class ToolController {
         model.addAttribute("tools",tools);
         return "tools/all-tools";
     }
+
+    @GetMapping("/single-tool/{id}")
+    private String productPage(@PathVariable String id,Model model) {
+        ToolOfferServiceModel toolOfferServiceModel = toolOfferService.findById(id);
+        ToolOfferViewModel toolOfferViewModel = modelMapper.map(toolOfferServiceModel, ToolOfferViewModel.class);
+        model.addAttribute("toolOffer",toolOfferViewModel);
+        return "tools/tool-product-view";
+    }
+
+
 }

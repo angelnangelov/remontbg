@@ -34,10 +34,10 @@
                         <th:block th:if="${#lists.contains(user.authorities, 'USER') &&
                         !#lists.contains(user.authorities, 'MODERATOR') &&
                         !#lists.contains(user.authorities, 'ADMIN')}">
-                            <form th:action="@{/user/set-admin/{id}(id=${user.id})}" method="post" class="mx-1">
+                            <form th:action="@{/admin/set-admin/{id}(id=${user.id})}" method="post" class="mx-1">
                                 <button class="btn btn-danger btn-width">ADMIN</button>
                             </form>
-                            <form th:action="@{/user/set-moderator/{id}(id=${user.id})}" method="post" class="mx-1">
+                            <form th:action="@{/admin/set-moderator/{id}(id=${user.id})}" method="post" class="mx-1">
                                 <button class="btn btn-success btn-width">MODERATOR</button>
                             </form>
                         </th:block>
@@ -45,10 +45,10 @@
                         <th:block th:if="${#lists.contains(user.authorities, 'USER') &&
                         #lists.contains(user.authorities, 'MODERATOR') &&
                         !#lists.contains(user.authorities, 'ADMIN')}">
-                            <form th:action="@{/user/set-user/{id}(id=${user.id})}" method="post" class="mx-1">
+                            <form th:action="@{/admin/set-user/{id}(id=${user.id})}" method="post" class="mx-1">
                                 <button class="btn btn-danger btn-width">USER</button>
                             </form>
-                            <form th:action="@{/user/set-admin/{id}(id=${user.id})}" method="post" class="mx-1">
+                            <form th:action="@{/admin/set-admin/{id}(id=${user.id})}" method="post" class="mx-1">
                                 <button class="btn btn-success btn-width">ADMIN</button>
                             </form>
                         </th:block>
@@ -56,10 +56,10 @@
                         <th:block th:if="${#lists.contains(user.authorities, 'USER') &&
                         #lists.contains(user.authorities, 'MODERATOR') &&
                         #lists.contains(user.authorities, 'ADMIN')}">
-                            <form th:action="@{/user/set-user/{id}(id=${user.id})}" method="post" class="mx-1">
+                            <form th:action="@{/admin/set-user/{id}(id=${user.id})}" method="post" class="mx-1">
                                 <button class="btn btn-danger btn-width">USER</button>
                             </form>
-                            <form th:action="@{/user/set-moderator/{id}(id=${user.id})}" method="post" class="mx-1">
+                            <form th:action="@{/admin/set-moderator/{id}(id=${user.id})}" method="post" class="mx-1">
                                 <button class="btn btn-success btn-width">MODERATOR</button>
                             </form>
                         </th:block>

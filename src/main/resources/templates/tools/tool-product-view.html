@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <th:block th:include="~{fragments/head}"/>
+</head>
+<body>
+<header>
+    <th:block th:include="~{fragments/navbar}"/>
+
+</header>
+
+<div class="container">
+
+    <div class="card-product">
+        <div class="col-12 col-md-6">
+
+            <p><a  action="action" type="button" onclick="history.go(-1);" class="text-muted th:text">НАЗАД</a>
+
+                <img src="./assets/images/services/map-marker.svg" class="is-icon" alt="">
+                <strong class="after-icon is-place" th:text="${toolOffer.region}">ОБЛАСТ</strong>
+
+            </p>
+        </div>
+        <div class="container-fliud">
+            <div class="wrapper row">
+                <div class="preview col-md-6">
+
+                    <div class="preview-pic tab-content">
+                        <div class="tab-pane active" id="pic-1"><img th:src="${toolOffer.image}"  alt="alttext"/></div>
+                    </div>
+
+                </div>
+                <div class="details col-md-6">
+                    <h3 class="product-title"  th:text="${toolOffer.name}">Заглавие</h3>
+                    <p class="product-description" th:text="${toolOffer.description}">.</p>
+                    <h6 class="price">Мощност:  <span th:text="${toolOffer.power}">180</span></h6>
+
+                    <h6 class="price">Депозит при взимане:  <span th:text="${toolOffer.deposit}">$180</span></h6>
+                    <h6 class="price">Цена:  <span th:text="${toolOffer.price}">$180</span></h6>
+                    <h6 class="price" >Активна до: <span th:text="${toolOffer.endsOn}">$180</span></h6>
+
+                    <p class="vote">Телефонен номер за връзка: <strong  th:text="${toolOffer.ownerPhoneNumber}">08882012121</strong></p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+</body>
+<th:block th:include="~{fragments/footer}"/>
+
+</html>
