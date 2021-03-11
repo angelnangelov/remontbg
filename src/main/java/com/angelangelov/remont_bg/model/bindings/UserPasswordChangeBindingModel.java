@@ -6,8 +6,8 @@ import javax.validation.constraints.NotNull;
 
 public class UserPasswordChangeBindingModel {
     private String oldPassword;
-    private String newPassword;
-    private String confirmNewPassword;
+    private String password;
+    private String confirmPassword;
 
     public UserPasswordChangeBindingModel() {
 
@@ -22,27 +22,25 @@ public class UserPasswordChangeBindingModel {
         this.oldPassword = oldPassword;
     }
 
+    @Length(min = 6, max = 20, message = "За вашата сигурност паролата трябва да е минимум 6 символа" )
+    @NotNull(message = "Това поле е задължително!")
+    public String getPassword() {
+        return password;
+    }
 
-
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
 
 
     @Length(min = 6, max = 20, message = "За вашата сигурност паролата трябва да е минимум 6 символа" )
     @NotNull(message = "Това поле е задължително!")
-    public String getNewPassword() {
-        return newPassword;
+    public String getConfirmPassword() {
+        return confirmPassword;
     }
 
-    public void setNewPassword(String newPassword) {
-        this.newPassword = newPassword;
-    }
-    @Length(min = 6, max = 20, message = "За вашата сигурност паролата трябва да е минимум 6 символа" )
-    @NotNull(message = "Това поле е задължително!")
-    public String getConfirmNewPassword() {
-        return confirmNewPassword;
-    }
-
-    public void setConfirmNewPassword(String confirmNewPassword) {
-        this.confirmNewPassword = confirmNewPassword;
+    public void setConfirmPassword(String confirmPassword) {
+        this.confirmPassword = confirmPassword;
     }
 }

@@ -6,7 +6,6 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 
 public class UserEditBindingModel {
-    private String username;
     private String email;
     private String firstName;
     private String lastName;
@@ -21,15 +20,7 @@ public class UserEditBindingModel {
 
     public UserEditBindingModel() {
     }
-    @Length(min = 2, max = 25, message = "Потребителското Ви не може да бъде под 2 символа!")
-    @NotBlank(message = "Това поле е задължително!")
-    public String getUsername() {
-        return username;
-    }
 
-    public void setUsername(String username) {
-        this.username = username;
-    }
 
     @Email(message = "Моля въведете валиден емайл адрес")
     @NotBlank(message = "Това поле е задължително!")

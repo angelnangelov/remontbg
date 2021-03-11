@@ -30,7 +30,7 @@ public class UserServiceImpl implements UserService {
 
     private final PasswordEncoder encoder;
 
-  @Autowired
+    @Autowired
     public UserServiceImpl(ModelMapper modelMapper, UserRepository userRepository, RoleService roleService, PasswordEncoder encoder) {
         this.modelMapper = modelMapper;
         this.userRepository = userRepository;
@@ -43,7 +43,8 @@ public class UserServiceImpl implements UserService {
         User user = this.userRepository.findUserByUsername(username)
                 .orElseThrow(() -> new UserWithUsernameNotExists("User with this username does not exist!"));
 
-        return this.modelMapper.map(user, UserServiceModel.class);    }
+        return this.modelMapper.map(user, UserServiceModel.class);
+    }
 
     @Override
     public void register(UserServiceModel userServiceModel) {
@@ -67,7 +68,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean existByEmail(String email) {
-        return this.userRepository.existsByEmail(email);    }
+        return this.userRepository.existsByEmail(email);
+    }
 
 
     @Override
@@ -75,6 +77,7 @@ public class UserServiceImpl implements UserService {
         User user = this.userRepository.findById(id).orElseThrow(() -> new UserWithIdNotExists("User with this id does not exist!"));
         return this.modelMapper.map(user, UserServiceModel.class);
     }
+
     @Override
     public List<UserServiceModel> findAllUsers() {
         return userRepository.findAll().stream()
@@ -83,16 +86,16 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void updateProfile(UserServiceModel userServiceModel, String  username) {
-     User user = userRepository.findUserByUsername(username)
-                .orElseThrow(() -> new UsernameNotFoundException(String.format("User with NOT FOUND  username: %s",username)));
-
-            user.setFirstName(userServiceModel.getFirstName());
-            user.setLastName(userServiceModel.getLastName());
-            user.setEmail(userServiceModel.getEmail());
-            user.setPhoneNumber(userServiceModel.getPhoneNumber());
-            user.setCity(userServiceModel.getCity());
-            userRepository.saveAndFlush(user);
+    public void updateProfile(UserServiceModel userServiceModel, String username) {
+        User user = userRepository.findUserByUsername(username)
+                .orElseThrow(() -> new UsernameNotFoundException(String.format("User with NOT FOUND  username: %s", username)));
+        user.setUsername(username);
+        user.setFirstName(userServiceModel.getFirstName());
+        user.setLastName(userServiceModel.getLastName());
+        user.setEmail(userServiceModel.getEmail());
+        user.setPhoneNumber(userServiceModel.getPhoneNumber());
+        user.setCity(userServiceModel.getCity());
+        userRepository.saveAndFlush(user);
 
 
         modelMapper.map(user, UserServiceModel.class);
@@ -104,7 +107,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public void setUserRole(String id, String role) {
 
-        User user = userRepository.findById(id).orElseThrow(()->new UserWithIdNotExists("User with this id does not exist!"));
+        User user = userRepository.findById(id).orElseThrow(() -> new UserWithIdNotExists("User with this id does not exist!"));
         UserServiceModel userServiceModel = modelMapper.map(user, UserServiceModel.class);
         userServiceModel.getAuthorities().clear();
         switch (role) {
@@ -120,7 +123,7 @@ public class UserServiceImpl implements UserService {
             }
         }
         userRepository.saveAndFlush(modelMapper.map(userServiceModel, User.class));
- user.setPassword(userServiceModel.getPassword() != null ? encoder.encode(userServiceModel.getPassword()) :
+        user.setPassword(userServiceModel.getPassword() != null ? encoder.encode(userServiceModel.getPassword()) :
                 user.getPassword());
     }
 
@@ -131,7 +134,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserServiceModel changePassword(UserServiceModel userServiceModel, String oldPassword,String username) {
+    public UserServiceModel changePassword(UserServiceModel userServiceModel, String oldPassword, String username) {
         User user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException(String.format("Username not found %s", userServiceModel.getUsername())));
 
@@ -142,6 +145,6 @@ public class UserServiceImpl implements UserService {
         user.setPassword(userServiceModel.getPassword() != null ? encoder.encode(userServiceModel.getPassword()) :
                 user.getPassword());
         userRepository.saveAndFlush(user);
-        return modelMapper.map(user,UserServiceModel.class);
+        return modelMapper.map(user, UserServiceModel.class);
     }
 }
