@@ -812,3 +812,11 @@ img {
     box-shadow: 3px 3px 3px 3px rgba(0,0,0,.15);
     transition: all .4s ease;
 }
+.dot {
+    height: 7px;
+    width: 7px;
+    margin-top: 3px;
+    background-color: #bbb;
+    border-radius: 50%;
+    display: inline-block
+}
