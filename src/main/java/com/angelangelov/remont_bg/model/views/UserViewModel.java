@@ -10,7 +10,7 @@ public class UserViewModel {
     private String password;
     private String email;
     private String phoneNumber;
-    private String profileImageUrl;
+    private String image;
     private String city;
 
 
@@ -75,12 +75,12 @@ public class UserViewModel {
         this.phoneNumber = phoneNumber;
     }
 
-    public String getProfileImageUrl() {
-        return profileImageUrl;
+    public String getImage() {
+        return image;
     }
 
-    public void setProfileImageUrl(String profileImageUrl) {
-        this.profileImageUrl = profileImageUrl;
+    public void setImage(String image) {
+        this.image = image;
     }
 
     public String getCity() {

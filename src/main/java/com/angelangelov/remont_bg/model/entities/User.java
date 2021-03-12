@@ -17,7 +17,7 @@ public class User  extends BaseEntity  implements UserDetails {
     private String lastName;
     private String phoneNumber;
     private String city;
-    private String profileImageUrl;
+    private String image;
     private LocalDateTime createdDate = LocalDateTime.now();
 
 
@@ -62,12 +62,12 @@ public class User  extends BaseEntity  implements UserDetails {
     }
 
     @Column(name = "profile_image_url")
-    public String getProfileImageUrl() {
-        return profileImageUrl;
+    public String getImage() {
+        return image;
     }
 
-    public void setProfileImageUrl(String profileImageUrl) {
-        this.profileImageUrl = profileImageUrl;
+    public void setImage(String image) {
+        this.image = image;
     }
 
     @Column(name = "first_name", nullable = false)

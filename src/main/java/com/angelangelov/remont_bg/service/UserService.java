@@ -3,13 +3,12 @@ package com.angelangelov.remont_bg.service;
 import com.angelangelov.remont_bg.model.services.UserServiceModel;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
-import java.security.Principal;
 import java.util.List;
 
 public interface UserService extends UserDetailsService {
     UserServiceModel findUserByUsername(String username);
 
-    void register(UserServiceModel userServiceModel);
+    UserServiceModel register(UserServiceModel userServiceModel);
 
     boolean existByUsername(String username);
 

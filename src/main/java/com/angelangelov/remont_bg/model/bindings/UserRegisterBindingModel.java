@@ -13,6 +13,7 @@ public class UserRegisterBindingModel extends BaseBindingModel {
     private String lastName;
     private String email;
     private String password;
+    private String profileImageUrl;
     private String confirmPassword;
 
     public UserRegisterBindingModel() {
@@ -75,5 +76,13 @@ public class UserRegisterBindingModel extends BaseBindingModel {
 
     public void setConfirmPassword(String confirmPassword) {
         this.confirmPassword = confirmPassword;
+    }
+
+    public String getProfileImageUrl() {
+        return profileImageUrl;
+    }
+
+    public void setProfileImageUrl(String profileImageUrl) {
+        this.profileImageUrl = profileImageUrl;
     }
 }

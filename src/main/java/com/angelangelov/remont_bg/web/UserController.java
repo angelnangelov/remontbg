@@ -1,14 +1,10 @@
 package com.angelangelov.remont_bg.web;
 
-import com.angelangelov.remont_bg.model.bindings.OfferAddBindingModel;
 import com.angelangelov.remont_bg.model.bindings.UserEditBindingModel;
 import com.angelangelov.remont_bg.model.bindings.UserPasswordChangeBindingModel;
 import com.angelangelov.remont_bg.model.bindings.UserRegisterBindingModel;
-import com.angelangelov.remont_bg.model.entities.User;
-import com.angelangelov.remont_bg.model.entities.enums.Region;
-import com.angelangelov.remont_bg.model.entities.enums.ServiceOfferNames;
 import com.angelangelov.remont_bg.model.services.UserServiceModel;
-import com.angelangelov.remont_bg.model.views.UserViewModel;
+import com.angelangelov.remont_bg.service.CloudinaryService;
 import com.angelangelov.remont_bg.service.UserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -20,20 +16,23 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
+import java.io.IOException;
 import java.security.Principal;
-import java.util.List;
-import java.util.stream.Collectors;
+
+import static com.angelangelov.remont_bg.web.constants.ControllersConstants.PROFILE_IMG_DEFAULT;
 
 @Controller
 @RequestMapping(value = "/user")
 public class UserController {
     private final UserService userService;
     private final ModelMapper modelMapper;
+    private final CloudinaryService cloudinaryService;
     private final PasswordEncoder encoder;
 
-    public UserController(UserService userService, ModelMapper modelMapper, PasswordEncoder encoder) {
+    public UserController(UserService userService, ModelMapper modelMapper, CloudinaryService cloudinaryService, PasswordEncoder encoder) {
         this.userService = userService;
         this.modelMapper = modelMapper;
+        this.cloudinaryService = cloudinaryService;
         this.encoder = encoder;
     }
 
@@ -75,8 +74,13 @@ public class UserController {
         }
 
         try {
-            this.userService.register(this.modelMapper
+
+            userRegisterBindingModel.setProfileImageUrl(PROFILE_IMG_DEFAULT);
+          UserServiceModel userServiceModel=  this.userService.register(this.modelMapper
                     .map(userRegisterBindingModel, UserServiceModel.class));
+            System.out.println();
+
+
             return "redirect:login";
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
@@ -101,6 +105,8 @@ public class UserController {
         }
         model.addAttribute("username",principal.getName());
 
+        model.addAttribute("profilePic",userServiceModel.getImage());
+
 
       return "user-profile";
     }
@@ -109,7 +115,7 @@ public class UserController {
     @PreAuthorize("isAuthenticated()")
     public String profileEdit(@Valid @ModelAttribute("userEditBindingModel") UserEditBindingModel userEditBindingModel,
                               BindingResult bindingResult, RedirectAttributes redirectAttributes,
-                              Principal principal) {
+                              Principal principal) throws IOException {
 
         if(bindingResult.hasErrors()){
             redirectAttributes.addFlashAttribute("userEditBindingModel", userEditBindingModel);
@@ -120,8 +126,12 @@ public class UserController {
 
        UserServiceModel userServiceModel = modelMapper.map(userEditBindingModel, UserServiceModel.class);
 
+        System.out.println();
+        if(!userServiceModel.getImage().equals(PROFILE_IMG_DEFAULT)){
+            userServiceModel.setImage(cloudinaryService.uploadImg(userEditBindingModel.getImage()));
+        }
 
-        this.userService.updateProfile(userServiceModel,principal.getName());
+        System.out.println();
 
         userService.updateProfile(userServiceModel, principal.getName());
         return "redirect:profile";

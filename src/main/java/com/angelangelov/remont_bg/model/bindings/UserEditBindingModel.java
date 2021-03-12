@@ -1,6 +1,7 @@
 package com.angelangelov.remont_bg.model.bindings;
 
 import org.hibernate.validator.constraints.Length;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
@@ -11,7 +12,7 @@ public class UserEditBindingModel {
     private String lastName;
     private String phoneNumber;
     private String city;
-    private String profileImageUrl;
+    private MultipartFile image;
     private String oldPassword;
     private String password;
     private String confirmPassword;
@@ -59,13 +60,15 @@ public class UserEditBindingModel {
         this.phoneNumber = phoneNumber;
     }
 
-    public String getProfileImageUrl() {
-        return profileImageUrl;
+    //TODO : VALIDATION ?
+    public MultipartFile getImage() {
+        return image;
     }
 
-    public void setProfileImageUrl(String profileImageUrl) {
-        this.profileImageUrl = profileImageUrl;
+    public void setImage(MultipartFile image) {
+        this.image = image;
     }
+
     @Length(min = 2,max = 20,message = "Моля въведете валиден град номер")
     public String getCity() {
         return city;

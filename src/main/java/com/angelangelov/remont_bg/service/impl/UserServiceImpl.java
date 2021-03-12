@@ -15,10 +15,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.security.Principal;
 import java.util.LinkedHashSet;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -47,7 +45,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void register(UserServiceModel userServiceModel) {
+    public UserServiceModel register(UserServiceModel userServiceModel) {
         if (userRepository.count() == 0) {
             roleService.seedRoles();
             userServiceModel.setAuthorities(roleService.findAll());
@@ -58,7 +56,8 @@ public class UserServiceImpl implements UserService {
 
         User user = modelMapper.map(userServiceModel, User.class);
         user.setPassword(encoder.encode(user.getPassword()));
-        userRepository.save(user);
+       return modelMapper.map(userRepository.save(user),UserServiceModel.class);
+
     }
 
     @Override
@@ -95,6 +94,8 @@ public class UserServiceImpl implements UserService {
         user.setEmail(userServiceModel.getEmail());
         user.setPhoneNumber(userServiceModel.getPhoneNumber());
         user.setCity(userServiceModel.getCity());
+        user.setImage(userServiceModel.getImage());
+        System.out.println();
         userRepository.saveAndFlush(user);
 
 

@@ -1,7 +1,5 @@
 package com.angelangelov.remont_bg.model.services;
 
-import com.angelangelov.remont_bg.model.entities.Role;
-
 import java.util.Set;
 
 public class UserServiceModel extends BaseServiceModel{
@@ -11,7 +9,7 @@ public class UserServiceModel extends BaseServiceModel{
     private String firstName;
     private String lastName;
     private String phoneNumber;
-    private String profileImageUrl;
+    private String image;
     private String city;
 
     private Set<RoleServiceModel> authorities;
@@ -75,12 +73,12 @@ public class UserServiceModel extends BaseServiceModel{
         this.phoneNumber = phoneNumber;
     }
 
-    public String getProfileImageUrl() {
-        return profileImageUrl;
+    public String getImage() {
+        return image;
     }
 
-    public void setProfileImageUrl(String profileImageUrl) {
-        this.profileImageUrl = profileImageUrl;
+    public void setImage(String image) {
+        this.image = image;
     }
 
     public Set<RoleServiceModel> getAuthorities() {
