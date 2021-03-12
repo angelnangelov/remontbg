@@ -17,6 +17,7 @@ public class OfferViewModel {
     private String ownerPhoneNumber;
     private boolean approved;
     private OfferCategoryViewModel category;
+    private UserViewModel userViewModel;
 
     public OfferViewModel() {
     }
@@ -99,5 +100,13 @@ public class OfferViewModel {
 
     public void setApproved(boolean approved) {
         this.approved = approved;
+    }
+
+    public UserViewModel getUserViewModel() {
+        return userViewModel;
+    }
+
+    public void setUserViewModel(UserViewModel userViewModel) {
+        this.userViewModel = userViewModel;
     }
 }

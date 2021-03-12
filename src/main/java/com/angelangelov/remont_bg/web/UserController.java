@@ -82,7 +82,7 @@ public class UserController {
         try {
 
             userRegisterBindingModel.setProfileImageUrl(PROFILE_IMG_DEFAULT);
-          UserServiceModel userServiceModel=  this.userService.register(this.modelMapper
+            UserServiceModel userServiceModel = this.userService.register(this.modelMapper
                     .map(userRegisterBindingModel, UserServiceModel.class));
             System.out.println();
 
@@ -98,23 +98,22 @@ public class UserController {
     }
 
 
-
     @GetMapping("/profile")
     @PreAuthorize("isAuthenticated()")
-    public String profile(Model model,  Principal principal) {
+    public String profile(Model model, Principal principal) {
 
         UserServiceModel userServiceModel = userService.findUserByUsername(principal.getName());
 //        UserViewModel user = modelMapper.map(userServiceModel, UserViewModel.class);
         UserEditBindingModel userEditBindingModel = modelMapper.map(userServiceModel, UserEditBindingModel.class);
-        if(!model.containsAttribute("userEditBindingModel")){
-            model.addAttribute("userEditBindingModel",userEditBindingModel);
+        if (!model.containsAttribute("userEditBindingModel")) {
+            model.addAttribute("userEditBindingModel", userEditBindingModel);
         }
-        model.addAttribute("username",principal.getName());
+        model.addAttribute("username", principal.getName());
 
-        model.addAttribute("profilePic",userServiceModel.getImage());
+        model.addAttribute("profilePic", userServiceModel.getImage());
 
 
-      return "/user/user-profile";
+        return "/user/user-profile";
     }
 
     @PostMapping("/profile")
@@ -123,17 +122,17 @@ public class UserController {
                               BindingResult bindingResult, RedirectAttributes redirectAttributes,
                               Principal principal) throws IOException {
 
-        if(bindingResult.hasErrors()){
+        if (bindingResult.hasErrors()) {
             redirectAttributes.addFlashAttribute("userEditBindingModel", userEditBindingModel);
             redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.userEditBindingModel"
                     , bindingResult);
             return "redirect:profile";
         }
 
-       UserServiceModel userServiceModel = modelMapper.map(userEditBindingModel, UserServiceModel.class);
+        UserServiceModel userServiceModel = modelMapper.map(userEditBindingModel, UserServiceModel.class);
 
         System.out.println();
-        if(!userServiceModel.getImage().equals(PROFILE_IMG_DEFAULT)){
+        if (!userServiceModel.getImage().equals(PROFILE_IMG_DEFAULT)) {
             userServiceModel.setImage(cloudinaryService.uploadImg(userEditBindingModel.getImage()));
         }
 
@@ -145,9 +144,9 @@ public class UserController {
 
     @GetMapping("/passwordChange")
     @PreAuthorize("isAuthenticated()")
-    public String changePassword(Model model){
-        if(!model.containsAttribute("userPasswordChangeBindingModel")){
-            model.addAttribute("userPasswordChangeBindingModel",new UserPasswordChangeBindingModel());
+    public String changePassword(Model model) {
+        if (!model.containsAttribute("userPasswordChangeBindingModel")) {
+            model.addAttribute("userPasswordChangeBindingModel", new UserPasswordChangeBindingModel());
         }
         return "passwordChange";
     }
@@ -155,50 +154,46 @@ public class UserController {
     @PostMapping("/passwordChange")
     @PreAuthorize("isAuthenticated()")
     public String changePasswordConfirm(@Valid @ModelAttribute("userPasswordChangeBindingModel")
-                                                    UserPasswordChangeBindingModel userPasswordChangeBindingModel,
-                                      BindingResult  bindingResult,RedirectAttributes redirectAttributes,Principal principal)
-            {
+                                                UserPasswordChangeBindingModel userPasswordChangeBindingModel,
+                                        BindingResult bindingResult, RedirectAttributes redirectAttributes, Principal principal) {
 
 
+        if (!this.encoder.matches(userPasswordChangeBindingModel.getOldPassword(), userService.findUserByUsername(principal.getName()).getPassword())) {
+            bindingResult.rejectValue("oldPassword", "error.userPasswordChangeBindingModel", "Грешна парола!");
 
-                if (!this.encoder.matches(userPasswordChangeBindingModel.getOldPassword(), userService.findUserByUsername(principal.getName()).getPassword())) {
-                    bindingResult.rejectValue("oldPassword", "error.userPasswordChangeBindingModel", "Грешна парола!");
+        }
+        if (!userPasswordChangeBindingModel.getPassword().equals(userPasswordChangeBindingModel.getConfirmPassword())) {
+            bindingResult.rejectValue("confirmPassword", "error.userPasswordChangeBindingModel", "Паролите не съвпадат!");
 
-                }
-                if (!userPasswordChangeBindingModel.getPassword().equals(userPasswordChangeBindingModel.getConfirmPassword())) {
-                    bindingResult.rejectValue("confirmPassword", "error.userPasswordChangeBindingModel", "Паролите не съвпадат!");
+        }
+        if (userPasswordChangeBindingModel.getPassword().isBlank() || userPasswordChangeBindingModel.getOldPassword().isBlank() || userPasswordChangeBindingModel.getConfirmPassword().isBlank()) {
+            bindingResult.rejectValue("password", "error.userPasswordChangeBindingModel", "Всички полета трябва да са запълнени!");
 
-                }
-                if(userPasswordChangeBindingModel.getPassword().isBlank()||userPasswordChangeBindingModel.getOldPassword().isBlank() ||userPasswordChangeBindingModel.getConfirmPassword().isBlank()){
-                    bindingResult.rejectValue("password", "error.userPasswordChangeBindingModel", "Всички полета трябва да са запълнени!");
+        }
+        if (bindingResult.hasErrors()) {
+            redirectAttributes.addFlashAttribute("userPasswordChangeBindingModel", userPasswordChangeBindingModel);
+            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.userPasswordChangeBindingModel"
+                    , bindingResult);
+            return "redirect:passwordChange";
+        }
 
-                }
-                if(bindingResult.hasErrors()){
-                    redirectAttributes.addFlashAttribute("userPasswordChangeBindingModel", userPasswordChangeBindingModel);
-                    redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.userPasswordChangeBindingModel"
-                            , bindingResult);
-                    return "redirect:passwordChange";
-                }
+        String oldPassword = userPasswordChangeBindingModel.getOldPassword();
 
-                    String oldPassword = userPasswordChangeBindingModel.getOldPassword();
+        if (userPasswordChangeBindingModel.getPassword().equals(userPasswordChangeBindingModel.getConfirmPassword())) {
+            UserServiceModel user = modelMapper.map(userPasswordChangeBindingModel, UserServiceModel.class);
+            userService.changePassword(user, userPasswordChangeBindingModel.getOldPassword(), principal.getName());
+            return "redirect:/logout";
+        } else {
+            return "redirect:passwordChange";
+        }
 
-                if(userPasswordChangeBindingModel.getPassword().equals(userPasswordChangeBindingModel.getConfirmPassword())){
-                    UserServiceModel user = modelMapper.map(userPasswordChangeBindingModel, UserServiceModel.class);
-                    userService.changePassword(user,userPasswordChangeBindingModel.getOldPassword(),principal.getName());
-                    return "redirect:/logout";
-                }else{
-                    return "redirect:passwordChange";
-                }
-
-
-            }
+    }
 
 
-
-            @GetMapping("/issue")
-    public String issue(){
+    @GetMapping("/issue")
+    public String issue() {
         return "issue/issue-page";
-            }
+    }
 
 
 }

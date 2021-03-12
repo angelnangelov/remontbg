@@ -5,8 +5,12 @@ import org.hibernate.validator.constraints.Length;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 
-public class UserRegisterBindingModel extends BaseBindingModel {
+
+
+
+public class    UserRegisterBindingModel extends BaseBindingModel {
 
     private String username;
     private String firstName;

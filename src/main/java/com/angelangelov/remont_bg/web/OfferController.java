@@ -9,6 +9,7 @@ import com.angelangelov.remont_bg.model.services.OfferServiceModel;
 import com.angelangelov.remont_bg.model.views.OfferCategoryViewModel;
 import com.angelangelov.remont_bg.model.views.OfferViewModel;
 import com.angelangelov.remont_bg.model.views.UserOffersViewModel;
+import com.angelangelov.remont_bg.model.views.UserViewModel;
 import com.angelangelov.remont_bg.service.CloudinaryService;
 import com.angelangelov.remont_bg.service.OfferCategoryService;
 import com.angelangelov.remont_bg.service.OfferService;
@@ -69,6 +70,7 @@ public class OfferController {
     private String productPage(@PathVariable String id,Model model) {
         OfferServiceModel offerServiceModel = offerService.findById(id);
         OfferViewModel offerViewModel = modelMapper.map(offerServiceModel, OfferViewModel.class);
+        offerViewModel.setUserViewModel(modelMapper.map(offerServiceModel.getUser(), UserViewModel.class));
         model.addAttribute("offer",offerViewModel);
         return "offers/offer-product-view";
     }

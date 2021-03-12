@@ -20,6 +20,7 @@ public class OfferServiceModel  extends BaseServiceModel {
     private UserServiceModel user;
     private String category;
 
+
     public OfferServiceModel() {
     }
 

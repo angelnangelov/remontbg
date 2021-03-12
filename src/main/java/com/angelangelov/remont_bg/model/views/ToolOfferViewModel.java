@@ -1,7 +1,6 @@
 package com.angelangelov.remont_bg.model.views;
 
 import com.angelangelov.remont_bg.model.entities.enums.Region;
-import com.angelangelov.remont_bg.model.services.UserServiceModel;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -17,6 +16,7 @@ public class ToolOfferViewModel {
     private String ownerPhoneNumber;
     private BigDecimal deposit;
     private LocalDate endsOn;
+    private UserViewModel user;
 
     private String power;
 
@@ -99,5 +99,13 @@ public class ToolOfferViewModel {
 
     public void setEndsOn(LocalDate endsOn) {
         this.endsOn = endsOn;
+    }
+
+    public UserViewModel getUser() {
+        return user;
+    }
+
+    public void setUser(UserViewModel user) {
+        this.user = user;
     }
 }

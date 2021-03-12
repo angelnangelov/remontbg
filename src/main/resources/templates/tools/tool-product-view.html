@@ -13,7 +13,7 @@
 
 <div class="container">
 
-    <div class="card-product">
+    <div class="card-product single-offer">
         <div class="col-12 col-md-6">
 
             <p><a  action="action" type="button" onclick="history.go(-1);" class="text-muted th:text">НАЗАД</a>
@@ -42,6 +42,26 @@
                     <h6 class="price" >Активна до: <span th:text="${toolOffer.endsOn}">$180</span></h6>
 
                     <p class="vote">Телефонен номер за връзка: <strong  th:text="${toolOffer.ownerPhoneNumber}">08882012121</strong></p>
+                    <div class="container profile-user">
+                        <div><h5>Качена от: </h5></div>
+
+                        <div class="row">
+                            <div class="col-md-6 img">
+                                <img class="rounded-circle" th:src="${toolOffer.user.image}" alt="">
+                            </div>
+                            <div class="col-md-6 details">
+                                <blockquote>
+                                    <h5 th:text="|${toolOffer.user.firstName}  ${toolOffer.user.lastName}|">a</h5>
+                                    <small><cite th:text="|${toolOffer.user.city}, област ${toolOffer.region}|" title="Source Title">Chicago, United States of America  <i class="icon-map-marker"></i></cite></small>
+                                </blockquote>
+                                <p th:text="|Емайл: ${toolOffer.user.email}|">
+                                    asa <br>
+                                    <br>
+
+                                </p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

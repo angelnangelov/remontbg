@@ -792,3 +792,23 @@ img {
     margin: 20px 0;
     display: inline-block;}
 .contant_box_404{ margin-top:-50px;}
+
+
+
+.profile-user .img{
+    text-align:center;
+}
+.profile-user .details{
+    border-left:3px solid #ded4da;
+}
+.profile-user .details p{
+    font-size:15px;
+    font-weight:bold;
+}
+.single-offer{
+    position: relative;
+
+    background: white;
+    box-shadow: 3px 3px 3px 3px rgba(0,0,0,.15);
+    transition: all .4s ease;
+}

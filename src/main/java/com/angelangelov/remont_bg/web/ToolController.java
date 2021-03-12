@@ -108,6 +108,8 @@ public class ToolController {
     private String productPage(@PathVariable String id,Model model) {
         ToolOfferServiceModel toolOfferServiceModel = toolOfferService.findById(id);
         ToolOfferViewModel toolOfferViewModel = modelMapper.map(toolOfferServiceModel, ToolOfferViewModel.class);
+        toolOfferViewModel.setUser(modelMapper.map(toolOfferServiceModel.getUser(),UserViewModel.class));
+
         model.addAttribute("toolOffer",toolOfferViewModel);
         return "tools/tool-product-view";
     }
