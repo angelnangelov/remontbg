@@ -16,4 +16,6 @@ public interface ToolOfferService {
     void approveTool(String id);
 
     void deleteTool(String id);
+
+    List<ToolOfferServiceModel> findAllUserTools(String name);
 }

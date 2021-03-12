@@ -1,5 +1,6 @@
 package com.angelangelov.remont_bg.service;
 
+import com.angelangelov.remont_bg.model.services.OfferServiceModel;
 import com.angelangelov.remont_bg.model.services.UserServiceModel;
 import org.springframework.security.core.userdetails.UserDetailsService;
 

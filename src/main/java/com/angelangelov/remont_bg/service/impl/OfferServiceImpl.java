@@ -66,6 +66,19 @@ public class OfferServiceImpl implements OfferService {
     }
 
     @Override
+    public List<OfferServiceModel> findAllUserOffers(String username) {
+        UserServiceModel user = userService.findUserByUsername(username);
+
+        List<Offer> offersByUser = offerRepository.findAllByUserId(user.getId());
+        return  offersByUser.stream().map(offer -> {
+            OfferServiceModel offerServiceModel = modelMapper.map(offer, OfferServiceModel.class);
+            offerServiceModel.setCategory(offer.getCategory().getName().toString());
+            return offerServiceModel;
+        }).collect(Collectors.toList());
+
+    }
+
+    @Override
     public void deleteOffer(String id) {
         Offer offer = offerRepository.findById(id)
                 .orElseThrow(() -> new CategoryWithIdNotExists(String.format("Offer with id: %s not found",id)));;

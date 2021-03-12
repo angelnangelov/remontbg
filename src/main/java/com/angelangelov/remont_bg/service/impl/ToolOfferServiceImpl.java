@@ -8,6 +8,7 @@ import com.angelangelov.remont_bg.model.entities.enums.ServiceOfferNames;
 import com.angelangelov.remont_bg.model.entities.enums.ToolsCategoryName;
 import com.angelangelov.remont_bg.model.services.OfferServiceModel;
 import com.angelangelov.remont_bg.model.services.ToolOfferServiceModel;
+import com.angelangelov.remont_bg.model.services.UserServiceModel;
 import com.angelangelov.remont_bg.repository.ToolOfferRepository;
 import com.angelangelov.remont_bg.service.ToolCategoryService;
 import com.angelangelov.remont_bg.service.ToolOfferService;
@@ -80,5 +81,17 @@ public class ToolOfferServiceImpl implements ToolOfferService {
         ToolOffer offer = toolOfferRepository.findById(id)
                 .orElseThrow(() -> new CategoryWithIdNotExists(String.format("Offer with id: %s not found",id)));;
         this.toolOfferRepository.delete(offer);
+    }
+
+    @Override
+    public List<ToolOfferServiceModel> findAllUserTools(String name) {
+        UserServiceModel user = userService.findUserByUsername(name);
+
+        List<ToolOffer> offersByUser = toolOfferRepository.findAllByUserId(user.getId());
+        return  offersByUser.stream().map(tool -> {
+            ToolOfferServiceModel toolOfferServiceModel = modelMapper.map(tool, ToolOfferServiceModel.class);
+            toolOfferServiceModel.setCategory(tool.getToolCategory().getName().toString());
+            return toolOfferServiceModel;
+        }).collect(Collectors.toList());
     }
 }

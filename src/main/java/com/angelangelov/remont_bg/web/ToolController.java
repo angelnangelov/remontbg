@@ -9,10 +9,7 @@ import com.angelangelov.remont_bg.model.services.OfferCategoryServiceModel;
 import com.angelangelov.remont_bg.model.services.OfferServiceModel;
 import com.angelangelov.remont_bg.model.services.ToolCategoryServiceModel;
 import com.angelangelov.remont_bg.model.services.ToolOfferServiceModel;
-import com.angelangelov.remont_bg.model.views.OfferCategoryViewModel;
-import com.angelangelov.remont_bg.model.views.OfferViewModel;
-import com.angelangelov.remont_bg.model.views.ToolOfferViewModel;
-import com.angelangelov.remont_bg.model.views.ToolsCategoryViewModel;
+import com.angelangelov.remont_bg.model.views.*;
 import com.angelangelov.remont_bg.service.*;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Controller;
@@ -114,6 +111,30 @@ public class ToolController {
         model.addAttribute("toolOffer",toolOfferViewModel);
         return "tools/tool-product-view";
     }
+
+    @GetMapping("/userTools")
+    public String userTools(Model model,Principal principal){
+        List<ToolOfferServiceModel> allUserTools = toolOfferService.findAllUserTools(principal.getName());
+        List<UserToolsViewModel> userToolsViewModels = allUserTools.stream().map(t -> {
+            return modelMapper.map(t, UserToolsViewModel.class);
+        }).collect(Collectors.toList());
+        System.out.println();
+        model.addAttribute("allUserTools",userToolsViewModels);
+
+        return "/user/all-user-tools";
+    }
+    @GetMapping("/user/deleteTool/")
+    public String deleteTool(@RequestParam(name = "id") String id,Principal principal){
+        String username = toolOfferService.findById(id).getUser().getUsername();
+        if(principal.getName().equals(username)){
+            this.toolOfferService.deleteTool(id);
+        }else {
+            throw new UnsupportedOperationException("You cant delete other users offers");
+        }
+
+        return "redirect:/tool/userTools";
+    }
+
 
 
 }

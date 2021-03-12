@@ -4,6 +4,7 @@ import com.angelangelov.remont_bg.error.user.UserOldPasswordNotCorrectException;
 import com.angelangelov.remont_bg.error.user.UserWithIdNotExists;
 import com.angelangelov.remont_bg.error.user.UserWithUsernameNotExists;
 import com.angelangelov.remont_bg.model.entities.User;
+import com.angelangelov.remont_bg.model.services.OfferServiceModel;
 import com.angelangelov.remont_bg.model.services.UserServiceModel;
 import com.angelangelov.remont_bg.repository.UserRepository;
 import com.angelangelov.remont_bg.service.RoleService;
@@ -148,4 +149,6 @@ public class UserServiceImpl implements UserService {
         userRepository.saveAndFlush(user);
         return modelMapper.map(user, UserServiceModel.class);
     }
+
+
 }

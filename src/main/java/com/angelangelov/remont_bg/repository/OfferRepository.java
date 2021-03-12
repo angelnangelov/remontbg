@@ -9,4 +9,5 @@ import java.util.List;
 @Repository
 public interface OfferRepository  extends JpaRepository<Offer,String> {
     List<Offer> findAllByApprovedFalse();
+    List<Offer> findAllByUserId(String id);
 }

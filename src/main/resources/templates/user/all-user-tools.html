@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <th:block th:include="~{fragments/head}"/>
+</head>
+<body>
+<header>
+    <th:block th:include="~{fragments/navbar}"/>
+
+</header>
+<div th:if="${#lists.isEmpty(allUserTools)}">
+    <div class="row mx-auto" style="padding-top: 10%">
+        <h1 class="font-weight-bold col-md-12 text-center">Нямате публикувани инструменти!</h1>
+
+    </div>
+</div>
+
+<div class="container" style="margin-top:50px;">
+    <form  action="/offer/userOffers/" th:method="get">
+    <div class="row" >
+
+        <div class="col-xs-12 col-sm-6 col-md-3" th:each="tool : ${allUserTools}" th:object="${tool}">
+
+            <div class="col-item">
+                <p class="font-weight-bolder text-sm-center" th:text="|Категория: *{category}|"> Sample Product</p>
+                <p class="font-weight-bolder text-sm-center" th:text="|Заглавие: *{name}|"> Sample Product</p>
+                <p class="font-weight-bolder text-sm-center"  th:text="|Цена:*{price}лв.|"> Sample Product</p>
+                <p class="font-weight-bolder text-sm-center" th:text="|тел: *{ownerPhoneNumber}|"> Sample Product</p>
+                <div class="photo">
+                    <img th:src="*{image}" class="img-responsive" alt="a" />
+                </div>
+                <p th:if="*{!approved}" class="text-danger border-danger font-weight-bold text-center">Изчаква удобрение</p>
+                <div >
+
+                        <div class="separator align-content-center">
+                            <a th:href="@{/tool/single-tool/{id}(id=${tool.id})}" type="button" class="btn btn-sm  btn-success">Детайли</a>
+                            <a th:href="@{/tool/single-tool/{id}(id=${tool.id})}" type="button" class="btn btn-sm  btn-dark">Промени</a>
+                            <a th:href="@{/tool/user/deleteTool/(id=${tool.id})}" type="submit" class="btn btn-sm  btn-danger">Изтрий</a>
+                        </div>
+                    <div class="clearfix">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    </form>
+</div>
+</body><th:block th:include="~{fragments/footer}"/>
+
+</html>

@@ -5,20 +5,21 @@ import com.angelangelov.remont_bg.model.entities.enums.Region;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
-public class OfferViewModel {
-
+public class UserToolsViewModel {
     private String id;
     private String name;
     private String description;
     private String image;
     private BigDecimal price;
+    private BigDecimal deposit;
+    private String power;
     private Region region;
     private LocalDate endsOn;
     private String ownerPhoneNumber;
     private boolean approved;
-    private OfferCategoryViewModel category;
+    private String category;
 
-    public OfferViewModel() {
+    public UserToolsViewModel() {
     }
 
     public String getId() {
@@ -27,14 +28,6 @@ public class OfferViewModel {
 
     public void setId(String id) {
         this.id = id;
-    }
-
-    public LocalDate getEndsOn() {
-        return endsOn;
-    }
-
-    public void setEndsOn(LocalDate endsOn) {
-        this.endsOn = endsOn;
     }
 
     public String getName() {
@@ -69,12 +62,36 @@ public class OfferViewModel {
         this.price = price;
     }
 
+    public BigDecimal getDeposit() {
+        return deposit;
+    }
+
+    public void setDeposit(BigDecimal deposit) {
+        this.deposit = deposit;
+    }
+
+    public String getPower() {
+        return power;
+    }
+
+    public void setPower(String power) {
+        this.power = power;
+    }
+
     public Region getRegion() {
         return region;
     }
 
     public void setRegion(Region region) {
         this.region = region;
+    }
+
+    public LocalDate getEndsOn() {
+        return endsOn;
+    }
+
+    public void setEndsOn(LocalDate endsOn) {
+        this.endsOn = endsOn;
     }
 
     public String getOwnerPhoneNumber() {
@@ -85,19 +102,19 @@ public class OfferViewModel {
         this.ownerPhoneNumber = ownerPhoneNumber;
     }
 
-    public OfferCategoryViewModel getCategory() {
-        return category;
-    }
-
-    public void setCategory(OfferCategoryViewModel category) {
-        this.category = category;
-    }
-
     public boolean isApproved() {
         return approved;
     }
 
     public void setApproved(boolean approved) {
         this.approved = approved;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
     }
 }

@@ -8,11 +8,13 @@ import com.angelangelov.remont_bg.model.services.OfferCategoryServiceModel;
 import com.angelangelov.remont_bg.model.services.OfferServiceModel;
 import com.angelangelov.remont_bg.model.views.OfferCategoryViewModel;
 import com.angelangelov.remont_bg.model.views.OfferViewModel;
+import com.angelangelov.remont_bg.model.views.UserOffersViewModel;
 import com.angelangelov.remont_bg.service.CloudinaryService;
 import com.angelangelov.remont_bg.service.OfferCategoryService;
 import com.angelangelov.remont_bg.service.OfferService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -113,6 +115,30 @@ public class OfferController {
 
 
     }
+
+    @GetMapping("/userOffers")
+    public String userOffer(Model model,Principal principal){
+        List<OfferServiceModel> allUserOffers = offerService.findAllUserOffers(principal.getName());
+        List<UserOffersViewModel> userOffersViewModels = allUserOffers.stream().map(o -> {
+            return modelMapper.map(o, UserOffersViewModel.class);
+        }).collect(Collectors.toList());
+        System.out.println();
+        model.addAttribute("allUserOffers",userOffersViewModels);
+
+        return "/user/all-user-offers";
+    }
+    @GetMapping("/user/deleteOffer/")
+    public String deleteOffer(@RequestParam(name = "id") String id,Principal principal){
+        String username = offerService.findById(id).getUser().getUsername();
+        if(principal.getName().equals(username)){
+            this.offerService.deleteOffer(id);
+        }else {
+            throw new UnsupportedOperationException("You cant delete other users offers");
+        }
+
+        return "redirect:/offer/userOffers";
+    }
+
 
 
 

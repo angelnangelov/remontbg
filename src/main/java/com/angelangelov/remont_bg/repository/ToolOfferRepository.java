@@ -1,5 +1,6 @@
 package com.angelangelov.remont_bg.repository;
 
+import com.angelangelov.remont_bg.model.entities.Offer;
 import com.angelangelov.remont_bg.model.entities.OfferCategory;
 import com.angelangelov.remont_bg.model.entities.ToolCategory;
 import com.angelangelov.remont_bg.model.entities.ToolOffer;
@@ -14,4 +15,6 @@ import java.util.List;
 public interface ToolOfferRepository extends JpaRepository<ToolOffer,String> {
 
     List<ToolOffer> findAllByApprovedFalse();
+    List<ToolOffer> findAllByUserId(String id);
+
 }

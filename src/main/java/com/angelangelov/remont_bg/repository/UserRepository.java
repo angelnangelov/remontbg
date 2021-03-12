@@ -1,9 +1,11 @@
 package com.angelangelov.remont_bg.repository;
 
+import com.angelangelov.remont_bg.model.entities.Offer;
 import com.angelangelov.remont_bg.model.entities.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -15,4 +17,5 @@ public interface UserRepository extends JpaRepository<User,String> {
 
     Optional<User> findById(String id);
     Optional<User> findByUsername(String username);
+
 }

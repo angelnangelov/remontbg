@@ -3,7 +3,11 @@ package com.angelangelov.remont_bg.web;
 import com.angelangelov.remont_bg.model.bindings.UserEditBindingModel;
 import com.angelangelov.remont_bg.model.bindings.UserPasswordChangeBindingModel;
 import com.angelangelov.remont_bg.model.bindings.UserRegisterBindingModel;
+import com.angelangelov.remont_bg.model.entities.Offer;
+import com.angelangelov.remont_bg.model.services.OfferCategoryServiceModel;
+import com.angelangelov.remont_bg.model.services.OfferServiceModel;
 import com.angelangelov.remont_bg.model.services.UserServiceModel;
+import com.angelangelov.remont_bg.model.views.OfferCategoryViewModel;
 import com.angelangelov.remont_bg.service.CloudinaryService;
 import com.angelangelov.remont_bg.service.UserService;
 import org.modelmapper.ModelMapper;
@@ -18,6 +22,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.validation.Valid;
 import java.io.IOException;
 import java.security.Principal;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import static com.angelangelov.remont_bg.web.constants.ControllersConstants.PROFILE_IMG_DEFAULT;
 
@@ -108,7 +114,7 @@ public class UserController {
         model.addAttribute("profilePic",userServiceModel.getImage());
 
 
-      return "user-profile";
+      return "/user/user-profile";
     }
 
     @PostMapping("/profile")
@@ -187,9 +193,11 @@ public class UserController {
 
             }
 
+
+
             @GetMapping("/issue")
     public String issue(){
-        return "issue-page";
+        return "issue/issue-page";
             }
 
 

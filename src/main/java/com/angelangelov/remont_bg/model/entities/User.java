@@ -5,11 +5,12 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Set;
 
 @Entity
 @Table(name = "users")
-public class User  extends BaseEntity  implements UserDetails {
+public class User extends BaseEntity implements UserDetails {
     private String username;
     private String password;
     private String email;
@@ -19,12 +20,12 @@ public class User  extends BaseEntity  implements UserDetails {
     private String city;
     private String image;
     private LocalDateTime createdDate = LocalDateTime.now();
-
-
+    private List<Offer> offers;
     private Set<Role> authorities;
 
     public User() {
     }
+
     @Column
     public String getCity() {
         return city;
@@ -78,14 +79,17 @@ public class User  extends BaseEntity  implements UserDetails {
     public void setFirstName(String firstName) {
         this.firstName = firstName;
     }
+
     @Column(name = "last_name", nullable = false)
 
     public String getLastName() {
         return lastName;
     }
+
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
+
     @Column(name = "phone_number")
     public String getPhoneNumber() {
         return phoneNumber;
@@ -108,6 +112,14 @@ public class User  extends BaseEntity  implements UserDetails {
         this.authorities = authorities;
     }
 
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
+    public List<Offer> getOffers() {
+        return offers;
+    }
+
+    public void setOffers(List<Offer> offers) {
+        this.offers = offers;
+    }
 
     @Column(name = "created_date", nullable = false)
     @DateTimeFormat(pattern = "dd.MM.yyyy HH:mm:ss")

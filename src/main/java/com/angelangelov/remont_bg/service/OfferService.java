@@ -13,7 +13,7 @@ public interface OfferService {
     OfferServiceModel findById(String id);
     List<OfferServiceModel> findAllOffers();
 
-    
+    List<OfferServiceModel> findAllUserOffers(String username);
 
     void approveOffer(String id);
 
