@@ -58,9 +58,14 @@ public class CommentServiceImpl implements CommentService {
     public void deleteComment(String id) {
         Comment comment = commentRepository.findById(id)
                 .orElseThrow(() -> new CommentWithIdNotExists(String.format("Comment with id: %s not found",id)));
-        commentRepository.deleteById(comment.getId());
-        //TODO : NE TRIE KOMENTARA?
+        commentRepository.delete(comment);
 
 
+    }
+
+    @Override
+    public CommentServiceModel findCommentById(String id) {
+        Comment comment = commentRepository.findById(id).orElseThrow(() -> new CommentWithIdNotExists(String.format("Comment with id: %s not found", id)));
+        return modelMapper.map(comment,CommentServiceModel.class);
     }
 }

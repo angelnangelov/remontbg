@@ -12,4 +12,6 @@ public interface CommentService {
     List<CommentServiceModel> findCommentsByOfferId(String id);
 
     void deleteComment(String id);
+
+    CommentServiceModel findCommentById(String id);
 }

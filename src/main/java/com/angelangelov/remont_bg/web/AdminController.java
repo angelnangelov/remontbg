@@ -1,5 +1,6 @@
 package com.angelangelov.remont_bg.web;
 
+import com.angelangelov.remont_bg.model.services.CommentServiceModel;
 import com.angelangelov.remont_bg.model.services.OfferServiceModel;
 import com.angelangelov.remont_bg.model.services.ToolOfferServiceModel;
 import com.angelangelov.remont_bg.model.services.UserServiceModel;
@@ -108,9 +109,11 @@ public class AdminController {
     @GetMapping("/comments/deleteComment/")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public String deleteComment(@RequestParam(name = "id") String id){
+        CommentServiceModel commentById = commentService.findCommentById(id);
+        String offerId = commentById.getOffer().getId();
         this.commentService.deleteComment(id);
-        //TODO : REDIRECT TO SAME PAGE?
-        return "redirect:/admin/offers";
+        //TODO : ДРУГ НАЧИН ?
+        return "redirect:/offer/single-offer/"+offerId;
     }
 
     //TODO : ДОБРА ПРАКТИКА ЛИ Е ГЕТ?
