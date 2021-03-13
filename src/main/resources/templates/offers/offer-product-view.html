@@ -69,8 +69,10 @@
     <div class="container-fluid " style="padding-top: 3%">
         <div class="comment-wrapper">
             <div class="panel panel-info">
-                <div class="panel-body">
-                    <textarea  th:field="${commentAddBindingModel.description}"  class="form-control" placeholder="Добави мнение за ползваната услуга..." rows="3"></textarea>
+                <div class="panel-body" th:object="${commentAddBindingModel}">
+                    <textarea  th:field="*{description}"  class="form-control" placeholder="Добави мнение за ползваната услуга..." rows="3"></textarea>
+                    <h5 th:if="${#fields.hasErrors('description')}" th:errors="*{description}" id="descriptionError" class="form-text bg-danger rounded text-white text-center">Задължително поле</h5>
+
                     <br>
                     <button type="submit" class="btn btn-danger pull-right" style="background-color:  #932432!important;">Добави</button>
                     <div class="clearfix"></div>

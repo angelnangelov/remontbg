@@ -88,19 +88,20 @@ public class OfferController {
     }
 
     @PostMapping("/single-offer/{id}")
-    private String postComment(@PathVariable String id,
-                               @Valid @ModelAttribute("commentAddBindingModel") CommentAddBindingModel commentAddBindingModel,
+    private String postComment(@Valid @PathVariable String id,
+                               @ModelAttribute("commentAddBindingModel") CommentAddBindingModel commentAddBindingModel,
                                BindingResult bindingResult,
                                RedirectAttributes redirectAttributes, Principal principal) {
-        //TODO : VALIDATIONS DONT SHOW
         if (commentAddBindingModel.getDescription().isBlank()) {
-            bindingResult.rejectValue("description", "error.commentAddBindingModel", "Това поле не може да е празно!");
+            bindingResult.rejectValue("description", "error.commentAddBindingModel", "Коментарът трябва да бъде минимум 4 символа!");
 
         }
         if (bindingResult.hasErrors()) {
             redirectAttributes.addFlashAttribute("commentAddBindingModel", commentAddBindingModel);
             redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.commentAddBindingModel"
                     , bindingResult);
+            return "redirect:"+id;
+
         }
         OfferServiceModel offerServiceModel = offerService.findById(id);
         CommentServiceModel comment = modelMapper.map(commentAddBindingModel, CommentServiceModel.class);
