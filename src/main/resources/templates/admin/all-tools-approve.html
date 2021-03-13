@@ -12,7 +12,7 @@
 </header>
 <div th:if="${#lists.isEmpty(unapprovedTools)}">
     <div class="row mx-auto" style="padding-top: 10%">
-        <h1 class="font-weight-bold col-md-12 text-center">Всички инструменти са удобрени!</h1>
+        <h1 class="font-weight-bold col-md-12 text-center">Всички инструменти са одобрени!</h1>
 
     </div>
 </div>
@@ -40,7 +40,7 @@
 
                     <div class="separator">
                         <a th:href="@{/admin/tools/deleteTool/(id=${tool.id})}" type="submit" class="btn btn-sm  btn-danger">Изтрий</a>
-                        <a th:href="@{/admin/tools/approveTool/(id=${tool.id})}" type="button" class="btn btn-sm  btn-success">Удобри</a>
+                        <a th:href="@{/admin/tools/approveTool/(id=${tool.id})}" type="button" class="btn btn-sm  btn-success">Одобри</a>
                     </div>
                     <div class="clearfix">
                     </div>

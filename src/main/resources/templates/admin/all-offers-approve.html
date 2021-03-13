@@ -12,7 +12,7 @@
 </header>
 <div th:if="${#lists.isEmpty(unapprovedOffers)}">
   <div class="row mx-auto" style="padding-top: 10%">
-    <h1 class="font-weight-bold col-md-12 text-center">Всички оферти са удобрени!</h1>
+    <h1 class="font-weight-bold col-md-12 text-center">Всички оферти са одобрени!</h1>
 
   </div>
 </div>
@@ -37,7 +37,7 @@
 
             <div class="separator">
               <a th:href="@{/admin/offers/deleteOffer/(id=${offer.id})}" type="submit" class="btn btn-sm  btn-danger">Изтрий</a>
-              <a th:href="@{/admin/offers/approveOffer/(id=${offer.id})}" type="button" class="btn btn-sm  btn-success">Удобри</a>
+              <a th:href="@{/admin/offers/approveOffer/(id=${offer.id})}" type="button" class="btn btn-sm  btn-success">Одобри</a>
               <a th:href="@{/offer/single-offer/{id}(id=${offer.id})}"  type="button" class="btn btn-sm  btn-dark">Коментари</a>
             </div>
             <div class="clearfix">
