@@ -10,4 +10,6 @@ public interface CommentService {
     CommentServiceModel addComment(CommentServiceModel commentServiceModel, String user, OfferServiceModel offerServiceModel);
 
     List<CommentServiceModel> findCommentsByOfferId(String id);
+
+    void deleteComment(String id);
 }

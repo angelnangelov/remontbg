@@ -34,7 +34,7 @@ public class Comment extends BaseEntity {
     }
 
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     public Offer getOffer() {
         return offer;
     }

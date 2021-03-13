@@ -35,7 +35,7 @@ public class Offer extends BaseOffer {
     public void setPrice(BigDecimal price) {
         this.price = price;
     }
-    @OneToMany(mappedBy = "offer",fetch = FetchType.EAGER,cascade = CascadeType.ALL,orphanRemoval = true)
+    @OneToMany(mappedBy = "offer",fetch = FetchType.EAGER,orphanRemoval = true)
     public List<Comment> getComments() {
         return comments;
     }

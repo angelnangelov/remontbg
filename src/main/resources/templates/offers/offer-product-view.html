@@ -91,6 +91,9 @@
                                     Lorem ipsum dolor sit amet, consectetur adipiscing elit.
                                     Lorem ipsum dolor sit amet, <a href="#">#consecteturadipiscing </a>.
                                 </p>
+                                <th:block sec:authorize="hasRole('ROLE_ADMIN')">
+                                    <a th:href="@{/admin/comments/deleteComment/(id=${c.id})}" type="submit" class="btn btn-sm  btn-danger">Изтрий</a>
+                                </th:block>
                             </div>
                         </li>
                     </ul>

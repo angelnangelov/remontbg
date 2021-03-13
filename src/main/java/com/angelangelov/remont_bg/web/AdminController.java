@@ -4,6 +4,8 @@ import com.angelangelov.remont_bg.model.services.OfferServiceModel;
 import com.angelangelov.remont_bg.model.services.ToolOfferServiceModel;
 import com.angelangelov.remont_bg.model.services.UserServiceModel;
 import com.angelangelov.remont_bg.model.views.UserViewModel;
+import com.angelangelov.remont_bg.repository.CommentRepository;
+import com.angelangelov.remont_bg.service.CommentService;
 import com.angelangelov.remont_bg.service.OfferService;
 import com.angelangelov.remont_bg.service.ToolOfferService;
 import com.angelangelov.remont_bg.service.UserService;
@@ -24,14 +26,18 @@ public class AdminController {
     private final ModelMapper modelMapper;
     private  final OfferService offerService;
     private final ToolOfferService toolOfferService;
+    private final CommentService commentService;
 
 
-    public AdminController(UserService userService, ModelMapper modelMapper, OfferService offerService, ToolOfferService toolOfferService) {
+
+    public AdminController(UserService userService, ModelMapper modelMapper, OfferService offerService, ToolOfferService toolOfferService, CommentService commentService) {
         this.userService = userService;
         this.modelMapper = modelMapper;
 
         this.offerService = offerService;
         this.toolOfferService = toolOfferService;
+        this.commentService = commentService;
+
     }
 
     @GetMapping("/actions")
@@ -96,6 +102,14 @@ public class AdminController {
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public String deleteOffer(@RequestParam(name = "id") String id){
         this.offerService.deleteOffer(id);
+        return "redirect:/admin/offers";
+    }
+
+    @GetMapping("/comments/deleteComment/")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public String deleteComment(@RequestParam(name = "id") String id){
+        this.commentService.deleteComment(id);
+        //TODO : REDIRECT TO SAME PAGE?
         return "redirect:/admin/offers";
     }
 

@@ -1,5 +1,7 @@
 package com.angelangelov.remont_bg.service.impl;
 
+import com.angelangelov.remont_bg.error.category.CategoryWithIdNotExists;
+import com.angelangelov.remont_bg.error.comment.CommentWithIdNotExists;
 import com.angelangelov.remont_bg.model.entities.Comment;
 import com.angelangelov.remont_bg.model.entities.Offer;
 import com.angelangelov.remont_bg.model.entities.User;
@@ -50,5 +52,15 @@ public class CommentServiceImpl implements CommentService {
                  .stream().map(comment ->
                      modelMapper.map(comment,CommentServiceModel.class)
          ).collect(Collectors.toList());
+    }
+
+    @Override
+    public void deleteComment(String id) {
+        Comment comment = commentRepository.findById(id)
+                .orElseThrow(() -> new CommentWithIdNotExists(String.format("Comment with id: %s not found",id)));
+        commentRepository.deleteById(comment.getId());
+        //TODO : NE TRIE KOMENTARA?
+
+
     }
 }
