@@ -2,16 +2,18 @@ package com.angelangelov.remont_bg.model.entities;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.List;
 
 @Entity
-@Table(name = "services")
+@Table(name = "offers")
 public class Offer extends BaseOffer {
     private BigDecimal price;
     private OfferCategory category;
+    private List<Comment> comments;
+
 
     public Offer() {
     }
-
 
 
     @ManyToOne
@@ -30,5 +32,13 @@ public class Offer extends BaseOffer {
 
     public void setPrice(BigDecimal price) {
         this.price = price;
+    }
+    @OneToMany(mappedBy = "offer")
+    public List<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
     }
 }

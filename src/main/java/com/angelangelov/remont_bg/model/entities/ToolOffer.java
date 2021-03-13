@@ -1,10 +1,8 @@
 package com.angelangelov.remont_bg.model.entities;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.List;
 
 @Entity
 @Table(name = "tools")
@@ -12,7 +10,6 @@ public class ToolOffer extends BaseOffer {
     private BigDecimal price;
     private String power;
     private BigDecimal deposit;
-
     private ToolCategory toolCategory;
 
     public ToolOffer() {
@@ -53,4 +50,6 @@ public class ToolOffer extends BaseOffer {
     public void setDeposit(BigDecimal deposit) {
         this.deposit = deposit;
     }
+
+
 }

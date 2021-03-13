@@ -131,9 +131,12 @@ public class UserController {
 
         UserServiceModel userServiceModel = modelMapper.map(userEditBindingModel, UserServiceModel.class);
 
-        System.out.println();
-        if (!userServiceModel.getImage().equals(PROFILE_IMG_DEFAULT)) {
+
+        if (!userEditBindingModel.getImage().isEmpty()) {
             userServiceModel.setImage(cloudinaryService.uploadImg(userEditBindingModel.getImage()));
+        } else {
+            userServiceModel.setImage(PROFILE_IMG_DEFAULT);
+            //TODO : SET OLD PICTURE
         }
 
         System.out.println();

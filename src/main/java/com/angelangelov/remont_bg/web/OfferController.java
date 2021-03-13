@@ -1,9 +1,11 @@
 package com.angelangelov.remont_bg.web;
 
+import com.angelangelov.remont_bg.model.bindings.CommentAddBindingModel;
 import com.angelangelov.remont_bg.model.bindings.OfferAddBindingModel;
 import com.angelangelov.remont_bg.model.entities.Offer;
 import com.angelangelov.remont_bg.model.entities.enums.Region;
 import com.angelangelov.remont_bg.model.entities.enums.ServiceOfferNames;
+import com.angelangelov.remont_bg.model.services.CommentServiceModel;
 import com.angelangelov.remont_bg.model.services.OfferCategoryServiceModel;
 import com.angelangelov.remont_bg.model.services.OfferServiceModel;
 import com.angelangelov.remont_bg.model.views.OfferCategoryViewModel;
@@ -11,11 +13,11 @@ import com.angelangelov.remont_bg.model.views.OfferViewModel;
 import com.angelangelov.remont_bg.model.views.UserOffersViewModel;
 import com.angelangelov.remont_bg.model.views.UserViewModel;
 import com.angelangelov.remont_bg.service.CloudinaryService;
+import com.angelangelov.remont_bg.service.CommentService;
 import com.angelangelov.remont_bg.service.OfferCategoryService;
 import com.angelangelov.remont_bg.service.OfferService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -39,13 +41,15 @@ public class OfferController {
     private final ModelMapper modelMapper;
     private final CloudinaryService cloudinaryService;
     private final OfferCategoryService offerCategoryService;
+    private final CommentService commentService;
 
     @Autowired
-    public OfferController(OfferService offerService, ModelMapper modelMapper, CloudinaryService cloudinaryService, OfferCategoryService offerCategoryService) {
+    public OfferController(OfferService offerService, ModelMapper modelMapper, CloudinaryService cloudinaryService, OfferCategoryService offerCategoryService, CommentService commentService) {
         this.offerService = offerService;
         this.modelMapper = modelMapper;
         this.cloudinaryService = cloudinaryService;
         this.offerCategoryService = offerCategoryService;
+        this.commentService = commentService;
     }
 
     @GetMapping("/categories")
@@ -68,12 +72,14 @@ public class OfferController {
 
     @GetMapping("/single-offer/{id}")
     private String productPage(@PathVariable String id,Model model) {
+   
         OfferServiceModel offerServiceModel = offerService.findById(id);
         OfferViewModel offerViewModel = modelMapper.map(offerServiceModel, OfferViewModel.class);
         offerViewModel.setUserViewModel(modelMapper.map(offerServiceModel.getUser(), UserViewModel.class));
         model.addAttribute("offer",offerViewModel);
         return "offers/offer-product-view";
     }
+
 
 
     @GetMapping("/actions")
