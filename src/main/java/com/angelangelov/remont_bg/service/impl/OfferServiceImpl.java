@@ -1,15 +1,14 @@
 package com.angelangelov.remont_bg.service.impl;
 
 import com.angelangelov.remont_bg.error.category.CategoryWithIdNotExists;
-import com.angelangelov.remont_bg.error.user.UserWithIdNotExists;
 import com.angelangelov.remont_bg.model.entities.Offer;
-import com.angelangelov.remont_bg.model.entities.OfferCategory;
 import com.angelangelov.remont_bg.model.entities.User;
 import com.angelangelov.remont_bg.model.entities.enums.ServiceOfferNames;
-import com.angelangelov.remont_bg.model.services.OfferCategoryServiceModel;
+import com.angelangelov.remont_bg.model.services.CommentServiceModel;
 import com.angelangelov.remont_bg.model.services.OfferServiceModel;
 import com.angelangelov.remont_bg.model.services.UserServiceModel;
 import com.angelangelov.remont_bg.repository.OfferRepository;
+import com.angelangelov.remont_bg.service.CommentService;
 import com.angelangelov.remont_bg.service.OfferCategoryService;
 import com.angelangelov.remont_bg.service.OfferService;
 import com.angelangelov.remont_bg.service.UserService;
@@ -27,11 +26,13 @@ public class OfferServiceImpl implements OfferService {
     private final OfferCategoryService offerCategoryService;
     private final UserService userService;
 
+
     public OfferServiceImpl(ModelMapper modelMapper, OfferRepository offerRepository, OfferCategoryService offerCategoryService, UserService userService) {
         this.modelMapper = modelMapper;
         this.offerRepository = offerRepository;
         this.offerCategoryService = offerCategoryService;
         this.userService = userService;
+
     }
 
     @Override
@@ -81,7 +82,9 @@ public class OfferServiceImpl implements OfferService {
     @Override
     public void deleteOffer(String id) {
         Offer offer = offerRepository.findById(id)
-                .orElseThrow(() -> new CategoryWithIdNotExists(String.format("Offer with id: %s not found",id)));;
+                .orElseThrow(() -> new CategoryWithIdNotExists(String.format("Offer with id: %s not found",id)));
+
+
         this.offerRepository.delete(offer);
     }
 

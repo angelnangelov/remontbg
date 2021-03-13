@@ -2,6 +2,7 @@ package com.angelangelov.remont_bg.web;
 
 import com.angelangelov.remont_bg.model.bindings.CommentAddBindingModel;
 import com.angelangelov.remont_bg.model.bindings.OfferAddBindingModel;
+import com.angelangelov.remont_bg.model.entities.Comment;
 import com.angelangelov.remont_bg.model.entities.Offer;
 import com.angelangelov.remont_bg.model.entities.enums.Region;
 import com.angelangelov.remont_bg.model.entities.enums.ServiceOfferNames;
@@ -28,6 +29,7 @@ import javax.validation.Valid;
 import java.io.IOException;
 import java.security.Principal;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import static com.angelangelov.remont_bg.web.constants.ControllersConstants.N0_IMG_URL;
@@ -62,7 +64,7 @@ public class OfferController {
     public String offersInCategory(@PathVariable String id,Model model){
         OfferCategoryServiceModel offerCategoryServiceModel = offerCategoryService.findById(id);
         OfferCategoryViewModel offerByCategory = modelMapper.map(offerCategoryServiceModel, OfferCategoryViewModel.class);
-        List<Offer> approvedOffers = offerByCategory.getOffers().stream().filter(o -> o.getApproved()).collect(Collectors.toList());
+        Set<Offer> approvedOffers = offerByCategory.getOffers().stream().filter(o -> o.getApproved()).collect(Collectors.toSet());
         
         System.out.println();
         model.addAttribute("offerName",offerByCategory.getName());
@@ -72,14 +74,41 @@ public class OfferController {
 
     @GetMapping("/single-offer/{id}")
     private String productPage(@PathVariable String id,Model model) {
-   
+        if(!model.containsAttribute("commentAddBindingModel")){
+            model.addAttribute("commentAddBindingModel",new CommentAddBindingModel());
+        }
         OfferServiceModel offerServiceModel = offerService.findById(id);
         OfferViewModel offerViewModel = modelMapper.map(offerServiceModel, OfferViewModel.class);
         offerViewModel.setUserViewModel(modelMapper.map(offerServiceModel.getUser(), UserViewModel.class));
+        List<CommentServiceModel> commentsByOfferId = commentService.findCommentsByOfferId(id);
+
+        model.addAttribute("comments",commentsByOfferId);
         model.addAttribute("offer",offerViewModel);
         return "offers/offer-product-view";
     }
 
+    @PostMapping("/single-offer/{id}")
+    private String postComment(@PathVariable String id,
+                               @Valid @ModelAttribute("commentAddBindingModel") CommentAddBindingModel commentAddBindingModel,
+                               BindingResult bindingResult,
+                               RedirectAttributes redirectAttributes, Principal principal) {
+        //TODO : VALIDATIONS DONT SHOW
+        if (commentAddBindingModel.getDescription().isBlank()) {
+            bindingResult.rejectValue("description", "error.commentAddBindingModel", "Това поле не може да е празно!");
+
+        }
+        if (bindingResult.hasErrors()) {
+            redirectAttributes.addFlashAttribute("commentAddBindingModel", commentAddBindingModel);
+            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.commentAddBindingModel"
+                    , bindingResult);
+        }
+        OfferServiceModel offerServiceModel = offerService.findById(id);
+        CommentServiceModel comment = modelMapper.map(commentAddBindingModel, CommentServiceModel.class);
+
+        commentService.addComment(comment, principal.getName(), offerServiceModel);
+
+        return "redirect:"+id;
+    }
 
 
     @GetMapping("/actions")

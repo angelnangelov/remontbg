@@ -1,9 +1,11 @@
 package com.angelangelov.remont_bg.model.views;
 
+import com.angelangelov.remont_bg.model.entities.Comment;
 import com.angelangelov.remont_bg.model.entities.enums.Region;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.List;
 
 public class OfferViewModel {
 
@@ -18,6 +20,7 @@ public class OfferViewModel {
     private boolean approved;
     private OfferCategoryViewModel category;
     private UserViewModel userViewModel;
+    private List<Comment> comments;
 
     public OfferViewModel() {
     }
@@ -108,5 +111,13 @@ public class OfferViewModel {
 
     public void setUserViewModel(UserViewModel userViewModel) {
         this.userViewModel = userViewModel;
+    }
+
+    public List<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
     }
 }

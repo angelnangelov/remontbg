@@ -13,6 +13,9 @@ import com.angelangelov.remont_bg.service.UserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 public class CommentServiceImpl implements CommentService {
     private final ModelMapper modelMapper;
@@ -28,13 +31,24 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public void addComment(CommentServiceModel commentServiceModel, String user, OfferServiceModel offerServiceModel) {
+    public CommentServiceModel addComment(CommentServiceModel commentServiceModel, String user, OfferServiceModel offerServiceModel) {
         Comment comment = modelMapper.map(commentServiceModel, Comment.class);
         comment.setUser(modelMapper.map(userService.findUserByUsername(user), User.class));
         comment.setOffer(modelMapper.map(offerServiceModel, Offer.class));
-        commentRepository.save(comment);
+        System.out.println();
+
+        return  modelMapper.map(commentRepository.save(comment),CommentServiceModel.class);
 
 
 
+    }
+
+    @Override
+    public List<CommentServiceModel> findCommentsByOfferId(String id) {
+
+       return   commentRepository.findAllByOfferIdOrderByPostedTime(id)
+                 .stream().map(comment ->
+                     modelMapper.map(comment,CommentServiceModel.class)
+         ).collect(Collectors.toList());
     }
 }

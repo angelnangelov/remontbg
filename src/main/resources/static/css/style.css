@@ -812,11 +812,19 @@ img {
     box-shadow: 3px 3px 3px 3px rgba(0,0,0,.15);
     transition: all .4s ease;
 }
-.dot {
-    height: 7px;
-    width: 7px;
-    margin-top: 3px;
-    background-color: #bbb;
-    border-radius: 50%;
-    display: inline-block
+.comment-wrapper .panel-body {
+    width: auto;
+    max-height:650px;
+    overflow:auto;
+}
+
+.comment-wrapper .media-list .media img {
+    width:64px;
+    height:64px;
+    border:2px solid #e5e7e8;
+}
+
+.comment-wrapper .media-list .media {
+    border-bottom:1px dashed #efefef;
+    margin-bottom:25px;
 }

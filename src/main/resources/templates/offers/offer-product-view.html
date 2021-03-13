@@ -65,25 +65,42 @@
             </div>
         </div>
     </div>
-    <div class="container mt-5 mb-5">
-        <div class="d-flex justify-content-center row">
-            <div class="d-flex flex-column col-md-8">
-
-                <div class="coment-bottom bg-white p-2 px-4">
-                    <div class="d-flex flex-row add-comment-section mt-4 mb-4"><img class="img-fluid img-responsive rounded-circle mr-2" src="https://i.imgur.com/qdiP4DB.jpg" width="38"><input type="text" class="form-control mr-3" placeholder="Add comment"><button class="btn btn-primary" type="button">Comment</button></div>
-                    <div class="commented-section mt-2">
-                        <div class="d-flex flex-row align-items-center commented-user">
-                            <h5 class="mr-2">Corey oates</h5><span class="dot mb-1"></span><span class="mb-1 ml-2">4 hours ago</span>
-                        </div>
-                        <div class="comment-text-sm"><span>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</span></div>
-
-                    </div>
-
-                    </div>
+    <form  th:action="@{/offer/single-offer/{id}(id=${offer.id})}" th:method="post">
+    <div class="container-fluid " style="padding-top: 3%">
+        <div class="comment-wrapper">
+            <div class="panel panel-info">
+                <div class="panel-body">
+                    <textarea  th:field="${commentAddBindingModel.description}"  class="form-control" placeholder="Добави мнение за ползваната услуга..." rows="3"></textarea>
+                    <br>
+                    <button type="submit" class="btn btn-danger pull-right" style="background-color:  #932432!important;">Добави</button>
+                    <div class="clearfix"></div>
+                    <hr>
+                    <ul class="media-list">
+                        <li class="media" th:each="c : ${comments}">
+                            <div style="padding-right: 5px">
+                                <img th:src="${c.user.image}" alt="" class="rounded-circle">
+                            </div>
+                            <div class="media-body">
+                                <strong th:text="|${c.user.firstName} ${c.user.lastName}|" style="color: #932432 ">First LastName</strong>
+                                <span class="text-muted pull-right">
+                                    <small th:text="${#temporals.format(c.postedTime, 'dd/MMM/yyyy HH:mm')}" class="text-muted">30 min ago</small>
+                                </span>
+                                <p th:text="${c.description}">
+                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                                    Lorem ipsum dolor sit amet, <a href="#">#consecteturadipiscing </a>.
+                                </p>
+                            </div>
+                        </li>
+                    </ul>
                 </div>
             </div>
         </div>
+
     </div>
+    </form>
+    </div>
+
+
 </body>
 <th:block th:include="~{fragments/footer}"/>
 

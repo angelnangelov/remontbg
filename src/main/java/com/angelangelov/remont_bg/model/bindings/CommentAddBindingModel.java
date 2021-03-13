@@ -2,6 +2,7 @@ package com.angelangelov.remont_bg.model.bindings;
 
 import com.angelangelov.remont_bg.model.services.BaseServiceModel;
 
+import javax.validation.constraints.NotBlank;
 import java.time.LocalDateTime;
 
 public class CommentAddBindingModel extends BaseBindingModel {
@@ -11,6 +12,7 @@ public class CommentAddBindingModel extends BaseBindingModel {
     public CommentAddBindingModel() {
     }
 
+    @NotBlank(message = "Не може да се добавя празен коментар!")
     public String getDescription() {
         return description;
     }
