@@ -4,9 +4,9 @@ import com.angelangelov.remont_bg.error.user.UserOldPasswordNotCorrectException;
 import com.angelangelov.remont_bg.error.user.UserWithIdNotExists;
 import com.angelangelov.remont_bg.error.user.UserWithUsernameNotExists;
 import com.angelangelov.remont_bg.model.entities.User;
-import com.angelangelov.remont_bg.model.services.OfferServiceModel;
 import com.angelangelov.remont_bg.model.services.UserServiceModel;
 import com.angelangelov.remont_bg.repository.UserRepository;
+import com.angelangelov.remont_bg.service.EmailService;
 import com.angelangelov.remont_bg.service.RoleService;
 import com.angelangelov.remont_bg.service.UserService;
 import org.modelmapper.ModelMapper;
@@ -26,14 +26,15 @@ public class UserServiceImpl implements UserService {
     private final ModelMapper modelMapper;
     private final UserRepository userRepository;
     private final RoleService roleService;
-
+    private final EmailService emailService;
     private final PasswordEncoder encoder;
 
     @Autowired
-    public UserServiceImpl(ModelMapper modelMapper, UserRepository userRepository, RoleService roleService, PasswordEncoder encoder) {
+    public UserServiceImpl(ModelMapper modelMapper, UserRepository userRepository, RoleService roleService, EmailService emailService, PasswordEncoder encoder) {
         this.modelMapper = modelMapper;
         this.userRepository = userRepository;
         this.roleService = roleService;
+        this.emailService = emailService;
         this.encoder = encoder;
     }
 
@@ -57,7 +58,19 @@ public class UserServiceImpl implements UserService {
 
         User user = modelMapper.map(userServiceModel, User.class);
         user.setPassword(encoder.encode(user.getPassword()));
-       return modelMapper.map(userRepository.save(user),UserServiceModel.class);
+        User savedUser = userRepository.save(user);
+        this.emailService.sendSimpleMessage
+                (savedUser.getEmail()
+                        ,"Добре дошли в Ремонт.бг"
+                        , """
+                                Добре дошли!
+                                Вече може да ползвате всички наши услуги!
+                                Поздрави,
+                                Екипът на ремонт.бг!"""
+                        ,"remontprojectbg@gmail.com");;
+
+        return modelMapper.map(savedUser,UserServiceModel.class);
+
 
     }
 
@@ -127,6 +140,8 @@ public class UserServiceImpl implements UserService {
         userRepository.saveAndFlush(modelMapper.map(userServiceModel, User.class));
         user.setPassword(userServiceModel.getPassword() != null ? encoder.encode(userServiceModel.getPassword()) :
                 user.getPassword());
+
+
     }
 
     @Override
