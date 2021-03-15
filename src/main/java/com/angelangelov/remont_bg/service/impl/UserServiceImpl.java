@@ -61,12 +61,12 @@ public class UserServiceImpl implements UserService {
         User savedUser = userRepository.save(user);
         this.emailService.sendSimpleMessage
                 (savedUser.getEmail()
-                        ,"Добре дошли в Ремонт.бг"
+                        ,"Успешна регистрация в Ремонт.бг"
                         , """
                                 Добре дошли!
                                 Вече може да ползвате всички наши услуги!
                                 Поздрави,
-                                Екипът на ремонт.бг!"""
+                                Екипът на Ремонт.бг!"""
                         ,"remontprojectbg@gmail.com");;
 
         return modelMapper.map(savedUser,UserServiceModel.class);

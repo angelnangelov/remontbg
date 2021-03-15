@@ -47,7 +47,7 @@ public class AppSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .and()
                 .exceptionHandling().accessDeniedPage("/unauthorized");
 
-        http.headers().disable();
+
     }
 
     @Override
