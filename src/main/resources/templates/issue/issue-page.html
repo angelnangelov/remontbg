@@ -10,8 +10,11 @@
     <th:block th:include="~{fragments/navbar}"/>
 </header>
 <div class="container">
-<section class="container mt-5">
+    <form  th:object="${issueAddBindingModel}" th:action="@{/issue/submit}" th:method="post"  enctype="multipart/form-data">
+
+    <section class="container mt-5">
     <!--Contact heading-->
+
     <div class="row">
         <!--Grid column-->
         <div class="col-sm-12 mb-4 col-md-5">
@@ -20,22 +23,32 @@
             <div class="card  rounded-0" style=" border: 1px solid #932432;">
                 <div class="card-header p-0">
                     <div class=" text-white text-center py-2" style="background-color: #932432">
-                        <h3><i class="fa fa-envelope"></i> Write to us:</h3>
-                        <p class="m-0">We’ll write rarely, but only the best content.</p>
+                        <h3><i class="fa fa-envelope"></i> Пишете ни:</h3>
+                        <p class="m-0">Имате проблем? Пишете, ние ще се свържим с вас!.</p>
                     </div>
                 </div>
                 <div class="card-body p-3">
 
                     <div class="form-group">
-                        <label>Subject</label>
+                        <label>Заглавие</label>
                         <div class="input-group mb-2 mb-sm-0">
-                            <input type="text" name="data[subject]" class="form-control" id="inlineFormInputGroupUsername" placeholder="Subject">
+                            <input  th:field="*{problemName}" type="text" name="problemName" class="form-control" id="problemName" placeholder="Subject">
+                            <small th:if="${#fields.hasErrors('problemName')}" th:errors="*{problemName}" id="problemNameError" class="form-text bg-danger rounded">Името трябва да бъде м/у 3 и 20 символа</small>
+
                         </div>
                     </div>
                     <div class="form-group">
-                        <label>Message</label>
+                        <label>Описание</label>
                         <div class="input-group mb-2 mb-sm-0">
-                            <textarea type="text" class="form-control" name="mesg"> </textarea>
+                            <textarea  th:field="*{problemDescription}" type="text" class="form-control" id ="problemDescription"> </textarea>
+                            <small th:if="${#fields.hasErrors('problemDescription')}" th:errors="*{problemDescription}" id="problemDescriptionEror" class="form-text bg-danger rounded">Името трябва да бъде м/у 3 и 20 символа</small>
+
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Снимка на проблема</label>
+                        <div class="input-group mb-2 mb-sm-0">
+                            <input type="file" class="form-control-file" id="problemImgUrl" name="problemImgUrl">
                         </div>
                     </div>
                     <div class="text-center">
@@ -48,8 +61,9 @@
         </div>
         <!--Grid column-->
 
-        <!--Grid column-->
+
         <div class="col-sm-12 col-md-7">
+
             <!--Google map-->
             <div class="mb-4">
                 <iframe width="100%" height="600" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.com/maps?width=100%25&amp;height=600&amp;hl=en&amp;q=Asenovgrad,sredna%20gora+(%D0%A0%D0%B5%D0%BC%D0%BE%D0%BD%D1%82.%D0%B1%D0%B3)&amp;t=p&amp;z=14&amp;ie=UTF8&amp;iwloc=B&amp;output=embed"></iframe>
@@ -59,6 +73,7 @@
     </div>
     </div>
 </section>
+    </form>
 </div>
 <th:block th:include="~{fragments/footer}"/>
 

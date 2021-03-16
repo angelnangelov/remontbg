@@ -1,19 +1,16 @@
-package com.angelangelov.remont_bg.model.entities;
+package com.angelangelov.remont_bg.model.services;
 
-import javax.persistence.*;
+import com.angelangelov.remont_bg.model.entities.User;
 
-@Entity
-@Table(name = "issues")
-public class Issue extends BaseEntity {
+public class IssueServiceModel extends BaseServiceModel{
     private String problemName;
     private String problemDescription;
     private String problemImgUrl;
-    private User user;
+    private UserServiceModel user;
 
-    public Issue() {
+    public IssueServiceModel() {
     }
 
-    @Column(name = "problem_name", nullable = false)
     public String getProblemName() {
         return problemName;
     }
@@ -22,7 +19,6 @@ public class Issue extends BaseEntity {
         this.problemName = problemName;
     }
 
-    @Column(name = "problem_description", nullable = false, columnDefinition = "text")
     public String getProblemDescription() {
         return problemDescription;
     }
@@ -31,7 +27,6 @@ public class Issue extends BaseEntity {
         this.problemDescription = problemDescription;
     }
 
-    @Column(name = "problem_img_url")
     public String getProblemImgUrl() {
         return problemImgUrl;
     }
@@ -40,13 +35,11 @@ public class Issue extends BaseEntity {
         this.problemImgUrl = problemImgUrl;
     }
 
-
-    @ManyToOne
-    public User getUser() {
+    public UserServiceModel getUser() {
         return user;
     }
 
-    public void setUser(User user) {
+    public void setUser(UserServiceModel user) {
         this.user = user;
     }
 }
