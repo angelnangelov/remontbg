@@ -17,9 +17,18 @@ public class UserToolsViewModel {
     private LocalDate endsOn;
     private String ownerPhoneNumber;
     private boolean approved;
+    private boolean active;
     private String category;
 
     public UserToolsViewModel() {
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
     }
 
     public String getId() {

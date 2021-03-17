@@ -31,6 +31,7 @@
                     <img th:src="*{image}" class="img-responsive" alt="a" />
                 </div>
                 <p th:if="*{!approved}" class="text-danger border-danger font-weight-bold text-center">Изчаква одобрение</p>
+                <p th:if="*{!active}" class="text-danger border-danger font-weight-bold text-center">Обявата е изтекла, цъкнете промени,за да редактирате датите</p>
                 <div >
 
                         <div class="separator align-content-center">

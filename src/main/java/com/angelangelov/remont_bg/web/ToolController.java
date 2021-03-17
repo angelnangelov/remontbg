@@ -97,7 +97,7 @@ public class ToolController {
     public String offersInCategory(@PathVariable String id, Model model){
         ToolCategoryServiceModel toolCategoryServiceModel = toolCategoryService.findById(id);
         ToolsCategoryViewModel toolsCategoryViewModel = modelMapper.map(toolCategoryServiceModel, ToolsCategoryViewModel.class);
-        List<ToolOffer> tools = toolsCategoryViewModel.getTools().stream().filter(t->t.getApproved()).collect(Collectors.toList());
+        List<ToolOffer> tools = toolsCategoryViewModel.getTools().stream().filter(t->t.getApproved() && t.getActive()).collect(Collectors.toList());
         System.out.println();
         model.addAttribute("toolName",toolCategoryServiceModel.getName());
         model.addAttribute("tools",tools);

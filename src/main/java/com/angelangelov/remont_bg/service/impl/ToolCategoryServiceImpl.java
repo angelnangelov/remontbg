@@ -46,7 +46,7 @@ public class ToolCategoryServiceImpl implements ToolCategoryService {
         return this.toolCategoryRepository.findAll().stream().map(
                 a ->{
                     ToolsCategoryViewModel toolsCategoryViewModel = this.modelMapper.map(a, ToolsCategoryViewModel.class);
-                    List<ToolOffer> approvedTools = a.getTools().stream().filter(t -> t.getApproved()).collect(Collectors.toList());
+                    List<ToolOffer> approvedTools = a.getTools().stream().filter(t -> t.getApproved()  && t.getActive()).collect(Collectors.toList());
                     toolsCategoryViewModel.setTools(approvedTools);
                     return toolsCategoryViewModel;
                 }

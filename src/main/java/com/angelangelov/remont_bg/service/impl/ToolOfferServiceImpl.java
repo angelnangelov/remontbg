@@ -54,7 +54,7 @@ public class ToolOfferServiceImpl implements ToolOfferService {
 
     @Override
     public List<ToolOfferServiceModel> findAllUnapprovedTools() {
-        List<ToolOffer> allTools = toolOfferRepository.findAllByApprovedFalse();
+        List<ToolOffer> allTools = toolOfferRepository.findAllByApprovedFalseAndActiveTrue();
         return allTools.stream().map(offer -> {
             ToolOfferServiceModel toolOfferServiceModel = modelMapper.map(offer, ToolOfferServiceModel.class);
             toolOfferServiceModel.setCategory(offer.getToolCategory().getName().toString());

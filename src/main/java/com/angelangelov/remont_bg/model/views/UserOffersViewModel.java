@@ -16,9 +16,18 @@ public class UserOffersViewModel {
     private LocalDate endsOn;
     private String ownerPhoneNumber;
     private boolean approved;
+    private boolean active;
     private String category;
 
     public UserOffersViewModel() {
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
     }
 
     public String getId() {

@@ -64,7 +64,7 @@ public class OfferController {
     public String offersInCategory(@PathVariable String id,Model model){
         OfferCategoryServiceModel offerCategoryServiceModel = offerCategoryService.findById(id);
         OfferCategoryViewModel offerByCategory = modelMapper.map(offerCategoryServiceModel, OfferCategoryViewModel.class);
-        Set<Offer> approvedOffers = offerByCategory.getOffers().stream().filter(o -> o.getApproved()).collect(Collectors.toSet());
+        Set<Offer> approvedOffers = offerByCategory.getOffers().stream().filter(o -> o.getApproved() && o.getActive()).collect(Collectors.toSet());
         
         System.out.println();
         model.addAttribute("offerName",offerByCategory.getName());

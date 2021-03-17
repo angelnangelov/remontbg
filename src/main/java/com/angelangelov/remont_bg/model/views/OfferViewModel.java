@@ -18,6 +18,7 @@ public class OfferViewModel {
     private LocalDate endsOn;
     private String ownerPhoneNumber;
     private boolean approved;
+
     private OfferCategoryViewModel category;
     private UserViewModel userViewModel;
     private List<Comment> comments;

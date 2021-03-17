@@ -58,7 +58,7 @@ public class OfferServiceImpl implements OfferService {
 
     @Override
     public List<OfferServiceModel> findAllOffers() {
-        List<Offer> allOffers = offerRepository.findAllByApprovedFalse();
+        List<Offer> allOffers = offerRepository.findAllByApprovedFalseAndActiveTrue();
         return allOffers.stream().map(offer -> {
             OfferServiceModel offerServiceModel = modelMapper.map(offer, OfferServiceModel.class);
             offerServiceModel.setCategory(offer.getCategory().getName().toString());

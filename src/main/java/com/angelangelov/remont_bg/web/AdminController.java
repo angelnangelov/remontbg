@@ -1,5 +1,6 @@
 package com.angelangelov.remont_bg.web;
 
+import com.angelangelov.remont_bg.annotation.PageTitle;
 import com.angelangelov.remont_bg.model.services.CommentServiceModel;
 import com.angelangelov.remont_bg.model.services.OfferServiceModel;
 import com.angelangelov.remont_bg.model.services.ToolOfferServiceModel;
@@ -40,7 +41,7 @@ public class AdminController {
         this.commentService = commentService;
 
     }
-
+    @PageTitle(name = "Admin Panel")
     @GetMapping("/actions")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public String adminPanel(){

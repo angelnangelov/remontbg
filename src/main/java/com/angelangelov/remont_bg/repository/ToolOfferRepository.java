@@ -14,7 +14,7 @@ import java.util.List;
 @Repository
 public interface ToolOfferRepository extends JpaRepository<ToolOffer,String> {
 
-    List<ToolOffer> findAllByApprovedFalse();
+    List<ToolOffer> findAllByApprovedFalseAndActiveTrue();
     List<ToolOffer> findAllByUserId(String id);
 
 }

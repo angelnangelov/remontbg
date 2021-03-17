@@ -46,7 +46,7 @@ public class OfferCategoryServiceImpl implements OfferCategoryService {
 
                 a ->{
                     OfferCategoryViewModel offerCategoryServiceModel = this.modelMapper.map(a, OfferCategoryViewModel.class);
-                    List<Offer> approvedOffers = offerCategoryServiceModel.getOffers().stream().filter(o -> o.getApproved()).collect(Collectors.toList());
+                    List<Offer> approvedOffers = offerCategoryServiceModel.getOffers().stream().filter(o -> o.getApproved() && o.getActive()).collect(Collectors.toList());
 
                     offerCategoryServiceModel.setOffers(approvedOffers);
                     return offerCategoryServiceModel;
