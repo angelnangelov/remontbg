@@ -12,19 +12,20 @@ import javax.servlet.http.HttpServletResponse;
 public class PageTitleInterceptor implements HandlerInterceptor {
 
     @Override
-    public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler,
-                           ModelAndView modelAndView) {
+    public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
+        String title = "REMONT.BG";
 
-        String title = "Ремонт.бг";
-        String addToTitleStr = "";
-        if (handler instanceof HandlerMethod) {
-            PageTitle addToTitle = ((HandlerMethod) handler).getMethodAnnotation(PageTitle.class);
-            addToTitleStr = addToTitle != null ? " - " + addToTitle.name() : "";
-        }
         if (modelAndView == null) {
             modelAndView = new ModelAndView();
-        }
-        modelAndView.addObject("pageTitle", title + addToTitleStr);
-    }
+        } else {
+            if (handler instanceof HandlerMethod) {
+                PageTitle methodAnnotation = ((HandlerMethod) handler).getMethodAnnotation(PageTitle.class);
 
+                if (methodAnnotation != null) {
+                    modelAndView
+                            .addObject("title", title + " - " + methodAnnotation.name());
+                }
+            }
+        }
+    }
 }
