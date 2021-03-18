@@ -44,9 +44,10 @@ public class ToolController {
     @PageTitle(name = "Offers - Categories")
     @GetMapping("/categories")
     private String allOffers(Model model){
-
+        int allToolsSum = this.toolCategoryService.getAllTools().stream().mapToInt(tool -> tool.getTools().size()).sum();
 
         model.addAttribute("allTools",this.toolCategoryService.getAllTools());
+        model.addAttribute("allToolsSum",allToolsSum);
         return "tools/all-tools-categories";
     }
     @PageTitle(name = "Tool: Actions")

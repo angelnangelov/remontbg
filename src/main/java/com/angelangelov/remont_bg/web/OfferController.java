@@ -60,7 +60,9 @@ public class OfferController {
     @PageTitle(name = "Offers - Categories")
     @GetMapping("/categories")
     private String allOffers(Model model) {
+        int allOffersSum = this.offerCategoryService.getAllCategories().stream().mapToInt(category -> category.getOffers().size()).sum();
         model.addAttribute("allCategories", this.offerCategoryService.getAllCategories());
+        model.addAttribute("allOffersSum", allOffersSum);
         return "offers/all-offer-categories";
     }
     @PageTitle(name = "Offers")
