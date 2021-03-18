@@ -19,7 +19,7 @@ public class GreetingInterceptor implements HandlerInterceptor{
         LocalDateTime localDateTime = LocalDateTime.now();
         int hour = localDateTime.getHour();
 
-        if(hour<12){
+        if(hour<12 && hour>5){
             greetings="Добро утро, ";
         }else  if(hour>12 && hour<18){
             greetings="Добър ден, ";

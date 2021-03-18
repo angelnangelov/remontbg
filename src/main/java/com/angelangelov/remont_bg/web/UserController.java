@@ -1,5 +1,6 @@
 package com.angelangelov.remont_bg.web;
 
+import com.angelangelov.remont_bg.annotation.PageTitle;
 import com.angelangelov.remont_bg.model.bindings.UserEditBindingModel;
 import com.angelangelov.remont_bg.model.bindings.UserPasswordChangeBindingModel;
 import com.angelangelov.remont_bg.model.bindings.UserRegisterBindingModel;
@@ -42,13 +43,14 @@ public class UserController {
         this.encoder = encoder;
     }
 
+    @PageTitle(name = "Login")
     @GetMapping("/login")
     @PreAuthorize("isAnonymous()")
     public String login(Model model) {
         return "auth/login";
     }
 
-
+    @PageTitle(name = "Register")
     @GetMapping("/register")
     @PreAuthorize("isAnonymous()")
     public String userRegister(Model model) {
@@ -97,7 +99,7 @@ public class UserController {
         }
     }
 
-
+    @PageTitle(name = "Profile")
     @GetMapping("/profile")
     @PreAuthorize("isAuthenticated()")
     public String profile(Model model, Principal principal) {
@@ -136,7 +138,7 @@ public class UserController {
             userServiceModel.setImage(cloudinaryService.uploadImg(userEditBindingModel.getImage()));
         } else {
             userServiceModel.setImage(PROFILE_IMG_DEFAULT);
-            //TODO : SET OLD PICTURE
+
         }
 
         System.out.println();
@@ -145,6 +147,7 @@ public class UserController {
         return "redirect:profile";
     }
 
+    @PageTitle(name = "PasswordChange")
     @GetMapping("/passwordChange")
     @PreAuthorize("isAuthenticated()")
     public String changePassword(Model model) {

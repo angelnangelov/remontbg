@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:action="http://www.w3.org/1999/xhtml">
+<head th:include="~{fragments/head}"></head>
+<body>
+<header>
+    <th:block th:include="~{fragments/navbar}"></th:block>
+</header>
+<main class="p-5 bg-blur text-center my-main  add-view-container">
+    <h1 class="text-dark border-bottom">Редактирай услуга</h1>
+
+    <div class="d-flex justify-content-center">
+        <form  th:object="${offerEditBindingModel}" th:action="@{/offer/update-offer/{id}(id=${offerEditBindingModel.id})}" th:method="post"  enctype="multipart/form-data"
+                class="text-dark">
+            <div class="form-row m-5">
+                <div class="col">
+                    <label for="name">Заглавие на обявата</label>
+                    <input th:value="*{name}" th:field="*{name}" th:errorclass="bg-danger"  name="name" id="name" type="text" class="form-control" placeholder="Album name">
+                    <small th:if="${#fields.hasErrors('name')}" th:errors="*{name}" id="nameError" class="form-text bg-danger rounded">Името трябва да бъде м/у 3 и 20 символа</small>
+                </div>
+                <div class="col">
+                    <div class="form-group">
+                        <label for="image" class="font-weight-bold">Нова снимка</label>
+                        <input type="file" class="form-control-file" id="image" name="image">
+                    </div>
+                </div>
+            </div>
+            <div class="form-row m-5">
+                <div class="col">
+                    <label for="price">Цена</label>
+                    <input  th:value="*{price}" th:field="*{price}" th:errorclass="bg-danger"  name="price" id="price" type="number" class="form-control" placeholder="Price">
+                    <small th:if="${#fields.hasErrors('price')}" th:errors="*{price}"  id="priceError" class="form-text bg-danger rounded">Цената  не може да бъде отрицателно число</small>
+                </div>
+
+                <div class="col">
+                    <label for="ownerPhoneNumber">Телефонен номер</label>
+                    <input   th:value="*{ownerPhoneNumber}" th:field="*{ownerPhoneNumber}" th:errorclass="bg-danger"  name="ownerPhoneNumber" id="ownerPhoneNumber" type="text" class="form-control" placeholder="Телефонен номер">
+                    <small th:if="${#fields.hasErrors('ownerPhoneNumber')}" th:errors="*{ownerPhoneNumber}" id="ownerPhoneNumberError" class="form-text bg-danger rounded">Това поле е задължително
+                        characters</small>
+                </div>
+            </div>
+            <div class="form-row m-5">
+                <div class="col">
+                    <label for="startsOn">От</label>
+                    <input th:value="*{startsOn}" th:field="*{startsOn}" th:errorclass="bg-danger"  name="startsOn" id="startsOn" type="date" class="form-control" placeholder="Oт">
+                    <small th:if="${#fields.hasErrors('startsOn')}" th:errors="*{startsOn}"  id="releaseDateError" class="form-text bg-danger rounded">Датата не може да бъде в миналото</small>
+                </div>
+                <div class="col">
+                    <label for="endsOn">До</label>
+                    <input  th:value="*{endsOn}" th:field="*{endsOn}" th:errorclass="bg-danger"  name="endsOn" id="endsOn" type="date" class="form-control" placeholder="До">
+                    <small  th:if="${#fields.hasErrors('endsOn')}" th:errors="*{endsOn}"  id="endsOnError" class="form-text bg-danger rounded">Датата не може да бъде в миналото</small>
+                </div>
+            </div>
+
+            <div class="form-row m-5">
+                <div class="col">
+                    <label for="description">Описание</label>
+                    <textarea  th:value="*{description}" th:field="*{description}" th:errorclass="bg-danger"   name="description" id="description" type="text" class="form-control" placeholder="Описание"></textarea>
+                    <small th:if="${#fields.hasErrors('description')}" th:errors="*{description}"  id="descriptionError" class="form-text bg-danger rounded">Описанието трябва да бъде минимум 5 символа</small>
+                </div>
+            </div>
+            <div class="d-flex justify-content-center mt-4">
+                <button class="btn btn-primary btn-block w-50 profile-button" type="submit">Обнови обява</button>
+            </div>
+        </form>
+    </div>
+</main>
+<th:block th:include="~{fragments/footer}"/>
+
+</body>
+</html>

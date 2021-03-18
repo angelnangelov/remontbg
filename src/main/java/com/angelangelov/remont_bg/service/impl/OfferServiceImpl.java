@@ -1,5 +1,6 @@
 package com.angelangelov.remont_bg.service.impl;
 
+import com.angelangelov.remont_bg.error.Offer.OfferWithIdNotExists;
 import com.angelangelov.remont_bg.error.category.CategoryWithIdNotExists;
 import com.angelangelov.remont_bg.model.entities.Offer;
 import com.angelangelov.remont_bg.model.entities.User;
@@ -17,6 +18,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.stream.Collectors;
+
+import static com.angelangelov.remont_bg.web.constants.ControllersConstants.N0_IMG_URL;
+import static com.angelangelov.remont_bg.web.constants.ControllersConstants.PROFILE_IMG_DEFAULT;
 
 @Service
 public class OfferServiceImpl implements OfferService {
@@ -82,10 +86,29 @@ public class OfferServiceImpl implements OfferService {
     @Override
     public void deleteOffer(String id) {
         Offer offer = offerRepository.findById(id)
-                .orElseThrow(() -> new CategoryWithIdNotExists(String.format("Offer with id: %s not found",id)));
+                .orElseThrow(() -> new OfferWithIdNotExists(String.format("Offer with id: %s not found",id)));
 
 
         this.offerRepository.delete(offer);
+    }
+
+    @Override
+    public OfferServiceModel updateOffer(OfferServiceModel offerServiceModel,String id) {
+        Offer offer = offerRepository.findById(id)
+                .orElseThrow(() -> new OfferWithIdNotExists(String.format("Offer with id: %s not found", id)));
+        offer.setActive(true);
+        offer.setApproved(false);
+        offer.setName(offerServiceModel.getName());
+        if (offer.getImage().equals(N0_IMG_URL)) {
+            offer.setImage(offerServiceModel.getImage());
+        }
+        offer.setPrice(offerServiceModel.getPrice());
+        offer.setOwnerPhoneNumber(offerServiceModel.getOwnerPhoneNumber());
+        offer.setStartsOn(offerServiceModel.getStartsOn());
+        offer.setEndsOn(offerServiceModel.getEndsOn());
+        offer.setDescription(offerServiceModel.getDescription());
+        System.out.println();
+        return modelMapper.map(offerRepository.saveAndFlush(offer),OfferServiceModel.class);
     }
 
     @Override

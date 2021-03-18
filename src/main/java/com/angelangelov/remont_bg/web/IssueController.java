@@ -1,5 +1,6 @@
 package com.angelangelov.remont_bg.web;
 
+import com.angelangelov.remont_bg.annotation.PageTitle;
 import com.angelangelov.remont_bg.model.bindings.IssueAddBindingModel;
 import com.angelangelov.remont_bg.model.services.IssueServiceModel;
 import com.angelangelov.remont_bg.service.CloudinaryService;
@@ -34,7 +35,7 @@ public class IssueController {
         this.issueService = issueService;
         this.cloudinaryService = cloudinaryService;
     }
-
+    @PageTitle(name = "Issue")
     @GetMapping("/submit")
     public String submitIssue(Model model){
         if (!model.containsAttribute("issueAddBindingModel")) {

@@ -1,12 +1,13 @@
 package com.angelangelov.remont_bg.web;
 
+import com.angelangelov.remont_bg.annotation.PageTitle;
+
+import com.angelangelov.remont_bg.model.bindings.ToolEditBindingModel;
 import com.angelangelov.remont_bg.model.bindings.ToolOfferAddBindingModel;
-import com.angelangelov.remont_bg.model.entities.Offer;
+
 import com.angelangelov.remont_bg.model.entities.ToolOffer;
 import com.angelangelov.remont_bg.model.entities.enums.Region;
 import com.angelangelov.remont_bg.model.entities.enums.ToolsCategoryName;
-import com.angelangelov.remont_bg.model.services.OfferCategoryServiceModel;
-import com.angelangelov.remont_bg.model.services.OfferServiceModel;
 import com.angelangelov.remont_bg.model.services.ToolCategoryServiceModel;
 import com.angelangelov.remont_bg.model.services.ToolOfferServiceModel;
 import com.angelangelov.remont_bg.model.views.*;
@@ -40,7 +41,7 @@ public class ToolController {
         this.cloudinaryService = cloudinaryService;
     }
 
-
+    @PageTitle(name = "Offers - Categories")
     @GetMapping("/categories")
     private String allOffers(Model model){
 
@@ -48,12 +49,13 @@ public class ToolController {
         model.addAttribute("allTools",this.toolCategoryService.getAllTools());
         return "tools/all-tools-categories";
     }
-
+    @PageTitle(name = "Tool: Actions")
     @GetMapping("/actions")
     private String chooseAction(){
         return "tools/tool-add-or-viewall";
     }
 
+    @PageTitle(name = "Tool: Add")
     @GetMapping("/add")
     private String addOffer(Model model) {
         if (!model.containsAttribute("toolOfferAddBindingModel")) {
@@ -92,7 +94,7 @@ public class ToolController {
 
     }
 
-
+    @PageTitle(name = "Tools")
     @GetMapping("/category/{id}")
     public String offersInCategory(@PathVariable String id, Model model){
         ToolCategoryServiceModel toolCategoryServiceModel = toolCategoryService.findById(id);
@@ -104,6 +106,7 @@ public class ToolController {
         return "tools/all-tools";
     }
 
+    @PageTitle(name = "Tool")
     @GetMapping("/single-tool/{id}")
     private String productPage(@PathVariable String id,Model model) {
         ToolOfferServiceModel toolOfferServiceModel = toolOfferService.findById(id);
@@ -114,6 +117,7 @@ public class ToolController {
         return "tools/tool-product-view";
     }
 
+    @PageTitle(name = "User: Tools")
     @GetMapping("/userTools")
     public String userTools(Model model,Principal principal){
         List<ToolOfferServiceModel> allUserTools = toolOfferService.findAllUserTools(principal.getName());
@@ -135,6 +139,45 @@ public class ToolController {
         }
 
         return "redirect:/tool/userTools";
+    }
+
+    @PageTitle(name = "Tool: Update")
+    @GetMapping("/update-tool/{id}")
+    private String updateOffer(@PathVariable String id,Model model) {
+        ToolOfferServiceModel tool = toolOfferService.findById(id);
+        ToolEditBindingModel toolEditBindingModel = modelMapper.map(tool, ToolEditBindingModel.class);
+        if(!model.containsAttribute("toolEditBindingModel")){
+            model.addAttribute("toolEditBindingModel",toolEditBindingModel);
+
+        }
+        return "tools/update-tool";
+    }
+    @PostMapping(value = "/update-tool/{id}")
+    public String updateOfferConfirm(@PathVariable String id, @Valid @ModelAttribute("toolEditBindingModel")
+            ToolEditBindingModel toolEditBindingModel,
+                                     BindingResult bindingResult, RedirectAttributes redirectAttributes, Principal principal) throws IOException {
+        if (bindingResult.hasErrors()) {
+            redirectAttributes.addFlashAttribute("toolEditBindingModel", toolEditBindingModel);
+            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.toolEditBindingModel"
+                    , bindingResult);
+
+            return "redirect:/tool/update-tool/" + id;
+        }
+        ToolOfferServiceModel toolOfferServiceModel = modelMapper.map(toolEditBindingModel, ToolOfferServiceModel.class);
+        String username = toolOfferService.findById(id).getUser().getUsername();
+        if(principal.getName().equals(username)){
+            if (toolEditBindingModel.getImage().isEmpty()) {
+                toolOfferServiceModel.setImage(N0_IMG_URL);
+            } else {
+                toolOfferServiceModel.setImage(cloudinaryService.uploadImg(toolEditBindingModel.getImage()));
+            }
+            this.toolOfferService.updateTool(toolOfferServiceModel,id);
+        }else {
+            throw new UnsupportedOperationException("You cant delete other users tools");
+
+        }
+
+        return "tools/success-updateTool-page";
     }
 
 

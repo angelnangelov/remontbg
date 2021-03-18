@@ -19,4 +19,6 @@ public interface OfferService {
 
 
     void deleteOffer(String id);
+
+    OfferServiceModel updateOffer(OfferServiceModel offerServiceModel,String id);
 }

@@ -20,6 +20,8 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static com.angelangelov.remont_bg.web.constants.ControllersConstants.PROFILE_IMG_DEFAULT;
+
 @Service
 public class UserServiceImpl implements UserService {
 
@@ -108,7 +110,9 @@ public class UserServiceImpl implements UserService {
         user.setEmail(userServiceModel.getEmail());
         user.setPhoneNumber(userServiceModel.getPhoneNumber());
         user.setCity(userServiceModel.getCity());
-        user.setImage(userServiceModel.getImage());
+        if(user.getImage().equals(PROFILE_IMG_DEFAULT)) {
+            user.setImage(userServiceModel.getImage());
+        }
         System.out.println();
         userRepository.saveAndFlush(user);
 

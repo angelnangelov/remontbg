@@ -48,7 +48,7 @@ public class AdminController {
         return "/admin/admin-page";
     }
 
-
+    @PageTitle(name = "Admin Panel: Users")
     @GetMapping("/users")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public String userPanel(Model model, Principal principal) {
@@ -91,7 +91,7 @@ public class AdminController {
         return "redirect:/admin/users";
 
     }
-
+    @PageTitle(name = "Admin Panel: Offers")
     @GetMapping("/offers")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public String approveOffer(Model model){
@@ -125,7 +125,7 @@ public class AdminController {
         return "redirect:/admin/offers";
     }
 
-
+    @PageTitle(name = "Admin Panel: Tools")
     @GetMapping("/tools")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public String allUnapprovedTools(Model model){

@@ -1,7 +1,10 @@
 package com.angelangelov.remont_bg.web;
 
+import com.angelangelov.remont_bg.annotation.PageTitle;
 import com.angelangelov.remont_bg.model.bindings.CommentAddBindingModel;
 import com.angelangelov.remont_bg.model.bindings.OfferAddBindingModel;
+import com.angelangelov.remont_bg.model.bindings.OfferEditBindingModel;
+import com.angelangelov.remont_bg.model.bindings.UserPasswordChangeBindingModel;
 import com.angelangelov.remont_bg.model.entities.Comment;
 import com.angelangelov.remont_bg.model.entities.Offer;
 import com.angelangelov.remont_bg.model.entities.enums.Region;
@@ -19,6 +22,7 @@ import com.angelangelov.remont_bg.service.OfferCategoryService;
 import com.angelangelov.remont_bg.service.OfferService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -53,13 +57,13 @@ public class OfferController {
         this.offerCategoryService = offerCategoryService;
         this.commentService = commentService;
     }
-
+    @PageTitle(name = "Offers - Categories")
     @GetMapping("/categories")
     private String allOffers(Model model) {
         model.addAttribute("allCategories", this.offerCategoryService.getAllCategories());
         return "offers/all-offer-categories";
     }
-
+    @PageTitle(name = "Offers")
     @GetMapping("/category/{id}")
     public String offersInCategory(@PathVariable String id,Model model){
         OfferCategoryServiceModel offerCategoryServiceModel = offerCategoryService.findById(id);
@@ -71,9 +75,9 @@ public class OfferController {
         model.addAttribute("offers",approvedOffers);
         return "offers/all-offers";
     }
-
+    @PageTitle(name = "Offer")
     @GetMapping("/single-offer/{id}")
-    private String productPage(@PathVariable String id,Model model) {
+    private String singleOffer(@PathVariable String id,Model model) {
         if(!model.containsAttribute("commentAddBindingModel")){
             model.addAttribute("commentAddBindingModel",new CommentAddBindingModel());
         }
@@ -88,7 +92,7 @@ public class OfferController {
     }
 
     @PostMapping("/single-offer/{id}")
-    private String postComment(@Valid @PathVariable String id,
+    private String postComment(@PathVariable String id ,@Valid
                                @ModelAttribute("commentAddBindingModel") CommentAddBindingModel commentAddBindingModel,
                                BindingResult bindingResult,
                                RedirectAttributes redirectAttributes, Principal principal) {
@@ -112,11 +116,13 @@ public class OfferController {
     }
 
 
+    @PageTitle(name = "Offer: Actions")
     @GetMapping("/actions")
     private String chooseAction() {
         return "offers/offer-add-or-viewall";
     }
 
+    @PageTitle(name = "Offer: Add")
     @GetMapping("/add")
     private String addOffer(Model model) {
         if (!model.containsAttribute("offerAddBindingModel")) {
@@ -153,7 +159,7 @@ public class OfferController {
 
 
     }
-
+    @PageTitle(name = "User: Offers")
     @GetMapping("/userOffers")
     public String userOffer(Model model,Principal principal){
         List<OfferServiceModel> allUserOffers = offerService.findAllUserOffers(principal.getName());
@@ -177,8 +183,43 @@ public class OfferController {
         return "redirect:/offer/userOffers";
     }
 
+    @PageTitle(name = "Offer: Update")
+    @GetMapping("/update-offer/{id}")
+    private String updateOffer(@PathVariable String id,Model model) {
+        OfferServiceModel offer = offerService.findById(id);
+        OfferEditBindingModel offerEditBindingModel = modelMapper.map(offer, OfferEditBindingModel.class);
+        if(!model.containsAttribute("offerEditBindingModel")){
+            model.addAttribute("offerEditBindingModel",offerEditBindingModel);
 
+        }
+        return "offers/update-offer";
+    }
+    @PostMapping(value = "/update-offer/{id}")
+    public String updateOfferConfirm(@PathVariable String id, @Valid @ModelAttribute("offerEditBindingModel")
+                                                OfferEditBindingModel offerEditBindingModel,
+                                        BindingResult bindingResult, RedirectAttributes redirectAttributes, Principal principal) throws IOException {
+        if (bindingResult.hasErrors()) {
+            redirectAttributes.addFlashAttribute("offerEditBindingModel", offerEditBindingModel);
+            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.offerEditBindingModel"
+                    , bindingResult);
 
+            return "redirect:/offer/update-offer/" + id;
+        }
+        OfferServiceModel offerServiceModel = modelMapper.map(offerEditBindingModel, OfferServiceModel.class);
+        String username = offerService.findById(id).getUser().getUsername();
+        if(principal.getName().equals(username)){
+            if (offerEditBindingModel.getImage().isEmpty()) {
+                offerServiceModel.setImage(N0_IMG_URL);
+            } else {
+                offerServiceModel.setImage(cloudinaryService.uploadImg(offerEditBindingModel.getImage()));
+            }
+            this.offerService.updateOffer(offerServiceModel,id);
+        }else {
+            throw new UnsupportedOperationException("You cant delete other users offers");
 
+        }
 
-}
+        return "offers/success-update-page";
+    }
+    }
+

@@ -1,5 +1,6 @@
 package com.angelangelov.remont_bg.service;
 
+import com.angelangelov.remont_bg.model.entities.ToolOffer;
 import com.angelangelov.remont_bg.model.services.ToolOfferServiceModel;
 
 import java.util.List;
@@ -18,4 +19,6 @@ public interface ToolOfferService {
     void deleteTool(String id);
 
     List<ToolOfferServiceModel> findAllUserTools(String name);
+
+    ToolOfferServiceModel updateTool(ToolOfferServiceModel toolOfferServiceModel, String id);
 }
