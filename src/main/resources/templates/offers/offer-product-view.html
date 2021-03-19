@@ -36,7 +36,7 @@
                     <h3 class="product-title"  th:text="${offer.name}">Заглавие</h3>
                     <p class="product-description" th:text="${offer.description}">.</p>
                     <h6 class="price">Цена:  <span th:text="${offer.price}">$180</span></h6>
-                    <h6 class="price" >Активна до: <span th:text="${offer.endsOn}">$180</span></h6>
+                    <h6 class="price" >Активна до: <span th:text="${#temporals.format(offer.endsOn, 'dd/MM/yyyy')}">$180</span></h6>
 
                     <p class="vote">Телефонен номер за връзка: <strong  th:text="${offer.ownerPhoneNumber}">08882012121</strong></p>
                     <div class="container profile-user">

@@ -20,7 +20,6 @@ public class AppSecurityConfiguration extends WebSecurityConfigurerAdapter {
     public AppSecurityConfiguration(
             UserService userService, PasswordEncoder passwordEncoder) {
         this.userService = userService;
-
         this.passwordEncoder = passwordEncoder;
     }
 
@@ -32,7 +31,7 @@ public class AppSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .csrf().disable()
                 .authorizeRequests()
                 .antMatchers("/static/**","/js/**", "/css/**","/img/**").permitAll()
-                .antMatchers("/index", "/", "/user/register", "/user/login").anonymous()
+                .antMatchers("/index", "/", "/user/register", "/user/login","/about").anonymous()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin().loginPage("/user/login").permitAll()

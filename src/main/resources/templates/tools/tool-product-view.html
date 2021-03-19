@@ -39,7 +39,7 @@
 
                     <h6 class="price">Депозит при взимане:  <span th:text="${toolOffer.deposit}">$180</span></h6>
                     <h6 class="price">Цена:  <span th:text="${toolOffer.price}">$180</span></h6>
-                    <h6 class="price" >Активна до: <span th:text="${toolOffer.endsOn}">$180</span></h6>
+                    <h6 class="price" >Активна до: <span th:text="${#temporals.format(toolOffer.endsOn, 'dd/MM/yyyy')}">$180</span></h6>
 
                     <p class="vote">Телефонен номер за връзка: <strong  th:text="${toolOffer.ownerPhoneNumber}">08882012121</strong></p>
                     <div class="container profile-user">
