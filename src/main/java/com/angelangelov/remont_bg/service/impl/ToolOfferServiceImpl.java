@@ -105,6 +105,8 @@ public class ToolOfferServiceImpl implements ToolOfferService {
         toolOffer.setActive(true);
         toolOffer.setApproved(false);
         toolOffer.setName(toolOfferServiceModel.getName());
+        toolOffer.setBrand(toolOfferServiceModel.getBrand());
+        toolOffer.setModel(toolOfferServiceModel.getModel());
         if (toolOffer.getImage().equals(N0_IMG_URL)) {
             toolOffer.setImage(toolOfferServiceModel.getImage());
         }

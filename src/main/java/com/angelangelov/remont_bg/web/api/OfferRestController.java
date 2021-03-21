@@ -37,6 +37,7 @@ public class OfferRestController {
                             return offerApiViewModel;
                         }).collect(Collectors.toList()));
 
+
         //TODO ADD TOOLS AND FIX TOOL ENTITY! BRAND AND MODEL
     }
 

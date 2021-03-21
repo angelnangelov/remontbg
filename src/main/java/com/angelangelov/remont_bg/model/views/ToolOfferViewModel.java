@@ -9,6 +9,8 @@ public class ToolOfferViewModel {
 
     private String id;
     private String name;
+    private String brand;
+    private String model;
     private String description;
     private String image;
     private BigDecimal price;
@@ -26,6 +28,22 @@ public class ToolOfferViewModel {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getBrand() {
+        return brand;
+    }
+
+    public void setBrand(String brand) {
+        this.brand = brand;
+    }
+
+    public String getModel() {
+        return model;
+    }
+
+    public void setModel(String model) {
+        this.model = model;
     }
 
     public String getName() {

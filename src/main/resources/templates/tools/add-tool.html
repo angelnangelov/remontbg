@@ -28,6 +28,22 @@
             </div>
             <div class="form-row m-5">
                 <div class="col">
+                    <label for="price">Марка</label>
+                    <input
+                            required minlength="3" maxlength="30"
+                            th:field="*{brand}" th:errorclass="bg-danger"  name="brand" id="brand" type="text" class="form-control" placeholder="Марка">
+                    <small th:if="${#fields.hasErrors('brand')}" th:errors="*{price}"  id="brandError" class="form-text bg-danger rounded"> </small>
+                </div>
+                <div class="col">
+                    <label for="price">Модел</label>
+                    <input
+                            required minlength="3" maxlength="30"
+                            th:field="*{model}" th:errorclass="bg-danger"  name="model" id="model" type="text" class="form-control" placeholder="Модел">
+                    <small th:if="${#fields.hasErrors('model')}" th:errors="*{price}"  id="modelError" class="form-text bg-danger rounded"></small>
+                </div>
+            </div>
+            <div class="form-row m-5">
+                <div class="col">
                     <label for="price">Цена</label>
                     <input
                             required min="0"

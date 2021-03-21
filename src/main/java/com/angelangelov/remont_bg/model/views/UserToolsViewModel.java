@@ -8,6 +8,8 @@ import java.time.LocalDate;
 public class UserToolsViewModel {
     private String id;
     private String name;
+    private String brand;
+    private String model;
     private String description;
     private String image;
     private BigDecimal price;
@@ -29,6 +31,22 @@ public class UserToolsViewModel {
 
     public void setActive(boolean active) {
         this.active = active;
+    }
+
+    public String getBrand() {
+        return brand;
+    }
+
+    public void setBrand(String brand) {
+        this.brand = brand;
+    }
+
+    public String getModel() {
+        return model;
+    }
+
+    public void setModel(String model) {
+        this.model = model;
     }
 
     public String getId() {

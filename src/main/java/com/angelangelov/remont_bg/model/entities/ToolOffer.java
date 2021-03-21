@@ -7,12 +7,30 @@ import java.util.List;
 @Entity
 @Table(name = "tools")
 public class ToolOffer extends BaseOffer {
+    private String brand;
+    private String model;
     private BigDecimal price;
     private String power;
     private BigDecimal deposit;
     private ToolCategory toolCategory;
 
     public ToolOffer() {
+    }
+    @Column(nullable = false)
+    public String getBrand() {
+        return brand;
+    }
+
+    public void setBrand(String brand) {
+        this.brand = brand;
+    }
+    @Column(nullable = false)
+    public String getModel() {
+        return model;
+    }
+
+    public void setModel(String model) {
+        this.model = model;
     }
 
     @ManyToOne

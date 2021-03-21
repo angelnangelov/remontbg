@@ -13,6 +13,8 @@ import java.time.LocalDate;
 
 public class ToolEditBindingModel extends BaseBindingModel{
     private String name;
+    private String brand;
+    private String model;
     private MultipartFile image;
     private BigDecimal price;
     private BigDecimal deposit;
@@ -36,6 +38,24 @@ public class ToolEditBindingModel extends BaseBindingModel{
 
     public void setName(String name) {
         this.name = name;
+    }
+    @NotBlank(message = "Това поле е задължително!")
+    @Length(min = 3 ,max = 30,message = "Полето трябва да бъде минимум 3 символа и максимум 30")
+    public String getBrand() {
+        return brand;
+    }
+
+    public void setBrand(String brand) {
+        this.brand = brand;
+    }
+    @NotBlank(message = "Това поле е задължително!")
+    @Length(min = 3 ,max = 30,message = "Полето трябва да бъде минимум 3 символа и максимум 30")
+    public String getModel() {
+        return model;
+    }
+
+    public void setModel(String model) {
+        this.model = model;
     }
 
     public MultipartFile getImage() {
