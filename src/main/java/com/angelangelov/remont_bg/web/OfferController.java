@@ -223,5 +223,10 @@ public class OfferController {
 
         return "offers/success-update-page";
     }
+
+    @GetMapping("/search")
+    public String search(){
+        return "search-page";
+    }
     }
 

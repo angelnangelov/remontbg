@@ -837,9 +837,6 @@ img {
 .about-img {padding-left: 57px;}
 
 
-input:invalid{
-    border: red solid 1px;
-}
-input:valid .login-btn{
-    border: none !important;
-}
+/*input:invalid{*/
+/*    border: red solid 1px;*/
+/*}*/

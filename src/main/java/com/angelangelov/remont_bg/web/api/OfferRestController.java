@@ -1,9 +1,8 @@
 package com.angelangelov.remont_bg.web.api;
 
-import com.angelangelov.remont_bg.model.entities.Offer;
 import com.angelangelov.remont_bg.model.views.OfferApiViewModel;
-import com.angelangelov.remont_bg.model.views.OfferViewModel;
 import com.angelangelov.remont_bg.repository.OfferRepository;
+import com.angelangelov.remont_bg.repository.ToolOfferRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,23 +17,27 @@ import java.util.stream.Collectors;
 public class OfferRestController {
     private final OfferRepository offerRepository;
     private final ModelMapper modelMapper;
+    private final ToolOfferRepository toolOfferRepository;
 
-    public OfferRestController(OfferRepository offerRepository, ModelMapper modelMapper) {
+    public OfferRestController(OfferRepository offerRepository, ModelMapper modelMapper, ToolOfferRepository toolOfferRepository) {
         this.offerRepository = offerRepository;
         this.modelMapper = modelMapper;
+        this.toolOfferRepository = toolOfferRepository;
     }
 
     @GetMapping("/api")
     public ResponseEntity<List<OfferApiViewModel>> findAll(){
         return ResponseEntity.ok().body(
                 offerRepository
-                        .findAll()
+                        .findAllByApprovedTrueAndActiveTrue()
                         .stream()
                         .map(offer -> {
                             OfferApiViewModel offerApiViewModel = modelMapper.map(offer, OfferApiViewModel.class);
                             offerApiViewModel.setCategory(offer.getCategory().getName().toString());
                             return offerApiViewModel;
                         }).collect(Collectors.toList()));
+
+        //TODO ADD TOOLS AND FIX TOOL ENTITY! BRAND AND MODEL
     }
 
 }

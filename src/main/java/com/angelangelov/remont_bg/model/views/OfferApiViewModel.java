@@ -5,14 +5,24 @@ import com.angelangelov.remont_bg.model.entities.enums.Region;
 import java.math.BigDecimal;
 
 public class OfferApiViewModel {
+    private String id;
     private String name;
     private String description;
     private String image;
     private BigDecimal price;
     private String category;
     private Region region;
+    private String ownerPhoneNumber;
 
     public OfferApiViewModel() {
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getCategory() {
@@ -61,5 +71,13 @@ public class OfferApiViewModel {
 
     public void setRegion(Region region) {
         this.region = region;
+    }
+
+    public String getOwnerPhoneNumber() {
+        return ownerPhoneNumber;
+    }
+
+    public void setOwnerPhoneNumber(String ownerPhoneNumber) {
+        this.ownerPhoneNumber = ownerPhoneNumber;
     }
 }
