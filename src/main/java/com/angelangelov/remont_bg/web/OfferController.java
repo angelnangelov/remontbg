@@ -59,7 +59,7 @@ public class OfferController {
     }
     @PageTitle(name = "Offers - Categories")
     @GetMapping("/categories")
-    private String allOffers(Model model) {
+    public String allOffers(Model model) {
         int allOffersSum = this.offerCategoryService.getAllCategories().stream().mapToInt(category -> category.getOffers().size()).sum();
         model.addAttribute("allCategories", this.offerCategoryService.getAllCategories());
         model.addAttribute("allOffersSum", allOffersSum);
@@ -79,7 +79,7 @@ public class OfferController {
     }
     @PageTitle(name = "Offer")
     @GetMapping("/single-offer/{id}")
-    private String singleOffer(@PathVariable String id,Model model) {
+    public String singleOffer(@PathVariable String id,Model model) {
         if(!model.containsAttribute("commentAddBindingModel")){
             model.addAttribute("commentAddBindingModel",new CommentAddBindingModel());
         }
@@ -94,7 +94,7 @@ public class OfferController {
     }
 
     @PostMapping("/single-offer/{id}")
-    private String postComment(@PathVariable String id ,@Valid
+    public String postComment(@PathVariable String id ,@Valid
                                @ModelAttribute("commentAddBindingModel") CommentAddBindingModel commentAddBindingModel,
                                BindingResult bindingResult,
                                RedirectAttributes redirectAttributes, Principal principal) {
@@ -120,13 +120,13 @@ public class OfferController {
 
     @PageTitle(name = "Offer: Actions")
     @GetMapping("/actions")
-    private String chooseAction() {
+    public String chooseAction() {
         return "offers/offer-add-or-viewall";
     }
 
     @PageTitle(name = "Offer: Add")
     @GetMapping("/add")
-    private String addOffer(Model model) {
+    public String addOffer(Model model) {
         if (!model.containsAttribute("offerAddBindingModel")) {
             model.addAttribute("offerAddBindingModel", new OfferAddBindingModel());
             model.addAttribute("categories", ServiceOfferNames.values());
@@ -136,7 +136,7 @@ public class OfferController {
     }
 
     @PostMapping("/add")
-    private String offerConfirm(@Valid @ModelAttribute("offerAddBindingModel") OfferAddBindingModel offerAddBindingModel, BindingResult bindingResult,
+    public String offerConfirm(@Valid @ModelAttribute("offerAddBindingModel") OfferAddBindingModel offerAddBindingModel, BindingResult bindingResult,
                                 RedirectAttributes redirectAttributes, Principal principal) throws IOException {
 
 
@@ -187,7 +187,7 @@ public class OfferController {
 
     @PageTitle(name = "Offer: Update")
     @GetMapping("/update-offer/{id}")
-    private String updateOffer(@PathVariable String id,Model model) {
+    public String updateOffer(@PathVariable String id,Model model) {
         OfferServiceModel offer = offerService.findById(id);
         OfferEditBindingModel offerEditBindingModel = modelMapper.map(offer, OfferEditBindingModel.class);
         if(!model.containsAttribute("offerEditBindingModel")){
