@@ -37,8 +37,10 @@
                 <div class="col">
                     <label for="region">Категория</label>
                     <select  required th:field="*{category}" th:errorclass="bg-danger"  name="category" id="category" class="custom-select">
+                        <option value="" disabled selected>Изберете категория</option>
+
                         <option
-                                th:each="c : ${categories}" th:value="${c}" th:text="${c}"  selected>Изберете категория</option>
+                                  th:each="c : ${categories}" th:value="${c}" th:text="${c}"  selected>Изберете категория</option>
                     </select>
                     <small th:if="${#fields.hasErrors('category')}" th:errors="*{category}"   id="categoryError" class="form-text bg-danger rounded">Това поле е задължително</small>
                 </div>
@@ -59,7 +61,8 @@
                 <div class="col">
                     <label for="region">Регион</label>
                     <select  required  th:field="*{region}" th:errorclass="bg-danger"  name="region" id="region" class="custom-select">
-                        <option th:each="r : ${regions}" th:value="${r}" th:text="${r}" selected>Изберете регион</option>
+                        <option value="" selected disabled >Изберете регион</option>
+                        <option th:each="r : ${regions}" th:value="${r}" th:text="${r}" selected></option>
                     </select>
                     <small  th:if="${#fields.hasErrors('region')}" th:errors="*{region}"   id="regionError" class="form-text bg-danger rounded">Това поле е задължително</small>
                 </div>

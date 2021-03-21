@@ -1,71 +1,79 @@
-<th:block  xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<th:block xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
     <nav class="navbar
     navbar-expand-lg navbar-light bg-light">
 
-        <div class="container" >
+        <div class="container">
             <th:block sec:authorize="isAnonymous()">
-            <a id="navbar" class="navbar-brand" th:href="@{/}">
+                <a id="navbar" class="navbar-brand" th:href="@{/}">
             </th:block>
             <th:block sec:authorize="isAuthenticated()">
                 <a class="navbar-brand" th:href="@{/home}">
             </th:block>
-                <img src="https://i.imgur.com/E0GlIBl.png" width="60" alt="" class="d-inline-block align-middle mr-2">            </a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <img src="https://i.imgur.com/E0GlIBl.png" width="60" alt=""
+                 class="d-inline-block align-middle mr-2">            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav ml-auto">
-                    <th:block sec:authorize="hasRole('ROLE_ADMIN')">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" href="/admin/actions">AДМИН</a>
-                        </li>
-                    </th:block>
+                <th:block sec:authorize="isAnonymous()">
+                    <ul class="navbar-nav ml-auto">
+
                     <li class="nav-item">
-                        <th:block sec:authorize="isAnonymous()">
                             <a class="nav-link text-dark" th:href="@{/}">Начало</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" href="/about">За Платформата</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" th:href="@{/user/login}">Вход</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark btn btn-outline-danger"
+                               th:href="@{/user/register}">Регистрация</a>
+                        </li>
+                    </ul>
+                </th:block>
+                <th:block sec:authorize="isAuthenticated()">
+                    <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+                        <th:block sec:authorize="hasRole('ROLE_ADMIN')">
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" href="/admin/actions">AДМИН</a>
+                            </li>
                         </th:block>
-                        <th:block sec:authorize="isAuthenticated()">
+                        <li class="nav-item">
                             <a class="nav-link text-dark" th:href="@{/home}">Начало</a>
-                        </th:block>
-                    </li>
-
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" href="/about">За Платформата</a>
-                    </li>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" href="/issue/submit">Контакти</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" href="/offer/actions">Услуги</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" href="/tool/actions">Инструменти</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle text-dark" href="#" id="navbarDropdown" role="button"
+                               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Профил
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item text-dark" href="/user/profile">Редактиране на профил</a>
+                                <a class="dropdown-item text-dark" href="/offer/userOffers/">Твойте услуги</a>
+                                <a class="dropdown-item text-dark" href="/tool/userTools">Твойте инструменти</a>
+                                <div class="dropdown-divider text-dark "></div>
+                                <a class="dropdown-item text-dark" th:href="@{/logout}">Изход</a>
+                            </div>
+                        </li>
+                    </ul>
+                </th:block>
                     <th:block sec:authorize="isAuthenticated()">
-
-
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" href="/offer/actions">Услуги</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" href="/tool/actions">Инструменти</a>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle text-dark" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Профил
-                        </a>
-                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item text-dark" href="/user/profile">Редактиране на профил</a>
-                            <a class="dropdown-item text-dark" href="/offer/userOffers/">Твойте услуги</a>
-                            <a class="dropdown-item text-dark" href="/tool/userTools">Твойте инструменти</a>
-                            <div class="dropdown-divider text-dark "></div>
-                            <a class="dropdown-item text-dark" th:href="@{/logout}">Изход</a>
-                        </div>
-                    </li>
+                        <form class="form-inline my-2 my-lg-0">
+                            <input id="searchInput" class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                            <button class="btn text-dark btn btn-outline-danger my-2 my-sm-0" type="submit">Търси</button>
+                        </form>
                     </th:block>
-
-                    <th:block sec:authorize="isAnonymous()">
-
-                    <li class="nav-item">
-                        <a class="nav-link text-dark"  th:href="@{/user/login}">Вход</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-dark btn btn-outline-danger" th:href="@{/user/register}">Регистрация</a>
-                    </li>
-                    </th:block>
-
-                </ul>
             </div>
         </div>
     </nav>
