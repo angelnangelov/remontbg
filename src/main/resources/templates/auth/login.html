@@ -30,13 +30,22 @@
                             </th:block>
                             <div class="form-group">
                                 <label for="username" class="sr-only">Потребителско име</label>
-                                <input type="text" name="username" id="username" class="form-control" placeholder="Потребителско име">
+                                <input
+                                        type="text" name="username"
+                                        required minlength="3" maxlength="15"
+                                        id="username" class="form-control"
+                                        placeholder="Потребителско име">
                             </div>
                             <div class="form-group mb-4">
                                 <label for="password" class="sr-only">Парола</label>
-                                <input type="password" name="password" id="password" class="form-control" placeholder="***********">
+                                <input type="password"
+                                       name="password"
+                                       id="password"
+                                       required minlength="6" maxlength="30"
+                                       class="form-control"
+                                       placeholder="***********">
                             </div>
-                            <input  class="btn btn-block login-btn mb-4" type="submit" value="Вход">
+                            <input  required class="btn btn-block login-btn mb-4" type="submit" formnovalidate value="Вход">
                         </form>
                         <p class="login-register-card-footer-text">Нямаш акаунт? <a href="/user/register" class="text-reset">Регистрирай се.</a></p>
                     </div>

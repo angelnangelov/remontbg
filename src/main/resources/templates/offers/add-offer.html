@@ -14,7 +14,9 @@
             <div class="form-row m-5">
                 <div class="col">
                     <label for="name">Заглавие на обявата</label>
-                    <input th:field="*{name}" th:errorclass="bg-danger"  name="name" id="name" type="text" class="form-control" placeholder="Album name">
+                    <input
+                            required minlength="3" maxlength="30"
+                            th:field="*{name}" th:errorclass="bg-danger"  name="name" id="name" type="text" class="form-control" placeholder="Заглавие">
                     <small th:if="${#fields.hasErrors('name')}" th:errors="*{name}" id="nameError" class="form-text bg-danger rounded">Името трябва да бъде м/у 3 и 20 символа</small>
                 </div>
                 <div class="col">
@@ -27,13 +29,16 @@
             <div class="form-row m-5">
                 <div class="col">
                     <label for="price">Цена</label>
-                    <input th:field="*{price}" th:errorclass="bg-danger"  name="price" id="price" type="number" class="form-control" placeholder="Price">
+                    <input
+                            required min="0"
+                            th:field="*{price}" th:errorclass="bg-danger"  name="price" id="price" type="number" class="form-control" placeholder="Price">
                     <small th:if="${#fields.hasErrors('price')}" th:errors="*{price}"  id="priceError" class="form-text bg-danger rounded">Цената  не може да бъде отрицателно число</small>
                 </div>
                 <div class="col">
                     <label for="region">Категория</label>
-                    <select   th:field="*{category}" th:errorclass="bg-danger"  name="category" id="category" class="custom-select">
-                        <option  th:each="c : ${categories}" th:value="${c}" th:text="${c}"  selected>Изберете категория</option>
+                    <select  required th:field="*{category}" th:errorclass="bg-danger"  name="category" id="category" class="custom-select">
+                        <option
+                                th:each="c : ${categories}" th:value="${c}" th:text="${c}"  selected>Изберете категория</option>
                     </select>
                     <small th:if="${#fields.hasErrors('category')}" th:errors="*{category}"   id="categoryError" class="form-text bg-danger rounded">Това поле е задължително</small>
                 </div>
@@ -41,26 +46,26 @@
             <div class="form-row m-5">
                 <div class="col">
                     <label for="startsOn">От</label>
-                    <input th:field="*{startsOn}" th:errorclass="bg-danger"  name="startsOn" id="startsOn" type="date" class="form-control" placeholder="Oт">
+                    <input required th:field="*{startsOn}" th:errorclass="bg-danger"  name="startsOn" id="startsOn" type="date" class="form-control" placeholder="Oт">
                     <small th:if="${#fields.hasErrors('startsOn')}" th:errors="*{startsOn}"  id="releaseDateError" class="form-text bg-danger rounded">Датата не може да бъде в миналото</small>
                 </div>
                 <div class="col">
                     <label for="endsOn">До</label>
-                    <input   th:field="*{endsOn}" th:errorclass="bg-danger"  name="endsOn" id="endsOn" type="date" class="form-control" placeholder="До">
+                    <input required  th:field="*{endsOn}" th:errorclass="bg-danger"  name="endsOn" id="endsOn" type="date" class="form-control" placeholder="До">
                     <small  th:if="${#fields.hasErrors('endsOn')}" th:errors="*{endsOn}"  id="endsOnError" class="form-text bg-danger rounded">Датата не може да бъде в миналото</small>
                 </div>
             </div>
             <div class="form-row m-5">
                 <div class="col">
                     <label for="region">Регион</label>
-                    <select    th:field="*{region}" th:errorclass="bg-danger"  name="region" id="region" class="custom-select">
+                    <select  required  th:field="*{region}" th:errorclass="bg-danger"  name="region" id="region" class="custom-select">
                         <option th:each="r : ${regions}" th:value="${r}" th:text="${r}" selected>Изберете регион</option>
                     </select>
                     <small  th:if="${#fields.hasErrors('region')}" th:errors="*{region}"   id="regionError" class="form-text bg-danger rounded">Това поле е задължително</small>
                 </div>
                 <div class="col">
                     <label for="ownerPhoneNumber">Телефонен номер</label>
-                    <input    th:field="*{ownerPhoneNumber}" th:errorclass="bg-danger"  name="ownerPhoneNumber" id="ownerPhoneNumber" type="text" class="form-control" placeholder="Телефонен номер">
+                    <input required min="9"   th:field="*{ownerPhoneNumber}" th:errorclass="bg-danger"  name="ownerPhoneNumber" id="ownerPhoneNumber" type="text" class="form-control" placeholder="Телефонен номер">
                     <small th:if="${#fields.hasErrors('ownerPhoneNumber')}" th:errors="*{ownerPhoneNumber}" id="ownerPhoneNumberError" class="form-text bg-danger rounded">Това поле е задължително
                         characters</small>
                 </div>
@@ -69,7 +74,7 @@
             <div class="form-row m-5">
                 <div class="col">
                     <label for="description">Описание</label>
-                    <textarea th:field="*{description}" th:errorclass="bg-danger"   name="description" id="description" type="text" class="form-control" placeholder="Описание"></textarea>
+                    <textarea required minlength="5" th:field="*{description}" th:errorclass="bg-danger"   name="description" id="description" type="text" class="form-control" placeholder="Описание"></textarea>
                     <small th:if="${#fields.hasErrors('description')}" th:errors="*{description}"  id="descriptionError" class="form-text bg-danger rounded">Описанието трябва да бъде минимум 5 символа</small>
                 </div>
             </div>

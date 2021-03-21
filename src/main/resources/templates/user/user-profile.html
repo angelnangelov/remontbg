@@ -28,11 +28,11 @@
                 </div>
                 <div class="row mt-2">
                     <div class="col-md-6"><label class="labels">Име</label>
-                         <input type="text" class="form-control" placeholder="Име" th:value="*{firstName} " th:field="*{firstName}"></div>
+                         <input required minlength="2" maxlength="15" type="text" class="form-control" placeholder="Име" th:value="*{firstName} " th:field="*{firstName}"></div>
                     <small th:each="e : ${#fields.errors('firstName')}" th:text="${e}"  id="firstNameError"
                            class="text-light form-text bg-danger rounded">Грешка</small>
                     <div class="col-md-6"><label class="labels">Фамилия</label>
-                        <input type="text" class="form-control" th:value="*{lastName}"   th:field="*{lastName}" placeholder="Фамилия"></div>
+                        <input required minlength="2" maxlength="15"  type="text" class="form-control" th:value="*{lastName}"   th:field="*{lastName}" placeholder="Фамилия"></div>
                     <small th:each="e : ${#fields.errors('lastName')}" th:text="${e}"  id="lastNameError"
                            class="text-light form-text bg-danger rounded">Грешка</small>
                 </div>
@@ -42,7 +42,7 @@
                     <small th:each="e : ${#fields.errors('phoneNumber')}" th:text="${e}"  id="phoneNumberError"
                            class="text-light form-text bg-danger rounded">Грешка</small>
                     <div class="col-md-12"><label class="labels">Емайл адрес</label>
-                        <input type="text" class="form-control" placeholder="Емайл" th:value="*{email}" th:field="*{email}"></div>
+                        <input required type="text" class="form-control" placeholder="Емайл" th:value="*{email}" th:field="*{email}"></div>
                     <small th:each="e : ${#fields.errors('email')}" th:text="${e}"  id="emailError"
                            class="text-light form-text bg-danger rounded">Грешка</small>
                     <div class="col-md-12"><label class="labels">Град</label>

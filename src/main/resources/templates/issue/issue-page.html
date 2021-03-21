@@ -32,7 +32,10 @@
                     <div class="form-group">
                         <label>Заглавие</label>
                         <div class="input-group mb-2 mb-sm-0">
-                            <input  th:field="*{problemName}" type="text" name="problemName" class="form-control" id="problemName" placeholder="Subject">
+                            <input
+                                    required minlength="3" maxlength="15"
+
+                                    th:field="*{problemName}" type="text" name="problemName" class="form-control" id="problemName" placeholder="Subject">
                             <small th:if="${#fields.hasErrors('problemName')}" th:errors="*{problemName}" id="problemNameError" class="form-text bg-danger rounded">Името трябва да бъде м/у 3 и 20 символа</small>
 
                         </div>
@@ -40,7 +43,10 @@
                     <div class="form-group">
                         <label>Описание</label>
                         <div class="input-group mb-2 mb-sm-0">
-                            <textarea  th:field="*{problemDescription}" type="text" class="form-control" id ="problemDescription"> </textarea>
+                            <textarea
+
+                                    required minlength="5"
+                                    th:field="*{problemDescription}" type="text" class="form-control" id ="problemDescription"> </textarea>
                             <small th:if="${#fields.hasErrors('problemDescription')}" th:errors="*{problemDescription}" id="problemDescriptionEror" class="form-text bg-danger rounded">Името трябва да бъде м/у 3 и 20 символа</small>
 
                         </div>

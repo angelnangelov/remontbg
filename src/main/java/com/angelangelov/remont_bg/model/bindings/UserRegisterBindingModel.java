@@ -63,7 +63,7 @@ public class    UserRegisterBindingModel extends BaseBindingModel {
         this.email = email;
     }
 
-    @Length(min = 6, max = 20, message = "За вашата сигурност паролата трябва да е минимум 6 символа" )
+    @Length(min = 6, max = 30, message = "За вашата сигурност паролата трябва да е минимум 6 символа" )
     @NotNull(message = "Това поле е задължително!")
     public String getPassword() {
         return password;
