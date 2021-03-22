@@ -50,11 +50,7 @@ public class ToolController {
         model.addAttribute("allToolsSum",allToolsSum);
         return "tools/all-tools-categories";
     }
-    @PageTitle(name = "Tool: Actions")
-    @GetMapping("/actions")
-    private String chooseAction(){
-        return "tools/tool-add-or-viewall";
-    }
+
 
     @PageTitle(name = "Tool: Add")
     @GetMapping("/add")

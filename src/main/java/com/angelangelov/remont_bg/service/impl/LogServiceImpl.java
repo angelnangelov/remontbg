@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 import java.security.Principal;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 public class LogServiceImpl implements LogService {
@@ -47,5 +48,10 @@ public class LogServiceImpl implements LogService {
         logRepository.save(logEntity);
 
 
+    }
+
+    @Override
+    public List<String> find3MostViewed() {
+       return logRepository.result( );
     }
 }

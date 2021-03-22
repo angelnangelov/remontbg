@@ -89,8 +89,28 @@
                 </a>
             </div>
         </div>
+        <th:block th:if="${!topOffers.isEmpty()}">
+        <div class="row">
+            <div class="container" style="padding-top: 35px; padding-bottom: 35px;">
+                <h2>Най-разглеждани услуги: </h2>
+                <div class="row">
+                    <div class="col-md-4" th:each="offer : ${topOffers}" th:object="${offer}">
+                        <div class="card mb">
+                            <img class="card-img-top" th:src="${offer.image}" alt="Card image cap">
+                            <div class="card-body mb">
+                                <h5 class="card-title" th:text="*{name}">Card title</h5>
+                                <p class="card-text" th:text="*{description}">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                                <a th:href="@{/offer/single-offer/{id}(id=${offer.id})}" type="button" class="btn btn-block btn-dark mb-4">Разгледай</a>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+            </div>
+        </th:block>
     </div>
-</div>
+    </div>
+
 </main>
 </body>
 <th:block th:include="~{fragments/footer}"/>

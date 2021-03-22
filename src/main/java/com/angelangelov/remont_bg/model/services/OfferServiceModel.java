@@ -1,12 +1,14 @@
 package com.angelangelov.remont_bg.model.services;
 
 import com.angelangelov.remont_bg.model.entities.Comment;
+import com.angelangelov.remont_bg.model.entities.LogEntity;
 import com.angelangelov.remont_bg.model.entities.enums.Region;
 import com.fasterxml.jackson.databind.ser.Serializers;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Set;
 
 public class OfferServiceModel  extends BaseServiceModel {
     private String name;
@@ -21,6 +23,7 @@ public class OfferServiceModel  extends BaseServiceModel {
     private String ownerPhoneNumber;
     private UserServiceModel user;
     private String category;
+    private Set<LogEntity> logs;
     private List<CommentServiceModel> comments;
 
     public OfferServiceModel() {
@@ -128,5 +131,13 @@ public class OfferServiceModel  extends BaseServiceModel {
 
     public void setComments(List<CommentServiceModel> comments) {
         this.comments = comments;
+    }
+
+    public Set<LogEntity> getLogs() {
+        return logs;
+    }
+
+    public void setLogs(Set<LogEntity> logs) {
+        this.logs = logs;
     }
 }

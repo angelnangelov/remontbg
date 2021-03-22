@@ -21,7 +21,7 @@ public class GreetingInterceptor implements HandlerInterceptor{
 
         if(hour<12 && hour>5){
             greetings="Добро утро, ";
-        }else  if(hour>12 && hour<18){
+        }else  if(hour>=12 && hour<18){
             greetings="Добър ден, ";
         }else {
             greetings="Добър вечер, ";

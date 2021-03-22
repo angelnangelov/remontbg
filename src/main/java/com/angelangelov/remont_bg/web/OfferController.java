@@ -118,11 +118,6 @@ public class OfferController {
     }
 
 
-    @PageTitle(name = "Offer: Actions")
-    @GetMapping("/actions")
-    public String chooseAction() {
-        return "offers/offer-add-or-viewall";
-    }
 
     @PageTitle(name = "Offer: Add")
     @GetMapping("/add")

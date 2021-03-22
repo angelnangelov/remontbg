@@ -1,9 +1,6 @@
 package com.angelangelov.remont_bg.model.entities;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
@@ -29,7 +26,6 @@ public class LogEntity extends BaseEntity{
         this.user = user;
     }
     @ManyToOne
-
     public Offer getOffer() {
         return offer;
     }

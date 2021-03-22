@@ -119,7 +119,10 @@ public class OfferServiceImpl implements OfferService {
                 OfferServiceModel offerServiceModel = modelMapper.map(offer,OfferServiceModel.class);
                 offerServiceModel.setApproved(true);
 
+
         Offer approvedOffer = modelMapper.map(offerServiceModel, Offer.class);
+        approvedOffer.getLogs().clear();
+        approvedOffer.getLogs().addAll(approvedOffer.getLogs());
         approvedOffer.setCategory(offer.getCategory());
         offerRepository.saveAndFlush(approvedOffer);
 
