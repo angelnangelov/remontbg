@@ -59,6 +59,7 @@ public class OfferController {
     }
     @PageTitle(name = "Offers - Categories")
     @GetMapping("/categories")
+    @PreAuthorize("isAuthenticated()")
     public String allOffers(Model model) {
         int allOffersSum = this.offerCategoryService.getAllCategories().stream().mapToInt(category -> category.getOffers().size()).sum();
         model.addAttribute("allCategories", this.offerCategoryService.getAllCategories());
@@ -67,6 +68,7 @@ public class OfferController {
     }
     @PageTitle(name = "Offers")
     @GetMapping("/category/{id}")
+    @PreAuthorize("isAuthenticated()")
     public String offersInCategory(@PathVariable String id,Model model){
         OfferCategoryServiceModel offerCategoryServiceModel = offerCategoryService.findById(id);
         OfferCategoryViewModel offerByCategory = modelMapper.map(offerCategoryServiceModel, OfferCategoryViewModel.class);
@@ -79,6 +81,7 @@ public class OfferController {
     }
     @PageTitle(name = "Offer")
     @GetMapping("/single-offer/{id}")
+    @PreAuthorize("isAuthenticated()")
     public String singleOffer(@PathVariable String id,Model model) {
         if(!model.containsAttribute("commentAddBindingModel")){
             model.addAttribute("commentAddBindingModel",new CommentAddBindingModel());
@@ -94,6 +97,7 @@ public class OfferController {
     }
 
     @PostMapping("/single-offer/{id}")
+    @PreAuthorize("isAuthenticated()")
     public String postComment(@PathVariable String id ,@Valid
                                @ModelAttribute("commentAddBindingModel") CommentAddBindingModel commentAddBindingModel,
                                BindingResult bindingResult,
@@ -121,6 +125,7 @@ public class OfferController {
 
     @PageTitle(name = "Offer: Add")
     @GetMapping("/add")
+    @PreAuthorize("isAuthenticated()")
     public String addOffer(Model model) {
         if (!model.containsAttribute("offerAddBindingModel")) {
             model.addAttribute("offerAddBindingModel", new OfferAddBindingModel());
@@ -131,6 +136,7 @@ public class OfferController {
     }
 
     @PostMapping("/add")
+    @PreAuthorize("isAuthenticated()")
     public String offerConfirm(@Valid @ModelAttribute("offerAddBindingModel") OfferAddBindingModel offerAddBindingModel, BindingResult bindingResult,
                                 RedirectAttributes redirectAttributes, Principal principal) throws IOException {
 
@@ -158,6 +164,7 @@ public class OfferController {
     }
     @PageTitle(name = "User: Offers")
     @GetMapping("/userOffers")
+    @PreAuthorize("isAuthenticated()")
     public String userOffer(Model model,Principal principal){
         List<OfferServiceModel> allUserOffers = offerService.findAllUserOffers(principal.getName());
         List<UserOffersViewModel> userOffersViewModels = allUserOffers.stream().map(o -> {
@@ -169,6 +176,7 @@ public class OfferController {
         return "/user/all-user-offers";
     }
     @GetMapping("/user/deleteOffer/")
+    @PreAuthorize("isAuthenticated()")
     public String deleteOffer(@RequestParam(name = "id") String id,Principal principal){
         String username = offerService.findById(id).getUser().getUsername();
         if(principal.getName().equals(username)){
@@ -182,6 +190,7 @@ public class OfferController {
 
     @PageTitle(name = "Offer: Update")
     @GetMapping("/update-offer/{id}")
+    @PreAuthorize("isAuthenticated()")
     public String updateOffer(@PathVariable String id,Model model) {
         OfferServiceModel offer = offerService.findById(id);
         OfferEditBindingModel offerEditBindingModel = modelMapper.map(offer, OfferEditBindingModel.class);
@@ -192,6 +201,7 @@ public class OfferController {
         return "offers/update-offer";
     }
     @PostMapping(value = "/update-offer/{id}")
+    @PreAuthorize("isAuthenticated()")
     public String updateOfferConfirm(@PathVariable String id, @Valid @ModelAttribute("offerEditBindingModel")
                                                 OfferEditBindingModel offerEditBindingModel,
                                         BindingResult bindingResult, RedirectAttributes redirectAttributes, Principal principal) throws IOException {

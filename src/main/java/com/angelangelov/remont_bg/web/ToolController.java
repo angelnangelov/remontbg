@@ -13,6 +13,7 @@ import com.angelangelov.remont_bg.model.services.ToolOfferServiceModel;
 import com.angelangelov.remont_bg.model.views.*;
 import com.angelangelov.remont_bg.service.*;
 import org.modelmapper.ModelMapper;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -43,7 +44,8 @@ public class ToolController {
 
     @PageTitle(name = "Offers - Categories")
     @GetMapping("/categories")
-    private String allOffers(Model model){
+    @PreAuthorize("isAuthenticated()")
+    public String allOffers(Model model){
         int allToolsSum = this.toolCategoryService.getAllTools().stream().mapToInt(tool -> tool.getTools().size()).sum();
 
         model.addAttribute("allTools",this.toolCategoryService.getAllTools());
@@ -54,7 +56,8 @@ public class ToolController {
 
     @PageTitle(name = "Tool: Add")
     @GetMapping("/add")
-    private String addOffer(Model model) {
+    @PreAuthorize("isAuthenticated()")
+    public String addOffer(Model model) {
         if (!model.containsAttribute("toolOfferAddBindingModel")) {
             model.addAttribute("toolOfferAddBindingModel", new ToolOfferAddBindingModel());
             model.addAttribute("categories", ToolsCategoryName.values());
@@ -64,7 +67,8 @@ public class ToolController {
     }
 
     @PostMapping("/add")
-    private String offerConfirm(@Valid @ModelAttribute("toolOfferAddBindingModel") ToolOfferAddBindingModel toolOfferAddBindingModel, BindingResult bindingResult,
+    @PreAuthorize("isAuthenticated()")
+    public String offerConfirm(@Valid @ModelAttribute("toolOfferAddBindingModel") ToolOfferAddBindingModel toolOfferAddBindingModel, BindingResult bindingResult,
                                 RedirectAttributes redirectAttributes, Principal principal) throws IOException {
 
 
@@ -93,6 +97,7 @@ public class ToolController {
 
     @PageTitle(name = "Tools")
     @GetMapping("/category/{id}")
+    @PreAuthorize("isAuthenticated()")
     public String offersInCategory(@PathVariable String id, Model model){
         ToolCategoryServiceModel toolCategoryServiceModel = toolCategoryService.findById(id);
         ToolsCategoryViewModel toolsCategoryViewModel = modelMapper.map(toolCategoryServiceModel, ToolsCategoryViewModel.class);
@@ -105,7 +110,8 @@ public class ToolController {
 
     @PageTitle(name = "Tool")
     @GetMapping("/single-tool/{id}")
-    private String productPage(@PathVariable String id,Model model) {
+    @PreAuthorize("isAuthenticated()")
+    public String productPage(@PathVariable String id,Model model) {
         ToolOfferServiceModel toolOfferServiceModel = toolOfferService.findById(id);
         ToolOfferViewModel toolOfferViewModel = modelMapper.map(toolOfferServiceModel, ToolOfferViewModel.class);
         toolOfferViewModel.setUser(modelMapper.map(toolOfferServiceModel.getUser(),UserViewModel.class));
@@ -116,6 +122,7 @@ public class ToolController {
 
     @PageTitle(name = "User: Tools")
     @GetMapping("/userTools")
+    @PreAuthorize("isAuthenticated()")
     public String userTools(Model model,Principal principal){
         List<ToolOfferServiceModel> allUserTools = toolOfferService.findAllUserTools(principal.getName());
         List<UserToolsViewModel> userToolsViewModels = allUserTools.stream().map(t -> {
@@ -127,6 +134,7 @@ public class ToolController {
         return "/user/all-user-tools";
     }
     @GetMapping("/user/deleteTool/")
+    @PreAuthorize("isAuthenticated()")
     public String deleteTool(@RequestParam(name = "id") String id,Principal principal){
         String username = toolOfferService.findById(id).getUser().getUsername();
         if(principal.getName().equals(username)){
@@ -140,7 +148,8 @@ public class ToolController {
 
     @PageTitle(name = "Tool: Update")
     @GetMapping("/update-tool/{id}")
-    private String updateOffer(@PathVariable String id,Model model) {
+    @PreAuthorize("isAuthenticated()")
+    public String updateOffer(@PathVariable String id,Model model) {
         ToolOfferServiceModel tool = toolOfferService.findById(id);
         ToolEditBindingModel toolEditBindingModel = modelMapper.map(tool, ToolEditBindingModel.class);
         if(!model.containsAttribute("toolEditBindingModel")){
@@ -150,6 +159,7 @@ public class ToolController {
         return "tools/update-tool";
     }
     @PostMapping(value = "/update-tool/{id}")
+    @PreAuthorize("isAuthenticated()")
     public String updateOfferConfirm(@PathVariable String id, @Valid @ModelAttribute("toolEditBindingModel")
             ToolEditBindingModel toolEditBindingModel,
                                      BindingResult bindingResult, RedirectAttributes redirectAttributes, Principal principal) throws IOException {

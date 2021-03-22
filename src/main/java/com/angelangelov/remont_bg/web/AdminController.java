@@ -43,7 +43,7 @@ public class AdminController {
     }
     @PageTitle(name = "Admin Panel")
     @GetMapping("/actions")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_MODERATOR')")
     public String adminPanel(){
         return "/admin/admin-page";
     }
@@ -93,7 +93,7 @@ public class AdminController {
     }
     @PageTitle(name = "Admin Panel: Offers")
     @GetMapping("/offers")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_MODERATOR')")
     public String approveOffer(Model model){
         List<OfferServiceModel> unapprovedOffers = offerService.findAllOffers();
         model.addAttribute("unapprovedOffers",unapprovedOffers);
@@ -101,14 +101,14 @@ public class AdminController {
         return "/admin/all-offers-approve";
     }
     @GetMapping("/offers/deleteOffer/")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_MODERATOR')")
     public String deleteOffer(@RequestParam(name = "id") String id){
         this.offerService.deleteOffer(id);
         return "redirect:/admin/offers";
     }
 
     @GetMapping("/comments/deleteComment/")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_MODERATOR')")
     public String deleteComment(@RequestParam(name = "id") String id){
         CommentServiceModel commentById = commentService.findCommentById(id);
         String offerId = commentById.getOffer().getId();
@@ -119,7 +119,7 @@ public class AdminController {
 
     //TODO : ДОБРА ПРАКТИКА ЛИ Е ГЕТ?
     @GetMapping("/offers/approveOffer/")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_MODERATOR')")
     public String approveOffer(@RequestParam(name = "id") String id){
         this.offerService.approveOffer(id);
         return "redirect:/admin/offers";
@@ -127,20 +127,20 @@ public class AdminController {
 
     @PageTitle(name = "Admin Panel: Tools")
     @GetMapping("/tools")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_MODERATOR')")
     public String allUnapprovedTools(Model model){
         List<ToolOfferServiceModel> unapprovedTools = toolOfferService.findAllUnapprovedTools();
         model.addAttribute("unapprovedTools",unapprovedTools);
         return "/admin/all-tools-approve";
     }
     @GetMapping("/tools/deleteTool/")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_MODERATOR')")
     public String deleteTool(@RequestParam(name = "id") String id){
         this.toolOfferService.deleteTool(id);
         return "redirect:/admin/tools";
     }
     @GetMapping("/tools/approveTool/")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_MODERATOR')")
     public String approveTool(@RequestParam(name = "id") String id){
         this.toolOfferService.approveTool(id);
         return "redirect:/admin/tools";

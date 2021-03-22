@@ -50,7 +50,7 @@
                                 <blockquote>
                                     <h5 th:text="|${offer.userViewModel.firstName}  ${offer.userViewModel.lastName}|">a</h5>
                                     <th:block th:if="${offer.userViewModel.city}!=null">
-                                    <small><cite th:text="|${offer.userViewModel.city}, област ${offer.region}|" title="Source Title">Chicago, United States of America  <i class="icon-map-marker"></i></cite></small>
+                                    <small><cite th:text="${offer.userViewModel.city}" title="Source Title">Chicago, United States of America  <i class="icon-map-marker"></i></cite></small>
                                     </th:block>
                                 </blockquote>
                                 <p th:text="|Емайл: ${offer.userViewModel.email}|">
@@ -91,7 +91,7 @@
                                     Lorem ipsum dolor sit amet, consectetur adipiscing elit.
                                     Lorem ipsum dolor sit amet, <a href="#">#consecteturadipiscing </a>.
                                 </p>
-                                <th:block sec:authorize="hasRole('ROLE_ADMIN')">
+                                <th:block sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_MODERATOR')">
                                     <a th:href="@{/admin/comments/deleteComment/(id=${c.id})}"   type="submit" class="btn btn-sm  btn-danger">Изтрий</a>
                                 </th:block>
                             </div>

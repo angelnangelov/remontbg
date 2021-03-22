@@ -17,12 +17,11 @@ import java.util.stream.Collectors;
 public class OfferRestController {
     private final OfferRepository offerRepository;
     private final ModelMapper modelMapper;
-    private final ToolOfferRepository toolOfferRepository;
 
-    public OfferRestController(OfferRepository offerRepository, ModelMapper modelMapper, ToolOfferRepository toolOfferRepository) {
+    public OfferRestController(OfferRepository offerRepository, ModelMapper modelMapper) {
         this.offerRepository = offerRepository;
         this.modelMapper = modelMapper;
-        this.toolOfferRepository = toolOfferRepository;
+
     }
 
     @GetMapping("/api")
@@ -38,7 +37,7 @@ public class OfferRestController {
                         }).collect(Collectors.toList()));
 
 
-        //TODO ADD TOOLS AND FIX TOOL ENTITY! BRAND AND MODEL
+
     }
 
 }
