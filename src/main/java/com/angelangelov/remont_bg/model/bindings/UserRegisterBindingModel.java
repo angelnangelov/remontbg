@@ -1,13 +1,13 @@
 package com.angelangelov.remont_bg.model.bindings;
 
+
 import org.hibernate.validator.constraints.Length;
 
-import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
-
+import static com.angelangelov.remont_bg.constants.Regex.*;
 
 
 public class    UserRegisterBindingModel extends BaseBindingModel {
@@ -24,6 +24,7 @@ public class    UserRegisterBindingModel extends BaseBindingModel {
     }
 
     @Length(min = 3, max = 15, message = "Потребителското име трябва да бъде минимум 3 символа!")
+    @Pattern(regexp = SIMPLE_TEXT_REGEX,message = "Потребителското име може да съдържа само букви и цифри")
     @NotBlank(message = "Това поле е задължително!")
     public String getUsername() {
         return username;
@@ -34,6 +35,7 @@ public class    UserRegisterBindingModel extends BaseBindingModel {
     }
 
     @Length(min = 2, max = 15, message = "Името Ви не може да бъде под 2 символа!")
+    @Pattern(regexp = FIRST_NAME_REGEX, message = "Моля въведете валидно име!")
     @NotBlank(message = "Това поле е задължително!")
     public String getFirstName() {
         return firstName;
@@ -44,6 +46,7 @@ public class    UserRegisterBindingModel extends BaseBindingModel {
     }
 
     @Length(min = 2, max = 15, message = "Фамилията Ви не може да бъде под 2 символа!")
+    @Pattern(regexp = LAST_NAME_REGEX, message = "Моля въведете валидно име!")
     @NotBlank(message = "Това поле е задължително!")
     public String getLastName() {
         return lastName;
@@ -53,7 +56,8 @@ public class    UserRegisterBindingModel extends BaseBindingModel {
         this.lastName = lastName;
     }
 
-    @Email(message = "Моля въведете валиден емайл адрес")
+    @Length(min = 5, max = 35, message = "Емайлът не може да бъде под 5 символа")
+    @Pattern(regexp = EMAIL_REGEX, message = "Моля въведете валиден емайл адрес")
     @NotBlank(message = "Това поле е задължително!")
     public String getEmail() {
         return email;

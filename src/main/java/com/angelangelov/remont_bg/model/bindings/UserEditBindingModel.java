@@ -5,6 +5,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
+
+import static com.angelangelov.remont_bg.constants.Regex.PHONE_REGEX;
 
 public class UserEditBindingModel {
     private String email;
@@ -51,7 +54,8 @@ public class UserEditBindingModel {
         this.lastName = lastName;
     }
 
-    @Length(min = 10,max = 10,message = "Моля въведете валиден телефонен номер")
+    @Length(min = 7,max = 13,message = "Моля въведете валиден телефонен номер")
+    @Pattern(regexp = PHONE_REGEX,message = "Моля въведете валиден телефонен номер")
     public String getPhoneNumber() {
         return phoneNumber;
     }

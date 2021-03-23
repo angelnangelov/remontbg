@@ -4,12 +4,11 @@ import org.hibernate.validator.constraints.Length;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.validation.constraints.FutureOrPresent;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Positive;
+import javax.validation.constraints.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+
+import static com.angelangelov.remont_bg.constants.Regex.PHONE_REGEX;
 
 public class OfferAddBindingModel{
 
@@ -91,9 +90,9 @@ public class OfferAddBindingModel{
         this.region = region;
     }
 
-    //TODO: ADD REGEX FOR PHONE NUMBER
+    @Length(min = 7,max = 13,message = "Моля въведете валиден телефонен номер")
+    @Pattern(regexp = PHONE_REGEX,message = "Моля въведете валиден телефонен номер")
     @NotBlank(message = "Това поле е задължително!")
-
     public String getOwnerPhoneNumber() {
         return ownerPhoneNumber;
     }

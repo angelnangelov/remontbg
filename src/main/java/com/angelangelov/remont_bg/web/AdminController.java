@@ -113,11 +113,9 @@ public class AdminController {
         CommentServiceModel commentById = commentService.findCommentById(id);
         String offerId = commentById.getOffer().getId();
         this.commentService.deleteComment(id);
-        //TODO : ДРУГ НАЧИН ?
         return "redirect:/offer/single-offer/"+offerId;
     }
 
-    //TODO : ДОБРА ПРАКТИКА ЛИ Е ГЕТ?
     @GetMapping("/offers/approveOffer/")
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_MODERATOR')")
     public String approveOffer(@RequestParam(name = "id") String id){

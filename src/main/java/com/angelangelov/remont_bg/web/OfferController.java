@@ -228,8 +228,9 @@ public class OfferController {
 
         return "offers/success-update-page";
     }
-
+    @PageTitle(name = "Offer: Search")
     @GetMapping("/search")
+    @PreAuthorize("isAuthenticated()")
     public String search(){
         return "search-page";
     }

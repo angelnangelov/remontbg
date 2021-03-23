@@ -118,7 +118,6 @@ public class ToolOfferServiceImpl implements ToolOfferService {
         toolOffer.setEndsOn(toolOfferServiceModel.getEndsOn());
         toolOffer.setDescription(toolOfferServiceModel.getDescription());
         System.out.println();
-        //TODO EXTRAND METHOD FOR TOOL OFFER AND OFFER
         return modelMapper.map(toolOfferRepository.saveAndFlush(toolOffer),ToolOfferServiceModel.class);
     }
 }
