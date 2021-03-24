@@ -19,6 +19,7 @@ public class Comment extends BaseEntity {
     public User getUser() {
         return user;
     }
+    
 
     public void setUser(User user) {
         this.user = user;

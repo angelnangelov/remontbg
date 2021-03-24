@@ -17,5 +17,6 @@ public interface ToolOfferRepository extends JpaRepository<ToolOffer,String> {
     List<ToolOffer> findAllByApprovedFalseAndActiveTrue();
 
     List<ToolOffer> findAllByUserId(String id);
+    List<ToolOffer> findAllByUser_Username(String name);
 
 }

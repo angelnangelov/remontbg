@@ -14,7 +14,10 @@ public class UserServiceModel extends BaseServiceModel{
 
     private Set<RoleServiceModel> authorities;
 
+
+
     public UserServiceModel() {
+
     }
 
     public String getCity() {

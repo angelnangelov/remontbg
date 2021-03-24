@@ -37,13 +37,13 @@ public class ToolOfferServiceImpl implements ToolOfferService {
     }
 
     @Override
-    public void save(ToolOfferServiceModel toolOfferServiceModel, String username) {
+    public ToolOfferServiceModel save(ToolOfferServiceModel toolOfferServiceModel, String username) {
         toolOfferServiceModel.setActive(true);
         toolOfferServiceModel.setApproved(false);
         ToolOffer toolOffer= modelMapper.map(toolOfferServiceModel, ToolOffer.class);
         toolOffer.setToolCategory(toolCategoryService.findByName(ToolsCategoryName.valueOf(toolOfferServiceModel.getCategory())));
         toolOffer.setUser(modelMapper.map(userService.findUserByUsername(username), User.class));
-        toolOfferRepository.save(toolOffer);
+        return modelMapper.map(toolOfferRepository.save(toolOffer),ToolOfferServiceModel.class);
 
     }
 
@@ -88,9 +88,9 @@ public class ToolOfferServiceImpl implements ToolOfferService {
 
     @Override
     public List<ToolOfferServiceModel> findAllUserTools(String name) {
-        UserServiceModel user = userService.findUserByUsername(name);
+        UserServiceModel userServiceModel = userService.findUserByUsername(name);
 
-        List<ToolOffer> offersByUser = toolOfferRepository.findAllByUserId(user.getId());
+        List<ToolOffer> offersByUser = toolOfferRepository.findAllByUserId(userServiceModel.getId());
         return  offersByUser.stream().map(tool -> {
             ToolOfferServiceModel toolOfferServiceModel = modelMapper.map(tool, ToolOfferServiceModel.class);
             toolOfferServiceModel.setCategory(tool.getToolCategory().getName().toString());
