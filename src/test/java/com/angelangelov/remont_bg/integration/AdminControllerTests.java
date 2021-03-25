@@ -25,14 +25,15 @@ public class AdminControllerTests {
 
 
     @Test
-    @WithMockUser(username = "test",roles = {"ADMIN"})
+    @WithMockUser(username = "test", roles = {"ADMIN"})
     public void testAdminActions_WhenAdmin_ShouldOk() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.get("/admin/actions"))
                 .andExpect(status().isOk())
-                .andExpect(view().name("/admin/admin-page")) ;
+                .andExpect(view().name("/admin/admin-page"));
     }
+
     @Test
-    @WithMockUser(username = "test",roles = {"ADMIN"})
+    @WithMockUser(username = "test", roles = {"ADMIN"})
     public void testAdminUnapprovedTools_WhenAdmin_ShouldOk() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.get("/admin/tools"))
                 .andExpect(status().isOk())
@@ -40,8 +41,9 @@ public class AdminControllerTests {
                 .andExpect(model().attributeExists("unapprovedTools"));
 
     }
+
     @Test
-    @WithMockUser(username = "test",roles = {"ADMIN"})
+    @WithMockUser(username = "test", roles = {"ADMIN"})
     public void testAdminUnapprovedOffers_WhenAdmin_ShouldOk() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.get("/admin/offers"))
                 .andExpect(status().isOk())
@@ -49,8 +51,9 @@ public class AdminControllerTests {
                 .andExpect(model().attributeExists("unapprovedOffers"));
 
     }
+
     @Test
-    @WithMockUser(username = "test",roles = {"ADMIN"})
+    @WithMockUser(username = "test", roles = {"ADMIN"})
     public void testAdminUserActions_WhenAdmin_ShouldOk() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.get("/admin/users"))
                 .andExpect(status().isOk())
@@ -58,26 +61,30 @@ public class AdminControllerTests {
                 .andExpect(model().attributeExists("users"));
 
     }
+
     @Test
-    @WithMockUser(username = "test",roles = {"USER"})
+    @WithMockUser(username = "test", roles = {"USER"})
     public void testAdminActions_WhenUser_ShouldThrow() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.get("/admin/actions"))
                 .andExpect(status().is4xxClientError());
     }
+
     @Test
-    @WithMockUser(username = "test",roles = {"USER"})
+    @WithMockUser(username = "test", roles = {"USER"})
     public void testAdminUnapprovedTools_WhenUserShould_Throw() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.get("/admin/tools"))
                 .andExpect(status().is4xxClientError());
     }
+
     @Test
-    @WithMockUser(username = "test",roles = {"USER"})
+    @WithMockUser(username = "test", roles = {"USER"})
     public void testAdminUnapprovedOffers_WhenUser_ShouldThrow() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.get("/admin/offers"))
                 .andExpect(status().is4xxClientError());
     }
+
     @Test
-    @WithMockUser(username = "test",roles = {"USER"})
+    @WithMockUser(username = "test", roles = {"USER"})
     public void testAdminUserActions_WhenUser_ShouldThrow() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.get("/admin/users"))
                 .andExpect(status().is4xxClientError());

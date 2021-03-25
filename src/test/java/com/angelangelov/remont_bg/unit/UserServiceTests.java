@@ -1,5 +1,8 @@
 package com.angelangelov.remont_bg.unit;
 
+import com.angelangelov.remont_bg.error.user.UserOldPasswordNotCorrectException;
+import com.angelangelov.remont_bg.error.user.UserWithIdNotExists;
+import com.angelangelov.remont_bg.error.user.UserWithUsernameNotExists;
 import com.angelangelov.remont_bg.model.entities.User;
 import com.angelangelov.remont_bg.model.services.RoleServiceModel;
 import com.angelangelov.remont_bg.model.services.UserServiceModel;
@@ -90,6 +93,17 @@ public class UserServiceTests {
         Mockito.when(userRepository.findByUsername("name"))
                 .thenThrow(UsernameNotFoundException.class);
         userService.loadUserByUsername("name");
+    }
+
+    @Test(expected = UserWithIdNotExists.class)
+    public void findUserById_WhenIdNotExist_ShouldThrow(){
+        Mockito.when(userService.findUserById("testId")).thenThrow(UserWithIdNotExists.class);
+        userService.findUserById("testId");
+    }
+    @Test(expected = UserWithUsernameNotExists.class)
+    public void findUserByUsername_WhenIdNotExist_ShouldThrow(){
+        Mockito.when(userService.findUserByUsername("testName")).thenThrow(UserWithUsernameNotExists.class);
+        userService.findUserByUsername("testName");
     }
 
 
