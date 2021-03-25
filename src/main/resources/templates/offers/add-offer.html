@@ -35,7 +35,7 @@
                     <small th:if="${#fields.hasErrors('price')}" th:errors="*{price}"  id="priceError" class="form-text bg-danger rounded">Цената  не може да бъде отрицателно число</small>
                 </div>
                 <div class="col">
-                    <label for="region">Категория</label>
+                    <label for="category">Категория</label>
                     <select  required th:field="*{category}" th:errorclass="bg-danger"  name="category" id="category" class="custom-select">
                         <option value="" disabled selected>Изберете категория</option>
 
