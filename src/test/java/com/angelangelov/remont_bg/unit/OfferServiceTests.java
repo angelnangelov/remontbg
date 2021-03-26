@@ -6,6 +6,7 @@ import com.angelangelov.remont_bg.model.entities.*;
 import com.angelangelov.remont_bg.model.entities.enums.Region;
 import com.angelangelov.remont_bg.model.entities.enums.ServiceOfferNames;
 import com.angelangelov.remont_bg.model.services.OfferServiceModel;
+import com.angelangelov.remont_bg.model.services.ToolOfferServiceModel;
 import com.angelangelov.remont_bg.model.services.UserServiceModel;
 import com.angelangelov.remont_bg.repository.OfferRepository;
 import com.angelangelov.remont_bg.service.impl.OfferCategoryServiceImpl;
@@ -94,6 +95,7 @@ public class OfferServiceTests {
         System.out.println();
         assertEquals(offers.size(), result);
     }
+
     @Test
     public void unapprovedOffer_WhenEmpty_ShouldWork() {
         List<Offer> offers = new ArrayList<>();
@@ -136,7 +138,6 @@ public class OfferServiceTests {
         offerService.deleteOffer(id);
         Mockito.verify(offerRepository, times(1)).deleteById(id);
     }
-
 
 
 }

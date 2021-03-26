@@ -25,7 +25,7 @@ public class CommentServiceImpl implements CommentService {
 
     private final UserService userService;
 
-    public CommentServiceImpl(ModelMapper modelMapper, CommentRepository commentRepository, OfferService offerService, ToolOfferService toolOfferService, UserService userService) {
+    public CommentServiceImpl(ModelMapper modelMapper, CommentRepository commentRepository, UserService userService) {
         this.modelMapper = modelMapper;
         this.commentRepository = commentRepository;
 

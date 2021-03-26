@@ -3,13 +3,16 @@ package com.angelangelov.remont_bg.unit;
 import com.angelangelov.remont_bg.error.user.UserOldPasswordNotCorrectException;
 import com.angelangelov.remont_bg.error.user.UserWithIdNotExists;
 import com.angelangelov.remont_bg.error.user.UserWithUsernameNotExists;
+import com.angelangelov.remont_bg.model.entities.Role;
 import com.angelangelov.remont_bg.model.entities.User;
 import com.angelangelov.remont_bg.model.services.RoleServiceModel;
 import com.angelangelov.remont_bg.model.services.UserServiceModel;
 import com.angelangelov.remont_bg.repository.UserRepository;
+import com.angelangelov.remont_bg.service.EmailService;
 import com.angelangelov.remont_bg.service.RoleService;
 import com.angelangelov.remont_bg.service.impl.UserServiceImpl;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -21,112 +24,171 @@ import org.modelmapper.ModelMapper;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
+
 
 @RunWith(MockitoJUnitRunner.class)
-@SpringBootTest
 public class UserServiceTests {
-    @InjectMocks
-    UserServiceImpl userService;
-    @Mock
-    UserRepository userRepository;
-    @Mock
-    RoleService roleService;
 
     @Mock
-    ModelMapper modelMapper;
+    UserRepository mockUserRepository;
     @Mock
-    BCryptPasswordEncoder encoder;
+    RoleService mockRoleService;
+    @Mock
+    BCryptPasswordEncoder mockEncoder;
+    @Mock
+    EmailService mockEmailService;
+    @Mock
+    PasswordEncoder passwordEncoder;
 
-
-    User user;
-    UserServiceModel userServiceModel;
+    UserServiceImpl serviceToTest;
+    User testUser;
 
     @Before
     public void initTests() {
-        user = new User();
-        userServiceModel = new UserServiceModel();
-        userServiceModel.setUsername("name");
-        userServiceModel.setEmail("email");
-        userServiceModel.setPassword("1");
-        userServiceModel.setCity("city");
-        userServiceModel.setFirstName("firstName");
-        userServiceModel.setAuthorities(Set.of(new RoleServiceModel()));
-        user.setUsername("name");
+        serviceToTest = new UserServiceImpl(
+                new ModelMapper(),
+                mockUserRepository,
+                mockRoleService,
+                mockEmailService,
+                mockEncoder
+        );
 
     }
+
 
     @Test
     public void findUserByUsername_WhenUserExist_ShouldWork() {
+        User testUser = new User();
+        testUser.setUsername("name");
+        testUser.setEmail("name@example.com");
+        Role sampleRole = new Role();
+        sampleRole.setAuthority("TEST_AUTHORITY");
+        testUser.setAuthorities(Set.of(sampleRole));
+        Mockito.when(mockUserRepository.findUserByUsername("name"))
+                .thenReturn(Optional.of(testUser));
+        UserServiceModel result = serviceToTest.findUserByUsername("name");
+        Assert.assertEquals(result.getUsername(), testUser.getUsername());
+        Assert.assertEquals(result.getEmail(), testUser.getEmail());
+        Assert.assertEquals(1, result.getAuthorities().size());
+    }
 
+    @Test
+    public void loadUserByUsername_WhenUserExist_ShouldWork() {
+        User testUser = new User();
+        testUser.setUsername("name");
+        testUser.setEmail("name@example.com");
+        Mockito.when(mockUserRepository.findByUsername("name"))
+                .thenReturn(Optional.of(testUser));
+        User userResult = (User) serviceToTest.loadUserByUsername("name");
+        assertEquals(testUser, userResult);
+    }
 
-//        User userTest = new User();
-//        userTest.setUsername("test");
-//        Mockito.when(userRepository.findByUsername("test"))
-//                .thenReturn(Optional.of(userTest));
-//        Mockito.when(modelMapper.map(userTest, UserServiceModel.class))
-//                .thenReturn(model);
-//        UserServiceModel result = userService.findUserByUsername("test");
-//        assertEquals(model, result);
+    @Test
+    public void existByUsername_WhenUserDoesNotExists_ShouldReturnFalse() {
 
-        //TODO: question
-
+        boolean existByNameResult = serviceToTest.existByUsername("name");
+        assertFalse(existByNameResult);
     }
 
 
     @Test
-    public void loadUserByUsername_WhenUserExist_ShouldWork() {
-        Mockito.when(userRepository.findByUsername("name"))
-                .thenReturn(Optional.of(user));
-        User userResult = (User) userService.loadUserByUsername("name");
-        assertEquals(user, userResult);
+    public void existByUsername_WhenUserExists_ShouldReturnTrue() {
+        User testUser = new User();
+        testUser.setUsername("name");
+        testUser.setEmail("name@example.com");
+        Mockito.when(mockUserRepository.existsByUsername("name"))
+                .thenReturn(true);
+        boolean existByNameResult = serviceToTest.existByUsername("name");
+        assertTrue(existByNameResult);
+
+    }
+
+    @Test
+    public void existByEmail_WhenEmailDoesNotExists_ShouldReturnFalse() {
+
+        boolean existByEmail = serviceToTest.existByEmail("name");
+        assertFalse(existByEmail);
+    }
+
+
+    @Test
+    public void existByEmail_WhenEmailExists_ShouldReturnTrue() {
+        User testUser = new User();
+        testUser.setUsername("name");
+        testUser.setEmail("name@example.com");
+        Mockito.when(mockUserRepository.existsByEmail("name@example.com"))
+                .thenReturn(true);
+        boolean existByEmail = serviceToTest.existByEmail("name@example.com");
+        assertTrue(existByEmail);
+
     }
 
     @Test(expected = UsernameNotFoundException.class)
     public void loadUserByUsername_WhenNotUserExist_ShouldThrow() {
-        Mockito.when(userRepository.findByUsername("name"))
+        Mockito.when(mockUserRepository.findByUsername("name"))
                 .thenThrow(UsernameNotFoundException.class);
-        userService.loadUserByUsername("name");
+        serviceToTest.loadUserByUsername("name");
+    }
+
+    @Test
+    public void findUserById_WhenIExist_ShouldThrow() {
+        User testUser = new User();
+        testUser.setId("testId");
+        testUser.setUsername("name");
+        testUser.setEmail("name@example.com");
+        Role sampleRole = new Role();
+        sampleRole.setAuthority("TEST_AUTHORITY");
+        testUser.setAuthorities(Set.of(sampleRole));
+        Mockito.when(mockUserRepository.findById("testId"))
+                .thenReturn(Optional.of(testUser));
+        UserServiceModel result = serviceToTest.findUserById("testId");
+        Assert.assertEquals(result.getUsername(), testUser.getUsername());
+        Assert.assertEquals(result.getEmail(), testUser.getEmail());
+        Assert.assertEquals(1, result.getAuthorities().size());
     }
 
     @Test(expected = UserWithIdNotExists.class)
-    public void findUserById_WhenIdNotExist_ShouldThrow(){
-        Mockito.when(userService.findUserById("testId")).thenThrow(UserWithIdNotExists.class);
-        userService.findUserById("testId");
+    public void findUserById_WhenIdNotExist_ShouldThrow() {
+        Mockito.when(serviceToTest.findUserById("testId")).thenThrow(UserWithIdNotExists.class);
+        serviceToTest.findUserById("testId");
     }
+
+
     @Test(expected = UserWithUsernameNotExists.class)
-    public void findUserByUsername_WhenIdNotExist_ShouldThrow(){
-        Mockito.when(userService.findUserByUsername("testName")).thenThrow(UserWithUsernameNotExists.class);
-        userService.findUserByUsername("testName");
+    public void findUserByUsername_WhenIdNotExist_ShouldThrow() {
+        Mockito.when(serviceToTest.findUserByUsername("testName")).thenThrow(UserWithUsernameNotExists.class);
+        serviceToTest.findUserByUsername("testName");
     }
 
 
     @Test(expected = UsernameNotFoundException.class)
     public void findByUsername_WhenNotUserExist_ShouldThrow() {
-        Mockito.when(userRepository.findByUsername("name"))
+        Mockito.when(mockUserRepository.findByUsername("name"))
                 .thenThrow(UsernameNotFoundException.class);
-        userService.loadUserByUsername("name");
+        serviceToTest.loadUserByUsername("name");
     }
 
 
-
     @Test
-    public void findAllUsers_WhenUsersExist_ShouldWork(){
+    public void findAllUsers_WhenUsersExist_ShouldWork() {
         List<User> users = new ArrayList<>();
-        users.add(user);
+        User testUser = new User();
+        testUser.setUsername("name");
+        testUser.setEmail("name@example.com");
+        users.add(testUser);
         System.out.println();
-        Mockito.when(userRepository.findAll())
+        Mockito.when(mockUserRepository.findAll())
                 .thenReturn(users);
-        int result = userService.findAllUsers().size();
+        int result = serviceToTest.findAllUsers().size();
         System.out.println();
         assertEquals(users.size(), result);
     }
 }
-
-
