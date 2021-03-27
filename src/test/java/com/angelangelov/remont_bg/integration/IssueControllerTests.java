@@ -91,8 +91,6 @@ public class IssueControllerTests {
 
     private void init() {
 
-
-
         User userEntity = new User();
         userEntity.setUsername("pesho");
         userEntity.setPassword("xyz");
