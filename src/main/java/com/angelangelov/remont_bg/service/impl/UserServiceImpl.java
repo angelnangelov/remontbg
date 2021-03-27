@@ -43,7 +43,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserServiceModel findUserByUsername(String username) {
         User user = this.userRepository.findUserByUsername(username)
-                .orElseThrow(() -> new UserWithUsernameNotExists("User with this username does not exist!"));
+                .orElseThrow(() -> new UserWithUsernameNotExists(String.format("User with this username does not exist!: %s",username)));
 
         return this.modelMapper.map(user, UserServiceModel.class);
     }

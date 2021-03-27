@@ -10,6 +10,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.runner.RunWith;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -24,6 +25,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import java.io.FileInputStream;
 import java.io.InputStream;
+import java.security.Principal;
 import java.time.LocalDateTime;
 import java.util.Set;
 
@@ -52,7 +54,7 @@ public class IssueControllerTests {
 
     @BeforeEach
     public void setUp() {
-        this.init();
+        testUser = this.init();
 
     }
 
@@ -62,10 +64,13 @@ public class IssueControllerTests {
         InputStream is = new FileInputStream("src/test/java/resources/img/testImg.png");
         System.out.println();
         MockMultipartFile image = new MockMultipartFile("problemImgUrl", is);
+        Principal mockPrincipal = Mockito.mock(Principal.class);
+        Mockito.when(mockPrincipal.getName()).thenReturn("pesho");
 
         mockMvc.perform(MockMvcRequestBuilders
                 .multipart("/issue/submit")
                 .file(image)
+                .principal(mockPrincipal)
                 .param("problemName", "TestName")
                 .param("problemDescription", "problemDescription")
                 .with(csrf()))
@@ -89,14 +94,14 @@ public class IssueControllerTests {
                 .andExpect(model().attributeExists("issueAddBindingModel"));
     }
 
-    private void init() {
+    private User init() {
 
         User userEntity = new User();
         userEntity.setUsername("pesho");
         userEntity.setPassword("xyz");
         userEntity.setCreatedDate(LocalDateTime.now());
 
-        userEntity = userRepository.save(userEntity);
+    return userRepository.save(userEntity);
 
 
     }
