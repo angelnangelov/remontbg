@@ -11,6 +11,7 @@ public class Issue extends BaseEntity {
     private User user;
 
     public Issue() {
+
     }
 
     @Column(name = "problem_name", nullable = false)
