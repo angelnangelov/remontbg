@@ -12,6 +12,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.jdbc.EmbeddedDatabaseConnection;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -27,6 +28,7 @@ import java.io.FileInputStream;
 import java.io.InputStream;
 import java.security.Principal;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Set;
 
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
@@ -34,7 +36,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @AutoConfigureMockMvc
 @SpringBootTest
+
 @ContextConfiguration(classes = RemontBgApplication.class)
+@AutoConfigureTestDatabase(connection = EmbeddedDatabaseConnection.H2)
+
 @RunWith(SpringRunner.class)
 public class IssueControllerTests {
 
@@ -51,34 +56,27 @@ public class IssueControllerTests {
 
     private static final String ISSUE_CONTROLLER_PREFIX = "/issue";
     User testUser;
-
-    @BeforeEach
-    public void setUp() {
-        testUser = this.init();
-
+    @Before
+    public void setup() {
+        this.init();
     }
+
 
     @Test
     @WithMockUser(username = "pesho", roles = {"USER, ADMIN"})
     public void testAddIssueShouldReturnValid() throws Exception {
-        InputStream is = new FileInputStream("src/test/java/resources/img/testImg.png");
+        InputStream is = new FileInputStream("src/test/java/com/resources/img/testImg.png");
         System.out.println();
         MockMultipartFile image = new MockMultipartFile("problemImgUrl", is);
-        Principal mockPrincipal = Mockito.mock(Principal.class);
-        Mockito.when(mockPrincipal.getName()).thenReturn("pesho");
 
         mockMvc.perform(MockMvcRequestBuilders
                 .multipart("/issue/submit")
                 .file(image)
-                .principal(mockPrincipal)
                 .param("problemName", "TestName")
                 .param("problemDescription", "problemDescription")
                 .with(csrf()))
-                .andExpect(status().is3xxRedirection())
-                .andExpect(view().name("redirect:success"));
-
-        //TODO : QUESTION: не успява да ми намери юзъра(Principal), който ползвам в контролера
-
+                .andExpect(status().isOk())
+                .andExpect(view().name("/issue/success-issue-page"));
 
     }
 
@@ -93,16 +91,16 @@ public class IssueControllerTests {
                 .andExpect(view().name("/issue/issue-page"))
                 .andExpect(model().attributeExists("issueAddBindingModel"));
     }
-
-    private User init() {
-
+    private void init() {
         User userEntity = new User();
         userEntity.setUsername("pesho");
+        userEntity.setFirstName("pesho");
+        userEntity.setLastName("pesho");
         userEntity.setPassword("xyz");
-        userEntity.setCreatedDate(LocalDateTime.now());
-
-    return userRepository.save(userEntity);
-
-
+        userEntity.setPassword("1234");
+        userEntity.setEmail("1234@asdadas");
+        userRepository.save(userEntity);
     }
-}
+    }
+
+
