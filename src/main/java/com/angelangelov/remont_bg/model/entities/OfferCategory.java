@@ -33,7 +33,7 @@ public class OfferCategory extends BaseEntity{
         this.name = name;
     }
 
-    @Column(name = "description", nullable = false, unique = true, columnDefinition = "text")
+    @Column(name = "description", nullable = false, columnDefinition = "text")
     public String getDescription() {
         return description;
     }

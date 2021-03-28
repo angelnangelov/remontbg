@@ -1,50 +1,35 @@
 package com.angelangelov.remont_bg.integration;
 
-import com.angelangelov.remont_bg.RemontBgApplication;
-import com.angelangelov.remont_bg.model.entities.Issue;
-import com.angelangelov.remont_bg.model.entities.Role;
+
 import com.angelangelov.remont_bg.model.entities.User;
 import com.angelangelov.remont_bg.repository.IssueRepository;
 import com.angelangelov.remont_bg.repository.UserRepository;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.runner.RunWith;
-import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.jdbc.EmbeddedDatabaseConnection;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.security.test.context.support.WithMockUser;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-
 import java.io.FileInputStream;
 import java.io.InputStream;
-import java.security.Principal;
-import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Set;
 
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
+
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @AutoConfigureMockMvc
 @SpringBootTest
-
-@ContextConfiguration(classes = RemontBgApplication.class)
+@DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
 @AutoConfigureTestDatabase(connection = EmbeddedDatabaseConnection.H2)
-
-@RunWith(SpringRunner.class)
 public class IssueControllerTests {
 
-    private String testIssueId;
-    private String userId;
+
     @Autowired
     private MockMvc mockMvc;
 
@@ -54,16 +39,18 @@ public class IssueControllerTests {
     @Autowired
     private IssueRepository issueRepository;
 
-    private static final String ISSUE_CONTROLLER_PREFIX = "/issue";
-    User testUser;
-    @Before
+
+
+    @BeforeEach
     public void setup() {
+
         this.init();
     }
 
 
+
     @Test
-    @WithMockUser(username = "pesho", roles = {"USER, ADMIN"})
+    @WithMockUser(username = "user", roles = {"USER, ADMIN"})
     public void testAddIssueShouldReturnValid() throws Exception {
         InputStream is = new FileInputStream("src/test/java/com/resources/img/testImg.png");
         System.out.println();
@@ -80,12 +67,29 @@ public class IssueControllerTests {
 
     }
 
+    @Test
+    @WithMockUser(username = "user", roles = {"USER, ADMIN"})
+    public void testAddIssueShouldRedirectWhenFieldsNotCorrect() throws Exception {
+        InputStream is = new FileInputStream("src/test/java/com/resources/img/testImg.png");
+        System.out.println();
+        MockMultipartFile image = new MockMultipartFile("problemImgUrl", is);
+
+        mockMvc.perform(MockMvcRequestBuilders
+                .multipart("/issue/submit")
+                .file(image)
+                .param("s", "TestName")
+                .param("problemDescription", "problemDescription")
+                .with(csrf()))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(view().name("redirect:submit"));
+
+    }
+
+
 
     @Test
-    @WithMockUser(username = "test", roles = {"USER, ADMIN"})
-    public void testGetToolCategoriesShouldWork() throws Exception {
-        String userId = this.userId;
-
+    @WithMockUser(username = "user", roles = {"USER, ADMIN"})
+    public void testGetIssuePageShouldWork() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.get("/issue/submit"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("/issue/issue-page"))
@@ -93,14 +97,12 @@ public class IssueControllerTests {
     }
     private void init() {
         User userEntity = new User();
-        userEntity.setUsername("pesho");
+        userEntity.setUsername("user");
         userEntity.setFirstName("pesho");
         userEntity.setLastName("pesho");
         userEntity.setPassword("xyz");
         userEntity.setPassword("1234");
-        userEntity.setEmail("1234@asdadas");
+        userEntity.setEmail("11234@asdadas");
         userRepository.save(userEntity);
     }
-    }
-
-
+}
