@@ -123,7 +123,7 @@ public class ToolEditBindingModel extends BaseBindingModel{
         this.deposit = deposit;
     }
 
-    @Length(min = 5,max = 15,message = "Може да е междъ 5 и 15 символа")
+    @Length(min = 1,max = 15,message = "Може да е между 1 и 15 символа")
     public String getPower() {
         return power;
     }

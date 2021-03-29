@@ -110,9 +110,10 @@ public class UserController {
         if (!model.containsAttribute("userEditBindingModel")) {
             model.addAttribute("userEditBindingModel", userEditBindingModel);
         }
+        String image = userServiceModel.getImage();
         model.addAttribute("username", principal.getName());
 
-        model.addAttribute("profilePic", userServiceModel.getImage());
+        model.addAttribute("profilePic",image);
 
 
         return "/user/user-profile";

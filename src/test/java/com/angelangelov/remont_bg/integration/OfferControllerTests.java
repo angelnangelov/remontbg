@@ -83,6 +83,7 @@ public class OfferControllerTests {
     @WithMockUser(username = "pesho", roles = {"USER, ADMIN"})
     public void testGetSingleOfferInCategoryShouldWork() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.get(
+
                 OFFER_CONTROLLER_PREFIX + "/single-offer/{id}", offerId
         )).
                 andExpect(status().isOk()).
@@ -114,6 +115,7 @@ public class OfferControllerTests {
     public void testPostAddOfferShouldWorkWhenEverythingCorrect() throws Exception {
         InputStream is = new FileInputStream("src/test/java/com/resources/img/testImg.png");
         System.out.println();
+
         MockMultipartFile image = new MockMultipartFile("image", is);
         mockMvc.perform(MockMvcRequestBuilders
                 .multipart("/offer/add")
