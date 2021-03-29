@@ -1,13 +1,16 @@
 package com.angelangelov.remont_bg.integration;
 
 import com.angelangelov.remont_bg.RemontBgApplication;
+import com.angelangelov.remont_bg.repository.LogRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.jdbc.EmbeddedDatabaseConnection;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ContextConfiguration;
@@ -25,6 +28,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class HomeControllerTests {
     @Autowired
     private MockMvc mockMvc;
+
+    @MockBean
+    LogRepository logRepository;
 
 
     @Test

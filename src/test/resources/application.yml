@@ -9,10 +9,10 @@ logging:
     org.hibernate.SQL: DEBUG
 mail:
   host: smtp.gmail.com
-  mailsender: remontprojectbg@gmail.com
+  mailsender: remontprojectbgsoftuni@gmail.com
   password:
   port: 587
-  username: remontprojectbg@gmail.com
+  username: remontprojectbgsoftuni@gmail.com
 spring:
   #This is the default in-memory credentials, we can change them if we want
   #    datasource:

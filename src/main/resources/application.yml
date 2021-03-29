@@ -9,10 +9,12 @@ logging:
         org.hibernate.SQL: DEBUG
 mail:
     host: smtp.gmail.com
-    mailsender: remontprojectbg@gmail.com
+    mailsender: remontprojectbgsoftuni@gmail.com
+
     password:
     port: 587
-    username: remontprojectbg@gmail.com
+    username: remontprojectbgsoftuni@gmail.com
+
 server:
     port: 8000
 spring:

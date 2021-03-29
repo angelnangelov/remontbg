@@ -70,14 +70,14 @@ public class UserControllerTests {
     }
 
     @Test
-    public void testLoginWhenAnonymousShouldWork() throws Exception {
+    public void testGetLoginWhenAnonymousShouldWork() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.get("/user/login"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("auth/login"));
     }
 
     @Test
-    public void testRegisterWhenAnonymousShouldWork() throws Exception {
+    public void testGetRegisterWhenAnonymousShouldWork() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.get("/user/register"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("auth/register"))
@@ -131,9 +131,28 @@ public class UserControllerTests {
                         .andExpect(view().name("redirect:profile"));
     }
 
+
+
     @Test
     @WithMockUser(username = "pesho", roles = {"USER, ADMIN"})
-    public void tesGettPasswordChange_ShouldWork() throws Exception {
+    public void testPostUpdateProfileShouldNotPostWhenIncorrectFields() throws Exception {
+        InputStream is = new FileInputStream("src/test/java/com/resources/img/testImg.png");
+        MockMultipartFile image = new MockMultipartFile("image", is);
+        mockMvc.perform(MockMvcRequestBuilders
+                .multipart("/user/profile")
+                .file(image)
+                .param("firstName", "p")
+                .param("lastName", "testLast")
+                .param("email", "test@test.bg")
+                .param("city","Plovdiv")
+                .param("phoneNumber","0")
+                .with(csrf()))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(view().name("redirect:profile"));
+    }
+    @Test
+    @WithMockUser(username = "pesho", roles = {"USER, ADMIN"})
+    public void tesGetPasswordChange_ShouldWork() throws Exception {
 
         mockMvc.perform(MockMvcRequestBuilders.get("/user/passwordChange")
 )

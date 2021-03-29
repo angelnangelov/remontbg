@@ -69,7 +69,7 @@ public class UserServiceImpl implements UserService {
                                 Вече може да ползвате всички наши услуги!
                                 Поздрави,
                                 Екипът на Ремонт.бг!"""
-                        ,"remontprojectbg@gmail.com");;
+                        ,"remontprojectbgsoftuni@gmail.com");;
 
         return modelMapper.map(savedUser,UserServiceModel.class);
 

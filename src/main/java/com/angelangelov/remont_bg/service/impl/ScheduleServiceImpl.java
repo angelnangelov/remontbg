@@ -42,7 +42,7 @@ public class ScheduleServiceImpl implements ScheduleService {
                 emailService.sendSimpleMessage(userEmail,"Изтелка оферта: "+ tool.getName(),
                         String.format("Здравейте, %s %n " +
                                 "Обявата ви за инструмент %s е изтекла! Можете да е подновите с един клик! %n" +
-                                "Поздрави, ремонт.бг",firstName,tool.getName()),"remontprojectbg@gmail.com");
+                                "Поздрави, ремонт.бг",firstName,tool.getName()),"remontprojectbgsoftuni@gmail.com");
             }
         }).collect(Collectors.toList());
         toolOfferRepository.saveAll(tools);
@@ -55,7 +55,7 @@ public class ScheduleServiceImpl implements ScheduleService {
                 emailService.sendSimpleMessage(userEmail,"Изтелка оферта: "+ offer.getName(),
                         String.format("Здравейте, %s %n " +
                                 "Обявата ви %s е изтекла! Можете да е подновите с един клик! %n" +
-                                "Поздрави, ремонт.бг",firstName,offer.getName()),"remontprojectbg@gmail.com");
+                                "Поздрави, ремонт.бг",firstName,offer.getName()),"remontprojectbgsoftuni@gmail.com");
             }
         }).collect(Collectors.toList());
         offerRepository.saveAll(offers);

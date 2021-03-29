@@ -36,7 +36,7 @@ public class IssueServiceImpl implements IssueService {
         IssueServiceModel savedIssue = modelMapper.map(issueRepository.save(issue), IssueServiceModel.class);
         emailService.sendSimpleMessage(userEmail,
                 String.format("Проблем: %s",issue.getProblemDescription()),String.format("Здравейте, %s %s %n," +
-                        "Получихме информацията за вашия проблем, очаквайте отговор най-скоро време. %n Поздрави,%n Екипът на Ремонт.бг " ,firstName,lastName),"remontprojectbg@gmail.com");
+                        "Получихме информацията за вашия проблем, очаквайте отговор най-скоро време. %n Поздрави,%n Екипът на Ремонт.бг " ,firstName,lastName),"remontprojectbgsoftuni@gmail.com");
 
         return savedIssue;
     }
