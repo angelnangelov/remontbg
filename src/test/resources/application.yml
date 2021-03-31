@@ -1,27 +1,27 @@
-cloudinary:
+ cloudinary:
   api-key: 481153665422683
   api-secret:
   cloud-name: dtns2qohp
-logging:
+ logging:
   level:
     blog: WARN
     org: WARN
     org.hibernate.SQL: DEBUG
-mail:
+ mail:
   host: smtp.gmail.com
   mailsender: remontprojectbgsoftuni@gmail.com
   password:
   port: 587
   username: remontprojectbgsoftuni@gmail.com
-spring:
-  #This is the default in-memory credentials, we can change them if we want
-  #    datasource:
-  #        url:
-  #            jdbc:h2:mem:testdb
-  #        driver-class-name:
-  #            org.h2.Driver
-  #        username: sa
-  #        password: ''
+ spring:
+#  This is the default in-memory credentials, we can change them if we want
+#      datasource:
+#          url:
+#              jdbc:h2:mem:testdb
+#          driver-class-name:
+#              org.h2.Driver
+#          username: sa
+#          password: ''
   jpa:
     #For H2 Database
     database-platform: org.hibernate.dialect.H2Dialect
